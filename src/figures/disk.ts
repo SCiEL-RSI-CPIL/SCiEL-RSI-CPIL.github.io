@@ -1,4 +1,4 @@
-// Hero: the culture disk of the first run beside its code map, with lineage brushing.
+// Hero: the culture disk of the first run, with lineage brushing and a reading key.
 // Ported from legacy/assets/disk.js (the geometry lives in disk-model.ts).
 
 import { C, demeColor, el, esc, f4 } from "../lib/core";
@@ -105,64 +105,7 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
   return s.join("") + "</svg>";
 }
 
-/** The code map (programs placed by a 2-D projection of their code) as an SVG string. */
-export function codeSvg(r: Run, W: number, H: number): string {
-  const c = r.coords.code;
-  const by = programsById(r);
-  const L = 48;
-  const B = 40;
-  const T = 8;
-  const Rr = 8;
-  const X = (x: number) => L + x * (W - L - Rr);
-  const Y = (y: number) => T + (1 - y) * (H - T - B);
-  const ids = Object.keys(c);
-  const sc = r.programs.filter((p) => c[p[0]] && p[4] != null).map((p) => p[4] as number);
-  const lo = Math.min(...sc);
-  const hi = Math.max(...sc);
-
-  let s =
-    `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Code map">` +
-    `<rect x="${L}" y="${T}" width="${W - L - Rr}" height="${H - T - B}" style="fill:${C.panel};stroke:${C.rule}"/>`;
-  for (const id of ids) {
-    const p = by.get(id);
-    const q = p && p[1] ? c[p[1]] : undefined;
-    if (q) {
-      s += `<line data-l="${esc(id)}" x1="${X(q[0]).toFixed(1)}" y1="${Y(q[1]).toFixed(1)}" x2="${X(c[id][0]).toFixed(1)}" y2="${Y(c[id][1]).toFixed(1)}" style="stroke:${C.muted}" stroke-width=".7" opacity=".45"/>`;
-    }
-  }
-  // The outline colour is inherited from the group so the brushing CSS can still override it.
-  s += `<g style="stroke:${C.bg}" stroke-width=".8">`;
-  for (const id of ids) {
-    const p = by.get(id);
-    if (!p) continue;
-    s += `<circle cx="${X(c[id][0]).toFixed(1)}" cy="${Y(c[id][1]).toFixed(1)}" r="3.6" fill="${demeColor(p[2])}" data-id="${esc(id)}"/>`;
-  }
-  s += "</g>";
-  let bi: string | null = null;
-  let bs = -Infinity;
-  for (const id of ids) {
-    const sc = by.get(id)?.[4];
-    if (sc != null && (bi == null || sc > bs)) {
-      bi = id;
-      bs = sc;
-    }
-  }
-  if (bi != null) {
-    const bx = X(c[bi][0]);
-    const byy = Y(c[bi][1]);
-    const lft = bx < L + (W - L) / 2;
-    s +=
-      `<circle cx="${bx.toFixed(1)}" cy="${byy.toFixed(1)}" r="9" fill="none" style="stroke:${C.ink}" stroke-width="1.2"/>` +
-      `<text x="${(bx + (lft ? 15 : -15)).toFixed(1)}" y="${(byy + 4).toFixed(1)}" style="fill:${C.ink}" font-size="13" font-weight="600" text-anchor="${lft ? "start" : "end"}">best ${f4(bs)}</text>`;
-  }
-  const my = T + (H - T - B) / 2;
-  s +=
-    `<text x="${L + (W - L) / 2}" y="${H - 10}" style="fill:${C.muted}" font-size="12" text-anchor="middle">code, component 1</text>` +
-    `<text x="16" y="${my}" style="fill:${C.muted}" font-size="12" text-anchor="middle" transform="rotate(-90 16 ${my})">code, component 2</text>`;
-  return s + "</svg>";
-}
-
-/** Hovering a program highlights its line of descent in both panels. */
+/** Hovering a program highlights its line of descent. */
 function brushLineage(hero: HTMLElement, r: Run): void {
   const by = programsById(r);
   let last: string | null = null;
@@ -208,8 +151,9 @@ export async function mount(): Promise<void> {
   disk.innerHTML = diskSvg(r, 640);
   chordLabel(disk);
   hover(disk, r);
-  const code = el("heroCode");
-  code.innerHTML = codeSvg(r, 800, 560);
-  hover(code, r);
   brushLineage(el("hero"), r);
+  // Numbers in the "how to read it" key.
+  const best = Math.max(...r.programs.map((p) => p[4] ?? -Infinity));
+  el("hero-demes").textContent = String(new Set(r.programs.map((p) => p[2])).size);
+  el("hero-best").textContent = f4(best);
 }

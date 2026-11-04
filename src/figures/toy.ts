@@ -1,28 +1,6 @@
-// The toy landscape behind "Four ways to search", the four searchers that run on it, and the small
-// canvas textures and renderer setup shared by the three.js figures (compare, niches, relief).
-// Ported from legacy/assets/world.js. A library: it has no mount().
-
-import * as THREE from "three";
-import { C, cssColor } from "../lib/core";
-
-// The legacy page used three r128, which had no colour management: hex colours went to the GPU
-// unconverted, vertex-colour gradients were lerped in sRGB, and the output was not re-encoded.
-// Turn r187's colour management off so the figures keep exactly those colours. Only the 3D figures
-// import three, so this global setting affects nothing else.
-THREE.ColorManagement.enabled = false;
-
-/** A WebGL renderer configured like the legacy (r128) one: no output encoding, opaque clear to the page background. */
-export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
-  const rd = new THREE.WebGLRenderer({ canvas, antialias: true });
-  rd.outputColorSpace = THREE.LinearSRGBColorSpace;
-  rd.setPixelRatio(Math.min(devicePixelRatio, 2));
-  rd.setClearColor(new THREE.Color(cssColor(C.bg)), 1);
-  return rd;
-}
-
-// ---------------------------------------------------------------------------
-// Toy landscape and searchers
-// ---------------------------------------------------------------------------
+// A toy landscape and four ways to search it (one call best-of-N, one climber, a swarm, SCiEL),
+// used by the "Why a population with culture?" bar chart. Pure functions, no rendering.
+// Ported from legacy/assets/world.js.
 
 export type Pt = [number, number];
 
@@ -338,52 +316,4 @@ export function runMode(W: World, mode: Mode, B: number, seed: number, opt: Mode
     last().pol = { i, c: [l.cur[0], l.cur[1]], s: useP ? l.s : sig, mu: useP ? [l.mu[0], l.mu[1]] : [0, 0] };
   }
   return { ev, best, L };
-}
-
-// ---------------------------------------------------------------------------
-// Canvas textures for sprites and points
-// ---------------------------------------------------------------------------
-
-function canvasTexture(draw: (g: CanvasRenderingContext2D) => void): THREE.CanvasTexture {
-  const c = document.createElement("canvas");
-  c.width = c.height = 64;
-  const g = c.getContext("2d");
-  if (g) draw(g);
-  return new THREE.CanvasTexture(c);
-}
-
-/** Soft white radial glow (tinted by the sprite colour). */
-export function glowTexture(): THREE.CanvasTexture {
-  return canvasTexture((g) => {
-    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    r.addColorStop(0, "rgba(255,255,255,1)");
-    r.addColorStop(0.3, "rgba(255,255,255,.35)");
-    r.addColorStop(1, "rgba(255,255,255,0)");
-    g.fillStyle = r;
-    g.fillRect(0, 0, 64, 64);
-  });
-}
-
-/** White disc with a page-background outline (tinted by the sprite colour). */
-export function discTexture(): THREE.CanvasTexture {
-  return canvasTexture((g) => {
-    g.beginPath();
-    g.arc(32, 32, 24, 0, 7);
-    g.fillStyle = "#fff";
-    g.fill();
-    g.lineWidth = 5;
-    g.strokeStyle = cssColor(C.bg);
-    g.stroke();
-  });
-}
-
-/** White ring (tinted by the sprite colour). */
-export function ringTexture(): THREE.CanvasTexture {
-  return canvasTexture((g) => {
-    g.beginPath();
-    g.arc(32, 32, 20, 0, 7);
-    g.lineWidth = 7;
-    g.strokeStyle = "#fff";
-    g.stroke();
-  });
 }

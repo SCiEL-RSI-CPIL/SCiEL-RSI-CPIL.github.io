@@ -1,13 +1,10 @@
-// Page entry: page chrome, the run note, and lazy mounting of figures.
+// Page entry: page chrome and lazy mounting of figures.
 // Each figure lives in src/figures/<name>.ts and exports `mount(): Promise<void> | void`.
-// A figure's module (and its data, and three.js if it needs it) loads only when its root element
+// A figure's module (and its data) loads only when its root element
 // comes within ~800px of the viewport.
 
-import { esc } from "../lib/core";
-import { loadOverview } from "../lib/data";
-import { currentRunId, onRunChange } from "../lib/run-state";
-import { ARENA_URL, TASK_NAMES, runMeta, runName } from "../data/names";
 import { initChrome } from "./chrome";
+import { initSvgText } from "../lib/svg-text";
 
 type Loader = () => Promise<{ mount: () => Promise<void> | void }>;
 
@@ -15,13 +12,9 @@ type Loader = () => Promise<{ mount: () => Promise<void> | void }>;
 const FIGURES: [string, Loader][] = [
   ["hero", () => import("../figures/disk")],
   ["cost", () => import("../figures/cost")],
-  ["disk", () => import("../figures/replay")],
-  ["funnel", () => import("../figures/culture")],
+  ["methods", () => import("../figures/methods")],
+  ["ctest", () => import("../figures/culture")],
   ["edits", () => import("../figures/progress")],
-  ["recs", () => import("../figures/records")],
-  ["mcompare", () => import("../figures/compare")],
-  ["niche3d", () => import("../figures/niches")],
-  ["map3d", () => import("../figures/relief")],
 ];
 
 function mountLazily(): void {
@@ -57,25 +50,6 @@ function mountLazily(): void {
   pending.forEach((_, n) => io.observe(n));
 }
 
-async function runLine(): Promise<void> {
-  const box = document.getElementById("runmeta");
-  if (!box) return;
-  const o = await loadOverview();
-  const render = async () => {
-    const id = await currentRunId();
-    const r = o.runs[id];
-    const demes = new Set(r.programs.map((p) => p[2])).size;
-    const last = r.steps[r.steps.length - 1];
-    box.innerHTML =
-      `<span class="rl">Figures below show</span>` +
-      `<a href="${ARENA_URL}" target="_blank" rel="noopener" title="Open the run in the Empira arena">${esc(runName(id))}</a>: ` +
-      `the ${esc(TASK_NAMES[runMeta(id).task].toLowerCase())} task, ${r.programs.length} programs in ${demes} demes, ` +
-      `$${last[1].toFixed(2)} of model calls over ${r.hours} hours.`;
-  };
-  onRunChange(render);
-  await render();
-}
-
 initChrome();
-runLine().catch((e) => console.error(e));
+initSvgText();
 mountLazily();

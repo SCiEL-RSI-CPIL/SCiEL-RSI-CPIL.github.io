@@ -6,6 +6,4 @@ export default defineConfig({
   integrations: [mdx()],
   devToolbar: { enabled: false },
   build: { inlineStylesheets: "auto" },
-  // three.js (~550 kB) is one lazily loaded chunk, fetched only when a 3D figure nears the viewport.
-  vite: { build: { chunkSizeWarningLimit: 600 } },
 });

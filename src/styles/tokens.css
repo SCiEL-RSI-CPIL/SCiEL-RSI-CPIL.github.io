@@ -8,6 +8,14 @@
   --font-serif: "Source Serif 4 Variable", "Iowan Old Style", Georgia, serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* Type scale. Body text is the serif at 19px; everything around it uses these five steps. */
+  --fs-2xs: 12px; /* small caps labels, axis ticks, tags */
+  --fs-xs: 13px; /* legends, controls, tooltips, notes */
+  --fs-sm: 14px; /* captions, tables, references */
+  --fs-md: 15px; /* figure subtitles, UI emphasis */
+  --fs-lg: 17px; /* figure titles, list text in boxes */
+  --fs-fig: 12px; /* text inside SVG charts, at its on-screen size */
+
   --col: 720px;
   --wide: 1120px;
   --full: 1360px;

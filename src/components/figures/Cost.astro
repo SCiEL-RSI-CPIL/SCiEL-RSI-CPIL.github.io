@@ -1,16 +1,14 @@
 ---
 import Figure from "../Figure.astro";
 ---
-<Figure width="wide" title="What the results cost" sub="Best score so far against cumulative model spend, six runs from scratch.">
+<Figure width="wide">
   <Fragment slot="controls">
-    <span class="seglab">Spend</span>
     <div class="seg" id="cxm"><button data-m="cost" class="on">Dollars</button><button data-m="calls">Model calls</button></div>
   </Fragment>
   <div class="chart" id="cost"></div>
   <div class="legend" id="costleg"></div>
   <Fragment slot="caption">
-    <b>Most of the climb costs cents.</b> Height is the number of digits that agree with the best known value, so each
-    gridline up is ten times closer. The rest of the budget buys the last digits, where improvements are rare and what
-    the system has learned matters most. Hover a line for its final score and spend.
+    <b>Figure 2.</b> Best score so far against model spend for six runs from scratch, labelled with run, final score
+    and total spend. Every run gets within 1% of the best known value for a few cents.
   </Fragment>
 </Figure>

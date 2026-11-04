@@ -105,7 +105,7 @@ nav.top .in {
 }
 nav.top .brand {
   font-weight: 650;
-  font-size: 15px;
+  font-size: var(--fs-md);
   letter-spacing: -0.01em;
   color: var(--ink);
   white-space: nowrap;
@@ -125,7 +125,7 @@ nav.top .toc::-webkit-scrollbar {
   display: none;
 }
 nav.top .toc a {
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   padding: 5px 9px;
   border-radius: 6px;
@@ -134,7 +134,7 @@ nav.top .toc a {
 nav.top .toc a span {
   display: none;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   margin-right: 5px;
   opacity: 0.7;
 }
@@ -148,7 +148,7 @@ nav.top .toc a.on {
   background: var(--bg-soft);
 }
 nav.top .gh {
-  font-size: 13px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   border-radius: 999px;
   padding: 5px 14px;
@@ -176,7 +176,7 @@ nav.top .mtoc {
     align-items: center;
     gap: 6px;
     font: inherit;
-    font-size: 13px;
+    font-size: var(--fs-xs);
     font-weight: 500;
     color: var(--ink);
     background: var(--bg-soft);
@@ -202,7 +202,7 @@ nav.top .mtoc {
     display: flex;
   }
   nav.top .toc a {
-    font-size: 15px;
+    font-size: var(--fs-md);
     padding: 11px 0;
     border-radius: 0;
     border-top: 1px solid var(--rule);
@@ -245,7 +245,7 @@ header.masthead {
   text-align: center;
 }
 .masthead .kicker {
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -306,7 +306,7 @@ header.masthead {
   align-items: center;
   gap: 8px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: var(--fs-sm);
 }
 .masthead .orgs a:hover {
   color: var(--ink);
@@ -319,7 +319,7 @@ header.masthead {
 }
 .masthead .meta {
   margin-top: 14px;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
 }
 .buttons {
@@ -333,7 +333,7 @@ header.masthead {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   border-radius: 999px;
   padding: 8px 18px;
@@ -396,14 +396,14 @@ header.masthead {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
-  margin: 104px 0 22px;
+  margin: 72px 0 22px;
   display: flex;
   align-items: baseline;
   gap: 14px;
 }
 .article h2 .num {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: var(--fs-md);
   font-weight: 500;
   color: var(--accent);
   flex: none;
@@ -451,7 +451,7 @@ sup.fnref a {
 .tldr > .label,
 .box > .label {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -472,7 +472,7 @@ sup.fnref a {
   position: relative;
   padding: 10px 0 10px 22px;
   border-top: 1px solid var(--rule);
-  font-size: 17px;
+  font-size: var(--fs-lg);
   line-height: 1.55;
   margin: 0;
 }
@@ -491,7 +491,7 @@ sup.fnref a {
 }
 .tldr .note {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   margin: 0 0 12px;
 }
@@ -501,7 +501,7 @@ sup.fnref a {
   font-family: var(--font-sans);
 }
 .toc-box .label {
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -517,7 +517,7 @@ sup.fnref a {
 }
 .toc-box li {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--fs-md);
   margin: 0;
   break-inside: avoid;
 }
@@ -530,7 +530,7 @@ sup.fnref a {
 }
 .toc-box a span {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   color: var(--accent);
   padding-top: 2px;
 }
@@ -559,13 +559,13 @@ sup.fnref a {
 .box dt {
   font-family: var(--font-sans);
   font-weight: 650;
-  font-size: 15px;
+  font-size: var(--fs-md);
   padding-top: 2px;
 }
 .box dd {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: var(--fs-lg);
   line-height: 1.55;
   color: var(--ink-2);
 }
@@ -589,7 +589,7 @@ sup.fnref a {
 .box p,
 .box li {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: var(--fs-lg);
   line-height: 1.6;
 }
 
@@ -602,14 +602,14 @@ sup.fnref a {
 }
 .figure .ftitle {
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: var(--fs-lg);
   font-weight: 650;
   letter-spacing: -0.01em;
   margin: 0 0 4px;
 }
 .figure .fsub {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--muted);
   margin: 0;
   max-width: 80ch;
@@ -617,7 +617,7 @@ sup.fnref a {
 .figure figcaption,
 .figure .caption {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   line-height: 1.6;
   color: var(--muted);
   margin: 18px 0 0;
@@ -639,7 +639,7 @@ sup.fnref a {
 }
 .runnote {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   padding: 10px 14px;
   border-radius: 8px;
@@ -665,7 +665,7 @@ sup.fnref a {
   align-items: baseline;
   padding: 12px 0;
   border-top: 1px solid var(--rule);
-  font-size: 17px;
+  font-size: var(--fs-lg);
   margin: 0;
 }
 .results .lab {
@@ -687,12 +687,12 @@ sup.fnref a {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
 }
 .article th {
   text-align: left;
   font-weight: 650;
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
@@ -715,7 +715,7 @@ sup.fnref a {
 }
 .refs li {
   font-family: var(--font-sans) !important;
-  font-size: 14px !important;
+  font-size: var(--fs-sm) !important;
   line-height: 1.55 !important;
   color: var(--ink-2) !important;
   margin-bottom: 8px !important;
@@ -725,7 +725,7 @@ sup.fnref a {
 }
 .footnotes {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--muted);
 }
 .bibwrap {
@@ -737,7 +737,7 @@ pre.bib {
   border-radius: 10px;
   padding: 18px 20px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   line-height: 1.6;
   color: var(--ink-2);
   overflow-x: auto;
@@ -748,7 +748,7 @@ pre.bib {
   right: 10px;
   font: inherit;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   border: 1px solid var(--rule);
   border-radius: 999px;
@@ -765,7 +765,7 @@ footer.site {
   margin: 72px auto 0;
   padding: 28px var(--gutter) 96px;
   border-top: 1px solid var(--rule);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   line-height: 1.6;
   color: var(--muted);
 }
@@ -804,7 +804,7 @@ footer.site .top {
 /* the run note sits among body paragraphs but is UI text */
 .article > p.runnote {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   line-height: 1.55;
   color: var(--muted);
 }
@@ -820,7 +820,7 @@ details.box[open] {
 details.box summary {
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--fs-md);
 }
 details.box[open] summary {
   margin-bottom: 12px;
@@ -833,7 +833,7 @@ details.box[open] summary {
 }
 @media (max-width: 640px) {
   .masthead .authors {
-    font-size: 15px;
+    font-size: var(--fs-md);
   }
   .tldr p.claim {
     font-size: 18px;

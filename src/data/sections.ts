@@ -10,14 +10,13 @@ export interface Section {
 
 export const SECTIONS: Section[] = [
   { id: "idea", nav: "Idea", title: "Getting better at getting better" },
-  { id: "results", nav: "Results", title: "Results so far" },
-  { id: "why", nav: "Why culture", title: "Why not one model, one climber, or a swarm" },
-  { id: "how", nav: "How it works", title: "How SCiEL works" },
-  { id: "runs", nav: "The runs", title: "What the runs show" },
-  { id: "weights", nav: "Weights", title: "Culture into weights" },
+  { id: "results", nav: "Results", title: "Results" },
+  { id: "why", nav: "Why culture", title: "Why a population with culture?" },
+  { id: "culture", nav: "Does it help", title: "Does culture help?" },
+  { id: "top", nav: "Near the top", title: "Why the last digits are hard" },
   { id: "use", nav: "Use it", title: "Use it on your problem" },
-  { id: "related", nav: "Related", title: "How this differs from other self-improving systems" },
-  { id: "open", nav: "Open", title: "Open questions" },
+  { id: "related", nav: "Related", title: "Related work" },
+  { id: "next", nav: "Next", title: "What comes next" },
 ];
 
 export const sectionNumber = (id: string) => String(SECTIONS.findIndex((s) => s.id === id) + 1).padStart(2, "0");

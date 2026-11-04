@@ -25,7 +25,7 @@ pre.diff {
   stroke-linejoin: round;
 }
 .lab {
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -34,7 +34,7 @@ pre.diff {
 }
 .hint {
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   text-align: center;
   margin-top: 14px;
 }
@@ -74,7 +74,7 @@ pre.diff {
   align-items: center;
 }
 .seglab {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
@@ -88,7 +88,7 @@ pre.diff {
 }
 .seg button {
   font: inherit;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   font-weight: 500;
   padding: 5px 12px;
   border: 0;
@@ -107,11 +107,11 @@ pre.diff {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 .chips button {
-  font-size: 12px;
+  font-size: var(--fs-2xs);
 }
 .playb {
   font: inherit;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   border: 0;
   border-radius: 999px;
@@ -136,7 +136,7 @@ pre.diff {
 }
 .racebar .num {
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   min-width: 170px;
   text-align: right;
 }
@@ -152,7 +152,7 @@ pre.diff {
 }
 .replay button {
   font: inherit;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   border: 0;
   border-radius: 999px;
@@ -163,7 +163,7 @@ pre.diff {
 }
 .replay .num {
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   min-width: 110px;
   text-align: right;
 }
@@ -173,7 +173,7 @@ pre.diff {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 20px;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   margin-top: 14px;
   line-height: 1.5;
@@ -211,7 +211,7 @@ pre.diff {
   border-radius: 10px;
   box-shadow: var(--shadow);
   padding: 11px 13px;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   line-height: 1.5;
   pointer-events: none;
 }
@@ -220,11 +220,11 @@ pre.diff {
 }
 .tip .t-n {
   font-weight: 650;
-  font-size: 14px;
+  font-size: var(--fs-sm);
 }
 .tip .t-m {
   color: var(--muted);
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   margin-top: 2px;
 }
 .tip .t-i {
@@ -236,9 +236,48 @@ pre.diff {
 /* grids */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: 56px;
   align-items: center;
+}
+.howto .label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.howto ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.howto li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+}
+.howto li:first-child {
+  border-top: 0;
+}
+.howto svg {
+  width: 40px;
+  height: 28px;
+  margin-top: 1px;
+}
+.howto p {
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.howto b {
+  color: var(--ink);
+  font-weight: 600;
 }
 .two {
   display: grid;
@@ -324,7 +363,7 @@ pre.diff {
   top: 0;
   transform: translate(-9999px, -9999px);
   white-space: nowrap;
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   color: var(--fig-muted);
   font-variant-numeric: tabular-nums;
   pointer-events: none;
@@ -346,7 +385,7 @@ pre.diff {
   font-weight: 600;
 }
 .l3.title {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   translate: -50% -50%;
@@ -355,21 +394,21 @@ pre.diff {
   translate: -50% -150%;
   color: var(--fig-ink);
   font-weight: 600;
-  font-size: 11px;
+  font-size: var(--fs-2xs);
 }
 .l3.mlab {
   translate: -50% -100%;
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   text-shadow: 0 0 5px #fff, 0 0 2px #fff, 0 0 1px #fff;
 }
 .l3.mlab.sm {
-  font-size: 10.5px;
+  font-size: var(--fs-2xs);
   font-weight: 500;
 }
 .l3.flag {
   translate: -50% -100%;
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 999px;
@@ -394,7 +433,7 @@ pre.diff {
   position: absolute;
   left: 14px;
   top: 12px;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--fig-ink);
 }
@@ -402,7 +441,7 @@ pre.diff {
   position: absolute;
   left: 14px;
   top: 32px;
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   color: var(--fig-muted);
 }
 .mpanel .mb b {
@@ -414,7 +453,7 @@ pre.diff {
   position: absolute;
   left: 18px;
   top: 14px;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   color: var(--fig-muted);
   pointer-events: none;
   line-height: 1.6;
@@ -434,7 +473,7 @@ pre.diff {
   grid-template-columns: minmax(220px, auto) 1fr 170px;
   gap: 10px 22px;
   align-items: center;
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
 }
 .mcompare .b,
 .funnel .b {
@@ -467,7 +506,7 @@ pre.diff {
   font-variant-numeric: tabular-nums;
 }
 .mcompare .hd {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
@@ -477,7 +516,7 @@ pre.diff {
   grid-template-columns: minmax(150px, auto) 1fr 56px;
   gap: 12px 20px;
   align-items: center;
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
 }
 .funnel .n {
   color: var(--ink);
@@ -487,12 +526,12 @@ pre.diff {
 .row {
   border-top: 1px solid var(--rule);
   padding: 14px 0 16px;
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
   color: var(--ink-2);
   line-height: 1.6;
 }
 .row .m {
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   color: var(--muted);
   margin-top: 6px;
 }
@@ -513,7 +552,7 @@ pre.diff {
 .mach b {
   display: block;
   font-weight: 650;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--ink);
   margin-bottom: 4px;
 }
@@ -527,7 +566,7 @@ pre.diff {
 }
 .mach p {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   line-height: 1.55;
 }
@@ -545,7 +584,7 @@ pre.diff {
 .figure th {
   text-align: left;
   font-weight: 650;
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--muted);
@@ -557,7 +596,7 @@ pre.diff {
   padding: 12px 16px 12px 0;
   vertical-align: top;
   border-bottom: 1px solid var(--rule);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   line-height: 1.55;
 }
 tr.pick {
@@ -573,7 +612,7 @@ td.idea {
   color: var(--muted);
 }
 .tag {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   font-weight: 500;
   padding: 1px 7px;
   border-radius: 4px;
@@ -605,7 +644,7 @@ pre.diff {
   border-radius: 10px;
   overflow: auto;
   max-height: 560px;
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   line-height: 1.55;
 }
 pre.diff span {
@@ -628,7 +667,7 @@ pre.diff .c {
   color: var(--muted);
 }
 .dtitle {
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
   margin: 0 0 10px;
 }
 @media (max-width: 960px) {
@@ -644,7 +683,7 @@ pre.diff .c {
   gap: 36px;
 }
 .multi .t {
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   margin: 0 0 8px;
 }
@@ -672,7 +711,7 @@ pre.diff .c {
   counter-increment: t;
   border-top: 2px solid var(--rule);
   padding: 12px 18px 4px 0;
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   line-height: 1.5;
   position: relative;
@@ -681,7 +720,7 @@ pre.diff .c {
   content: counter(t, decimal-leading-zero);
   display: block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   opacity: 0.7;
   margin-bottom: 6px;
 }
@@ -689,7 +728,7 @@ pre.diff .c {
   display: block;
   color: var(--ink);
   font-weight: 650;
-  font-size: 15px;
+  font-size: var(--fs-md);
   margin-bottom: 3px;
 }
 .steps-row li.w {
@@ -709,7 +748,7 @@ pre.diff .c {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
@@ -719,7 +758,7 @@ pre.diff .c {
 }
 .steps-back {
   margin: 12px 0 0;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
 }
 @media (max-width: 760px) {
@@ -749,7 +788,7 @@ pre.diff .c {
 }
 .ww .who {
   display: inline-block;
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -758,13 +797,13 @@ pre.diff .c {
 }
 .ww b {
   display: block;
-  font-size: 15px;
+  font-size: var(--fs-md);
   font-weight: 650;
   margin-bottom: 6px;
 }
 .ww p {
   margin: 0;
-  font-size: 13.5px;
+  font-size: var(--fs-xs);
   color: var(--muted);
   line-height: 1.55;
 }
@@ -798,13 +837,13 @@ pre.diff .c {
   gap: 4px 10px;
   padding: 10px 0;
   border-top: 1px solid var(--rule);
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--ink-2);
 }
 .runsteps ol.steps li::before {
   content: counter(st);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-2xs);
   color: var(--muted);
   padding-top: 2px;
 }
@@ -821,14 +860,14 @@ pre.diff .c {
   margin: 0;
   flex: 1;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   color: var(--ink);
   white-space: pre-wrap;
   word-break: break-all;
 }
 .runsteps .cp {
   font: inherit;
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   border: 1px solid var(--rule);
   border-radius: 999px;
   padding: 3px 10px;
@@ -839,22 +878,11 @@ pre.diff .c {
 }
 .runsteps .snote {
   margin: 8px 0 0;
-  font-size: 13px;
+  font-size: var(--fs-xs);
   color: var(--muted);
 }
 
 @media (max-width: 760px) {
-  #cost,
-  #chart,
-  #ladder {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  #cost svg,
-  #chart svg,
-  #ladder svg {
-    min-width: 680px;
-  }
   .replay {
     flex-wrap: wrap;
   }
@@ -864,7 +892,7 @@ pre.diff .c {
     width: 100%;
   }
   .l3.mlab {
-    font-size: 9.5px;
+    font-size: var(--fs-2xs);
   }
   .l3.mlab.sm,
   .l3.mlab.land,
@@ -872,12 +900,12 @@ pre.diff .c {
     display: none;
   }
   .mpanel .mt {
-    font-size: 11.5px;
+    font-size: var(--fs-2xs);
     left: 8px;
     top: 6px;
   }
   .mpanel .mb {
-    font-size: 10.5px;
+    font-size: var(--fs-2xs);
     left: 8px;
     top: 22px;
   }
@@ -890,11 +918,167 @@ pre.diff .c {
   .mcompare {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) 70px;
     gap: 8px 10px;
-    font-size: 12px;
+    font-size: var(--fs-2xs);
   }
   .funnel {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 40px;
     gap: 10px 12px;
-    font-size: 12px;
+    font-size: var(--fs-2xs);
+  }
+}
+
+/* Chart text keeps one on-screen size however wide the chart is drawn (see src/lib/svg-text.ts).
+   CSS outranks the font-size attributes the figure code writes. */
+.figure svg text {
+  font-family: var(--font-sans);
+  font-size: calc(var(--fs-fig) * min(var(--k, 1), var(--kmax, 9)));
+}
+.figure svg text[font-weight="600"],
+.figure svg text[font-size="13"] {
+  font-size: calc(var(--fs-xs) * min(var(--k, 1), var(--kmax, 9)));
+}
+/* On a phone the cost chart's labels may shrink a little rather than collide. */
+#cost svg {
+  --kmax: 1.3;
+}
+
+/* Horizontal bar and dot charts, laid out in HTML so they reflow on a phone. */
+.hb {
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+.hb .hb-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin: 0 0 14px;
+}
+.hb .hb-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.hb .hb-key i {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.hb .hb-key i.dot {
+  border-radius: 50%;
+}
+.hb h4 {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 18px 0 6px;
+}
+.hb h4:first-child {
+  margin-top: 0;
+}
+.hb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 13.5em) minmax(0, 1fr) 4.5em;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 5px 0;
+}
+.hb-row > .l {
+  text-align: right;
+}
+.hb-row > .v {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.hb-row.em > .l,
+.hb-row.em > .v {
+  font-weight: 600;
+  color: var(--ink);
+}
+.hb-track {
+  position: relative;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--fig-soft);
+}
+.hb-track > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 3px;
+  min-width: 2px;
+}
+.hb-pair {
+  display: grid;
+  gap: 4px;
+}
+.hb-pair > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hb-pair i {
+  display: block;
+  height: 13px;
+  border-radius: 2px;
+  min-width: 2px;
+}
+.hb-pair em {
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+.hb-dots {
+  position: relative;
+  height: 44px;
+}
+.hb-dots .seg-line {
+  position: absolute;
+  top: 29px;
+  height: 3px;
+  background: var(--fig-rule-strong);
+}
+.hb-dots .d {
+  position: absolute;
+  top: 30px;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+}
+.hb-dots .t {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-variant-numeric: tabular-nums;
+}
+.hb-axis {
+  display: grid;
+  grid-template-columns: minmax(0, 13.5em) minmax(0, 1fr) 4.5em;
+  gap: 14px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: var(--fs-2xs);
+}
+.hb-axis > div {
+  position: relative;
+  height: 14px;
+  border-top: 1px solid var(--rule);
+}
+.hb-axis span {
+  position: absolute;
+  top: 3px;
+  transform: translateX(-50%);
+}
+@media (max-width: 640px) {
+  .hb-row,
+  .hb-axis {
+    grid-template-columns: minmax(0, 1fr) 4.5em;
+    gap: 2px 10px;
+  }
+  .hb-row > .l {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+  .hb-axis > :first-child {
+    display: none;
   }
 }
