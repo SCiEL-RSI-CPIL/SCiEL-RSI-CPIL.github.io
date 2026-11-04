@@ -32,9 +32,8 @@ const jsonLd = {
     <title>{SITE.title} · {SITE.shortTitle}</title>
     <meta name="description" content={SITE.description} />
     <meta name="author" content={AUTHORS.map((a) => a.name).join(", ")} />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f0f11" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={SITE.url} />

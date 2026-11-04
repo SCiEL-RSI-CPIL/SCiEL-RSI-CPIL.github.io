@@ -1,8 +1,8 @@
-/* Design tokens. Light by default; dark follows the system setting.
+/* Design tokens. One fixed theme: white page, black text.
    --fig-* are the neutral colours used inside figures (see C in src/lib/core.ts). */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-serif: "Source Serif 4 Variable", "Iowan Old Style", Georgia, serif;
@@ -16,9 +16,9 @@
   --bg: #ffffff;
   --bg-soft: #f5f5f3;
   --bg-raised: #ffffff;
-  --ink: #1b1b1f;
-  --ink-2: #3a3a40;
-  --muted: #6b6b72;
+  --ink: #000000;
+  --ink-2: #1a1a1a;
+  --muted: #5c5c63;
   --rule: #e3e3e0;
   --rule-strong: #c9c9c5;
   --accent: #1f5fd1;
@@ -38,50 +38,13 @@
   --fig-rule-strong: #c4c4c0;
   --fig-faint: #a0a0a6;
   --fig-muted: #6b6b72;
-  --fig-ink2: #3a3a40;
-  --fig-ink: #1b1b1f;
+  --fig-ink2: #1a1a1a;
+  --fig-ink: #000000;
   --fig-accent: #0a84ff;
   --fig-chord: #e0637f;
   --fig-up: #2f9e6e;
   --fig-down: #d6404a;
   --fig-warn: #d08a1f;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f0f11;
-    --bg-soft: #18181b;
-    --bg-raised: #141416;
-    --ink: #ededf0;
-    --ink-2: #c7c7cc;
-    --muted: #98989d;
-    --rule: #2a2a2e;
-    --rule-strong: #3d3d42;
-    --accent: #6aa6ff;
-    --accent-ink: #0f0f11;
-    --accent-soft: rgba(106, 166, 255, 0.1);
-    --mark: rgba(106, 166, 255, 0.18);
-    --chord: #e0637f;
-    --up: #3dae7c;
-    --down: #e5484d;
-    --warn: #e8a33d;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.4);
-
-    --fig-bg: #0f0f11;
-    --fig-panel: #131315;
-    --fig-soft: #1c1c1e;
-    --fig-rule: #2c2c2e;
-    --fig-rule-strong: #48484d;
-    --fig-faint: #636366;
-    --fig-muted: #98989d;
-    --fig-ink2: #c7c7cc;
-    --fig-ink: #f5f5f7;
-    --fig-accent: #0a84ff;
-    --fig-chord: #e0637f;
-    --fig-up: #3dae7c;
-    --fig-down: #e5484d;
-    --fig-warn: #e8a33d;
-  }
 }
 
 /* WebGL figures always sit on a dark stage: their glows use additive blending. */
