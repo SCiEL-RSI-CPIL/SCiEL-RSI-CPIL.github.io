@@ -25,10 +25,8 @@ pre.diff {
   stroke-linejoin: round;
 }
 .lab {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 14px;
 }
@@ -74,9 +72,7 @@ pre.diff {
   align-items: center;
 }
 .seglab {
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   color: var(--muted);
 }
 .seg {
@@ -241,10 +237,8 @@ pre.diff {
   align-items: center;
 }
 .howto .label {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 6px;
 }
@@ -385,9 +379,7 @@ pre.diff {
   font-weight: 600;
 }
 .l3.title {
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   translate: -50% -50%;
 }
 .l3.rec {
@@ -506,9 +498,7 @@ pre.diff {
   font-variant-numeric: tabular-nums;
 }
 .mcompare .hd {
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   color: var(--muted);
 }
 .funnel {
@@ -584,9 +574,7 @@ pre.diff {
 .figure th {
   text-align: left;
   font-weight: 650;
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   color: var(--muted);
   padding: 10px 16px 8px 0;
   border-bottom: 1px solid var(--ink);
@@ -748,9 +736,7 @@ pre.diff .c {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   color: var(--muted);
 }
 .steps-scale span:last-child {
@@ -788,10 +774,8 @@ pre.diff .c {
 }
 .ww .who {
   display: inline-block;
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 8px;
 }

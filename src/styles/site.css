@@ -245,10 +245,8 @@ header.masthead {
   text-align: center;
 }
 .masthead .kicker {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--accent);
   margin: 0 0 18px;
 }
@@ -450,10 +448,8 @@ sup.fnref a {
 .tldr > .label,
 .box > .label {
   font-family: var(--font-sans);
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--accent);
   margin: 0 0 10px;
 }
@@ -500,10 +496,8 @@ sup.fnref a {
   font-family: var(--font-sans);
 }
 .toc-box .label {
-  font-size: var(--fs-2xs);
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 8px;
 }
@@ -691,9 +685,7 @@ sup.fnref a {
 .article th {
   text-align: left;
   font-weight: 650;
-  font-size: var(--fs-2xs);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
   color: var(--muted);
   padding: 10px 16px 10px 0;
   border-bottom: 1px solid var(--ink);
