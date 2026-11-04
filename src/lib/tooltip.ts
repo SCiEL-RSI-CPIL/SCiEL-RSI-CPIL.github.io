@@ -3,7 +3,7 @@
 
 import { demeName } from "../data/names";
 import { programsById, type Program, type Run } from "./data";
-import { C, esc, f4, opName } from "./core";
+import { esc, f4, opName } from "./core";
 
 export function tipFor(tip: HTMLElement, p: Program | undefined): void {
   if (!p) {

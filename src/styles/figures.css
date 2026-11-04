@@ -119,9 +119,37 @@ pre.diff {
 .playb:hover {
   border-color: var(--ink);
 }
+/* A thin, quiet slider: hairline track, small dark thumb. */
 .rng {
-  accent-color: var(--ink-2);
+  -webkit-appearance: none;
+  appearance: none;
   width: 120px;
+  height: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+.rng::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--rule-strong);
+}
+.rng::-moz-range-track {
+  height: 2px;
+  background: var(--rule-strong);
+}
+.rng::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+.rng::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
 }
 .racebar {
   display: flex;
@@ -1070,34 +1098,54 @@ pre.diff .c {
   }
 }
 
-/* Four ways to climb: four small maps side by side, two by two on a phone. */
+/* Four ways to climb: four framed cards side by side, two by two on a phone. */
 .climb {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  gap: 14px;
 }
-.cl-panel svg {
+.cl-card {
+  border: 1px solid var(--rule);
+  padding: 12px 12px 14px;
+  background: var(--bg);
+}
+.cl-card.em {
+  border-color: var(--ink);
+}
+.cl-card svg {
   width: 100%;
   height: auto;
   display: block;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
 }
 .cl-name {
   font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--ink-2);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
-.cl-name.em {
+.cl-card.em .cl-name {
   font-weight: 650;
   color: var(--ink);
 }
-.cl-best {
+.cl-num {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.cl-num b {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.cl-num span {
   font-size: var(--fs-xs);
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  margin: 6px 0 0;
+}
+.cl-card.em .cl-num b {
+  color: var(--accent);
 }
 @media (max-width: 760px) {
   .racebar .num {
@@ -1105,6 +1153,9 @@ pre.diff .c {
   }
   .climb {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 12px;
+    gap: 10px;
+  }
+  .cl-num b {
+    font-size: 22px;
   }
 }
