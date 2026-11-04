@@ -20,8 +20,8 @@ export type Program = [
   idea: string,
 ];
 
-/** [parent score, child score, attempt] */
-export type Edit = [before: number, after: number, attempt: number];
+/** [parent score, child score, deme (0-based)] */
+export type Edit = [before: number, after: number, deme: number];
 
 /** [step, cumulative dollars, cumulative model calls, best score so far] */
 export type CostStep = [step: number, dollars: number, calls: number, best: number];
