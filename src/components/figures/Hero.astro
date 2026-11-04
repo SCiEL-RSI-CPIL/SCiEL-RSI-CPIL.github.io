@@ -5,7 +5,9 @@ import Figure from "../Figure.astro";
 ---
 <Figure width="wide" class="teaser">
   <div class="hero">
-    <div class="fig relwrap brushable" id="hero"><div id="heroDisk"></div></div>
+    <div class="hero-main"><div class="fig relwrap brushable" id="hero"><div id="heroDisk"></div></div>
+      <div class="chips-row" id="hero-chips" aria-label="Focus one deme"></div>
+      <p class="hero-info" id="hero-info"></p></div>
     <div class="howto">
       <p class="label">How to read it</p>
       <ul>
@@ -33,7 +35,7 @@ import Figure from "../Figure.astro";
     </div>
   </div>
   <Fragment slot="caption">
-    <b>Figure 1.</b> Every program in one SCiEL run on the third autocorrelation constant. Hover a program to trace
-    its ancestry.
+    <b>Figure 1.</b> Every program in one SCiEL run on the third autocorrelation constant. Pick a deme to follow it;
+    hover a program to trace its ancestry.
   </Fragment>
 </Figure>

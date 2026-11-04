@@ -1,7 +1,7 @@
 // Hero: the culture disk of the first run, with lineage brushing and a reading key.
 // Ported from legacy/assets/disk.js (the geometry lives in disk-model.ts).
 
-import { C, demeColor, el, esc, f4 } from "../lib/core";
+import { C, demeColor, el, esc, f4, isVisible, prefersReducedMotion } from "../lib/core";
 import { loadOverview, loadRun, programsById, type Run } from "../lib/data";
 import { hover } from "../lib/tooltip";
 import { demeName } from "../data/names";
@@ -23,7 +23,7 @@ interface DotItem {
 export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
   const m = diskModel(r);
   const by = programsById(r);
-  const pad = 16;
+  const pad = 44;
   const X = (x: number) => ((x + 1) / 2) * S;
   const Y = (y: number) => (1 - (y + 1) / 2) * S;
   const path = (pts: Pt[]) => pts.map((q, k) => `${k ? "L" : "M"}${X(q[0]).toFixed(1)} ${Y(q[1]).toFixed(1)}`).join("");
@@ -46,7 +46,7 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     const p = by.get(id)!;
     const src: Pt = p[1] && m.pos[p[1]] ? m.pos[p[1]] : [0, 0];
     s.push(
-      `<path data-l="${esc(id)}" d="${path(geodesic(src, m.pos[id]))}" fill="none" stroke="${demeColor(p[2])}" stroke-width="1" opacity=".55"/>`,
+      `<path data-l="${esc(id)}" data-d="${p[2]}" d="${path(geodesic(src, m.pos[id]))}" fill="none" stroke="${demeColor(p[2])}" stroke-width="1" opacity=".55"/>`,
     );
   }
   // Chords: findings passed between demes. The first that raised its child gets the label.
@@ -54,8 +54,10 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
   for (const c of m.chords) {
     if (!shown(c.to)) continue;
     const mark = c.rose && !labelled;
+    const cf = by.get(c.from)?.[2] ?? -1;
+    const ct = by.get(c.to)?.[2] ?? -1;
     s.push(
-      `<path${mark ? ' data-chord="1"' : ""} d="${path(geodesic(m.pos[c.from], m.pos[c.to], 40))}" fill="none" style="stroke:${C.chord}" stroke-width="1.5"${c.rose ? "" : ' stroke-dasharray="5 5"'}/>`,
+      `<path${mark ? ' data-chord="1"' : ""} data-cf="${cf}" data-ct="${ct}" d="${path(geodesic(m.pos[c.from], m.pos[c.to], 40))}" fill="none" style="stroke:${C.chord}" stroke-width="1.5"${c.rose ? "" : ' stroke-dasharray="5 5"'}/>`,
     );
     if (mark) labelled = true;
   }
@@ -66,7 +68,7 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     const rr = Math.max(1.6, i.r * S);
     const fill = i.fill ? `fill="${i.c}"` : `style="fill:${C.panel}"`;
     s.push(
-      `<circle cx="${(i.x * S).toFixed(1)}" cy="${((1 - i.y) * S).toFixed(1)}" r="${rr.toFixed(1)}" ${fill} stroke="${i.c}" stroke-width="1.2" data-id="${esc(id)}"/>`,
+      `<circle cx="${(i.x * S).toFixed(1)}" cy="${((1 - i.y) * S).toFixed(1)}" r="${rr.toFixed(1)}" ${fill} stroke="${i.c}" stroke-width="1.2" data-id="${esc(id)}" data-d="${by.get(id)?.[2] ?? -1}"/>`,
     );
   }
   // Ring and label the best program shown.
@@ -143,6 +145,19 @@ function brushLineage(hero: HTMLElement, r: Run): void {
   });
 }
 
+/**
+ * Focus one deme: its programs and lines keep their colour, everything else fades, and the findings
+ * it sent or received stay red. `null` shows the whole run.
+ */
+function focusDeme(svg: Element, d: number | null): void {
+  svg.querySelectorAll<SVGElement>("[data-d]").forEach((n) => n.classList.toggle("dim", d != null && +n.dataset.d! !== d));
+  svg.querySelectorAll<SVGElement>("[data-cf]").forEach((n) => {
+    const on = d != null && (+n.dataset.cf! === d || +n.dataset.ct! === d);
+    n.classList.toggle("dim", d != null && !on);
+    n.classList.toggle("on", on);
+  });
+}
+
 export async function mount(): Promise<void> {
   // The hero always shows the first run, whichever run the figures below are set to.
   const o = await loadOverview();
@@ -151,8 +166,61 @@ export async function mount(): Promise<void> {
   disk.innerHTML = diskSvg(r, 640);
   hover(disk, r);
   brushLineage(el("hero"), r);
+  const svg = disk.querySelector("svg")!;
+  const by = programsById(r);
+  const m = diskModel(r);
+
   // Numbers in the "how to read it" key.
+  const demes = [...new Set(r.programs.map((p) => p[2]))].sort((a, b) => a - b);
   const best = Math.max(...r.programs.map((p) => p[4] ?? -Infinity));
-  el("hero-demes").textContent = String(new Set(r.programs.map((p) => p[2])).size);
+  el("hero-demes").textContent = String(demes.length);
   el("hero-best").textContent = f4(best);
+
+  // One line per deme: size, best score, findings sent and received.
+  const info = (d: number | null): string => {
+    if (d == null) {
+      return `All ${demes.length} demes: ${r.programs.length} programs, ${m.chords.length} findings passed between demes.`;
+    }
+    const ps = r.programs.filter((p) => p[2] === d);
+    const b = Math.max(...ps.map((p) => p[4] ?? -Infinity));
+    const sent = m.chords.filter((c) => by.get(c.from)?.[2] === d).length;
+    const got = m.chords.filter((c) => by.get(c.to)?.[2] === d);
+    const helped = got.filter((c) => c.rose).length;
+    return (
+      `<b style="color:${demeColor(d)}">${esc(demeName(d))}</b>: ${ps.length} programs, best ${f4(b)}. ` +
+      `Sent ${sent} finding${sent === 1 ? "" : "s"}; received ${got.length}` +
+      (got.length ? `, ${helped} of which helped.` : ".")
+    );
+  };
+  const chips = el("hero-chips");
+  chips.innerHTML =
+    `<button type="button" data-k="all" class="on">All</button>` +
+    demes.map((d) => `<button type="button" data-k="${d}"><i style="background:${demeColor(d)}"></i>${esc(demeName(d))}</button>`).join("");
+  const line = el("hero-info");
+  let cur: number | null = null;
+  const show = (d: number | null) => {
+    cur = d;
+    focusDeme(svg, d);
+    line.innerHTML = info(d);
+    chips.querySelectorAll<HTMLButtonElement>("button").forEach((b) => b.classList.toggle("on", b.dataset.k === (d == null ? "all" : String(d))));
+  };
+  // A slow tour of the demes until the reader picks one.
+  let touring = !prefersReducedMotion();
+  const stop = () => (touring = false);
+  chips.addEventListener("click", (e) => {
+    const b = (e.target as Element).closest<HTMLButtonElement>("button");
+    if (!b) return;
+    stop();
+    show(b.dataset.k === "all" ? null : +b.dataset.k!);
+  });
+  chips.addEventListener("mouseover", stop);
+  disk.addEventListener("mouseover", stop);
+  const order: (number | null)[] = [null, ...demes];
+  let k = 0;
+  setInterval(() => {
+    if (!touring || !isVisible(disk)) return;
+    k = (k + 1) % order.length;
+    show(order[k]);
+  }, 2600);
+  show(cur);
 }

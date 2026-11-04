@@ -1159,3 +1159,177 @@ pre.diff .c {
     font-size: 22px;
   }
 }
+
+/* Figure 1: focus one deme. */
+#heroDisk [data-d],
+#heroDisk [data-cf] {
+  transition: opacity 0.35s;
+}
+#heroDisk .dim {
+  opacity: 0.07 !important;
+}
+#heroDisk [data-cf].on {
+  stroke-width: 2.6;
+}
+.chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 14px 0 0;
+}
+.chips-row button {
+  font: inherit;
+  font-size: var(--fs-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.chips-row button i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.chips-row button:hover {
+  border-color: var(--rule-strong);
+}
+.chips-row button.on {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.hero-info {
+  min-height: 3em;
+  margin: 10px auto 0;
+  max-width: 34em;
+  text-align: center;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* Stat cards: a large before → after number with a small scale under it (Figure 5). */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.stat-card {
+  border: 1px solid var(--rule);
+  padding: 16px 18px 14px;
+}
+.sc-name {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  margin: 0;
+}
+.sc-big {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 8px 0 2px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.sc-from {
+  font-size: 26px;
+  color: var(--muted);
+}
+.sc-arrow {
+  font-size: 20px;
+  color: var(--faint, #a0a0a6);
+}
+.sc-to {
+  font-size: 34px;
+  font-weight: 600;
+}
+.sc-sub {
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+  margin: 0 0 14px;
+}
+.sc-sub span {
+  color: var(--muted);
+}
+.sc-strip,
+.sc-axis {
+  margin: 0 12px;
+}
+.sc-strip {
+  position: relative;
+  height: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.sc-strip .seg-line {
+  position: absolute;
+  top: 7px;
+  height: 2px;
+  background: var(--fig-rule-strong);
+}
+.sc-strip .d {
+  position: absolute;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  border-radius: 50%;
+}
+.sc-axis {
+  position: relative;
+  height: 16px;
+  font-size: var(--fs-2xs);
+  color: var(--muted);
+}
+.sc-axis span {
+  position: absolute;
+  top: 3px;
+  transform: translateX(-50%);
+}
+@media (max-width: 640px) {
+  .stat-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.stat-cards.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.stat-cards.three .sc-to {
+  font-size: 28px;
+}
+.stat-cards.three .sc-from {
+  font-size: 22px;
+}
+.mini-bar {
+  height: 6px;
+  margin-top: 6px;
+  background: var(--fig-soft);
+  border-radius: 3px;
+}
+.mini-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+}
+@media (max-width: 640px) {
+  .stat-cards.three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .stat-cards.three .sc-to {
+    font-size: 24px;
+  }
+  .stat-cards.three .sc-from {
+    font-size: 18px;
+  }
+}
+/* Figure 4 sits in the same thin frame as the other figures. */
+#methods .hb {
+  border: 1px solid var(--rule);
+  padding: 18px 20px 14px;
+}

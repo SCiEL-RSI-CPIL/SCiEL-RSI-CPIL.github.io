@@ -24,7 +24,7 @@ function render(o: Overview, mode: Mode, cur: string): void {
     H = 360,
     L = 92,
     Rr = 150,
-    T = 18,
+    T = 10,
     B = 48;
   const Y = (d: number) => T + (1 - (Math.min(hi, Math.max(lo, d)) - lo) / (hi - lo)) * (H - T - B);
   const panel = (task: TaskKey): string => {
@@ -76,14 +76,26 @@ function render(o: Overview, mode: Mode, cur: string): void {
       );
     }
     s.push(
-      `<text x="${L}" y="${T - 6}" font-weight="600" style="fill:${C.ink}">${esc(TASK_NAMES[task])}</text>` +
-        `<text x="${(L + W - Rr) / 2}" y="${H - 4}" style="fill:${C.muted}" text-anchor="middle">` +
+      `<text x="${(L + W - Rr) / 2}" y="${H - 4}" style="fill:${C.muted}" text-anchor="middle">` +
         (mode === "cost" ? "model spend so far (log scale)" : "model calls so far (log scale)") +
         "</text></svg>",
     );
-    return `<div class="fig">${s.join("")}</div>`;
+    // Card header: the task and, in large type, what one run costs.
+    const tot = ids.map((id) => {
+      const st = o.runs[id].steps;
+      return st[st.length - 1][key];
+    });
+    const minT = Math.min(...tot);
+    const maxT = Math.max(...tot);
+    const big = mode === "cost" ? "$" + minT.toFixed(2) + "–" + maxT.toFixed(2) : Math.round(minT) + "–" + Math.round(maxT);
+    const unit = mode === "cost" ? "model spend per run" : "model calls per run";
+    return (
+      `<div class="cl-card"><p class="cl-name">${esc(TASK_NAMES[task])}</p>` +
+      `<p class="cl-num" style="margin:0 0 8px"><b>${big}</b><span>${unit}</span></p>` +
+      `<div class="fig">${s.join("")}</div></div>`
+    );
   };
-  el("cost").innerHTML = `<div class="two cost2">${panel("autocorrelation")}${panel("circles")}</div>`;
+  el("cost").innerHTML = `<div class="stat-cards">${panel("autocorrelation")}${panel("circles")}</div>`;
   el("costleg").innerHTML = "";
 }
 
