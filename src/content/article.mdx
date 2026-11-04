@@ -12,8 +12,8 @@ import Edits from "../components/figures/Edits.astro";
   <p class="claim">Systems that evolve programs with a language model keep the best programs and forget how they got there. <b>SCiEL also keeps and shares what it learns about searching</b>, and tests each lesson before it is adopted.</p>
   <ul>
     <li><b>Circle packing (n = 26): the best known value</b>, under zero tolerance.</li>
-    <li><b>Third autocorrelation constant: a tighter bound</b> than reported for AlphaEvolve <a class="cite" href="#ref-3">[3]</a>, with a 27B model served locally.</li>
-    <li><b>Higher scores with about half the evaluations</b> of OpenEvolve and ShinkaEvolve <a class="cite" href="#ref-1">[1, 2]</a>, same model and budget.</li>
+    <li><b>Third autocorrelation constant: a tighter bound</b> than reported for AlphaEvolve (<a class="cite" href="#ref-3">Novikov et al., 2025</a>), with a 27B model served locally.</li>
+    <li><b>Higher scores with about half the evaluations</b> of OpenEvolve and ShinkaEvolve (<a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>), same model and budget.</li>
     <li><b>Culture measurably helps:</b> a finding from another subpopulation raises the chance that an edit improves <b>from 54% to 62%</b> in a randomised test.</li>
   </ul>
 </div>
@@ -24,7 +24,7 @@ import Edits from "../components/figures/Edits.astro";
 
 <Sec id="idea" />
 
-A system improves *recursively* when its improvements <span class="key">make it better at improving</span> <a class="cite" href="#ref-14">(Yampolskiy, 2015)</a>. People do this through culture: what one person learns is taught, tried by others, and kept if it works <a class="cite" href="#ref-15">(Henrich, 2016)</a>. SCiEL applies the same loop to a population of programs written by a language model:
+A system improves *recursively* when its improvements <span class="key">make it better at improving</span> (<a class="cite" href="#ref-14">Yampolskiy, 2015</a>). People do this through culture: what one person learns is taught, tried by others, and kept if it works (<a class="cite" href="#ref-15">Henrich, 2016</a>). SCiEL applies the same loop to a population of programs written by a language model:
 
 - **Demes.** The population is split into demes, groups of programs that evolve on their own, in parallel.
 - **Findings travel after a test.** A deme turns a hunch into an experiment. What holds becomes a *finding*, which is delivered to other demes and kept only if it helps there.
@@ -40,9 +40,9 @@ We run SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.worker
 | Task | Result | Compared with |
 |---|---|---|
 | Circle packing, n = 26 | **best known value**, zero tolerance | best known |
-| Third autocorrelation constant | **tighter bound** | AlphaEvolve <a class="cite" href="#ref-3">[3]</a> |
-| Same model and budget | **higher scores, ~½ the evaluations** | OpenEvolve, ShinkaEvolve <a class="cite" href="#ref-1">[1, 2]</a> |
-| Circle packing on two GPUs | **six digits** of the best known value | a 4.4× larger model <a class="cite" href="#ref-4">[4]</a> |
+| Third autocorrelation constant | **tighter bound** | AlphaEvolve (<a class="cite" href="#ref-3">Novikov et al., 2025</a>) |
+| Same model and budget | **higher scores, ~½ the evaluations** | OpenEvolve, ShinkaEvolve (<a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>) |
+| Circle packing on two GPUs | **six digits** of the best known value | a 4.4× larger model (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>) |
 
 <Cost />
 
@@ -72,44 +72,37 @@ Other self-improving systems differ mainly in what they change and how they deci
   <table>
     <thead><tr><th>System</th><th>What improves</th><th>How a change is kept</th></tr></thead>
     <tbody>
-      <tr><td><b>MASS</b> <a class="cite" href="#ref-5">[5]</a></td><td>model weights</td><td>a training round</td></tr>
-      <tr><td><b>AIDE²</b> <a class="cite" href="#ref-6">[6]</a></td><td>its own pipeline</td><td>greedy</td></tr>
-      <tr><td><b>DGM · SICA · HGM</b> <a class="cite" href="#ref-7">[7–9]</a></td><td>its own code</td><td>benchmark score</td></tr>
-      <tr><td><b>Hyperagents</b> <a class="cite" href="#ref-10">[10]</a></td><td>the improver</td><td>a fixed number of rounds</td></tr>
-      <tr><td><b>MetaRSI</b> <a class="cite" href="#ref-11">[11]</a></td><td>the improver of the improver</td><td>meta-level search</td></tr>
-      <tr><td><b>TTT-Discover · ThetaEvolve</b> <a class="cite" href="#ref-4">[4, 12]</a></td><td>model weights during the run</td><td>reinforcement-learning reward</td></tr>
+      <tr><td><b>MASS</b> (<a class="cite" href="#ref-5">Lee et al., 2026</a>)</td><td>model weights</td><td>a training round</td></tr>
+      <tr><td><b>AIDE²</b> (<a class="cite" href="#ref-6">Srikanth et al., 2026</a>)</td><td>its own pipeline</td><td>greedy</td></tr>
+      <tr><td><b>DGM · SICA · HGM</b> (<a class="cite" href="#ref-7">Zhang et al., 2025</a>; <a class="cite" href="#ref-8">Robeyns et al., 2025</a>; <a class="cite" href="#ref-9">Wang et al., 2025a</a>)</td><td>its own code</td><td>benchmark score</td></tr>
+      <tr><td><b>Hyperagents</b> (<a class="cite" href="#ref-10">Zhang et al., 2026</a>)</td><td>the improver</td><td>a fixed number of rounds</td></tr>
+      <tr><td><b>MetaRSI</b> (<a class="cite" href="#ref-11">Tan et al., 2026</a>)</td><td>the improver of the improver</td><td>meta-level search</td></tr>
+      <tr><td><b>TTT-Discover · ThetaEvolve</b> (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>; <a class="cite" href="#ref-12">Wang et al., 2025b</a>)</td><td>model weights during the run</td><td>reinforcement-learning reward</td></tr>
       <tr class="self"><td><b>SCiEL</b></td><td>methods, findings, policy, world model</td><td>a test where it is used, on randomised logs</td></tr>
     </tbody>
   </table>
 </div>
 
-<Sec id="next" />
-
-- **Across generations.** We will run the same tasks generation after generation, each starting from what the last one learned, against fresh runs at equal cost. If culture compounds, later generations should improve faster.
-- **Into the weights.** With DeltaServe <a class="cite" href="#ref-13">[13]</a>, small adapters (LoRA) can be trained on the run's own verified improvements while it searches. An adapter is kept only if it passes the same test as any other finding.
-- **More tasks.** The mechanism is not specific to mathematics; the Empira arena has 959 task packages to try it on.
-
 <hr />
 
 ### References
 
-<ol class="refs">
-  <li id="ref-1">OpenEvolve: an open-source evolutionary coding agent. 2025. <a href="https://github.com/codelion/openevolve">github.com/codelion/openevolve</a></li>
-  <li id="ref-2">ShinkaEvolve: towards open-ended and sample-efficient program evolution. 2025. <a href="https://arxiv.org/abs/2509.19349">arXiv:2509.19349</a></li>
-  <li id="ref-3">AlphaEvolve: a coding agent for scientific and algorithmic discovery. 2025. <a href="https://arxiv.org/abs/2506.13131">arXiv:2506.13131</a></li>
-  <li id="ref-4">Learning to discover at test time. 2026. <a href="https://arxiv.org/abs/2601.16175">arXiv:2601.16175</a></li>
-  <li id="ref-5">MASS: recursive self-improvement through multi-agent self-supervision. 2026. <a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a></li>
-  <li id="ref-6">Recursive self-improvement of AI research agents (AIDE²). 2026. <a href="https://arxiv.org/abs/2609.26457">arXiv:2609.26457</a></li>
-  <li id="ref-7">Darwin Gödel Machine: open-ended evolution of self-improving agents. 2025. <a href="https://arxiv.org/abs/2505.22954">arXiv:2505.22954</a></li>
-  <li id="ref-8">A self-improving coding agent. 2025. <a href="https://arxiv.org/abs/2504.15228">arXiv:2504.15228</a></li>
-  <li id="ref-9">Huxley-Gödel Machine: human-level coding agent development by an approximation of the optimal self-improving machine. 2025. <a href="https://arxiv.org/abs/2510.21614">arXiv:2510.21614</a></li>
-  <li id="ref-10">Hyperagents. 2026. <a href="https://arxiv.org/abs/2603.19461">arXiv:2603.19461</a></li>
-  <li id="ref-11">MetaRSI / RSI²: a meta-recursive self-improving system for recursive self-improving systems themselves. 2026. <a href="https://arxiv.org/abs/2609.06396">arXiv:2609.06396</a></li>
-  <li id="ref-12">ThetaEvolve: test-time learning on open problems. 2025. <a href="https://arxiv.org/abs/2511.23473">arXiv:2511.23473</a></li>
-  <li id="ref-13">DeltaServe: host-agnostic co-serving of inference and fine-tuning for LLMs. 2026. <a href="https://arxiv.org/abs/2607.28848">arXiv:2607.28848</a></li>
-  <li id="ref-14">R. V. Yampolskiy. From seed AI to technological singularity via recursively self-improving software. 2015. <a href="https://arxiv.org/abs/1502.06512">arXiv:1502.06512</a></li>
-  <li id="ref-15">J. Henrich. The Secret of Our Success: How Culture Is Driving Human Evolution. Princeton University Press, 2016.</li>
-</ol>
+<ul class="refs">
+  <li id="ref-15">Henrich, J. (2016). <i>The Secret of Our Success: How Culture Is Driving Human Evolution.</i> Princeton University Press.</li>
+  <li id="ref-2">Lange, R. T., Imajuku, Y., and Cetin, E. (2025). ShinkaEvolve: towards open-ended and sample-efficient program evolution. <a href="https://arxiv.org/abs/2509.19349">arXiv:2509.19349</a></li>
+  <li id="ref-5">Lee, H., Xu, J., Seely, J., Lee, D., et al. (2026). Recursive self-improvement through multi-agent self-supervision (MASS). <a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a></li>
+  <li id="ref-3">Novikov, A., Vũ, N., Eisenberger, M., Dupont, E., et al. (2025). AlphaEvolve: a coding agent for scientific and algorithmic discovery. <a href="https://arxiv.org/abs/2506.13131">arXiv:2506.13131</a></li>
+  <li id="ref-8">Robeyns, M., Szummer, M., and Aitchison, L. (2025). A self-improving coding agent. <a href="https://arxiv.org/abs/2504.15228">arXiv:2504.15228</a></li>
+  <li id="ref-1">Sharma, A. (2025). OpenEvolve: an open-source evolutionary coding agent. <a href="https://github.com/codelion/openevolve">github.com/codelion/openevolve</a></li>
+  <li id="ref-6">Srikanth, D., Zhao, B., Xu, D., Wu, Y., et al. (2026). Recursive self-improvement of AI research agents (AIDE²). <a href="https://arxiv.org/abs/2609.26457">arXiv:2609.26457</a></li>
+  <li id="ref-11">Tan, Z., Sun, L., Shi, Z., Liu, Y., et al. (2026). MetaRSI / RSI²: a meta-recursive self-improving system for recursive self-improving systems themselves. <a href="https://arxiv.org/abs/2609.06396">arXiv:2609.06396</a></li>
+  <li id="ref-9">Wang, W., Piękos, P., Nanbo, L., Laakom, F., et al. (2025a). Huxley-Gödel Machine: human-level coding agent development by an approximation of the optimal self-improving machine. <a href="https://arxiv.org/abs/2510.21614">arXiv:2510.21614</a></li>
+  <li id="ref-12">Wang, Y., Su, S.-R., Zeng, Z., Xu, E., et al. (2025b). ThetaEvolve: test-time learning on open problems. <a href="https://arxiv.org/abs/2511.23473">arXiv:2511.23473</a></li>
+  <li id="ref-14">Yampolskiy, R. V. (2015). From seed AI to technological singularity via recursively self-improving software. <a href="https://arxiv.org/abs/1502.06512">arXiv:1502.06512</a></li>
+  <li id="ref-4">Yuksekgonul, M., Koceja, D., Li, X., Bianchi, F., et al. (2026). Learning to discover at test time. <a href="https://arxiv.org/abs/2601.16175">arXiv:2601.16175</a></li>
+  <li id="ref-7">Zhang, J., Hu, S., Lu, C., Lange, R., et al. (2025). Darwin Gödel Machine: open-ended evolution of self-improving agents. <a href="https://arxiv.org/abs/2505.22954">arXiv:2505.22954</a></li>
+  <li id="ref-10">Zhang, J., Zhao, B., Yang, W., Foerster, J., et al. (2026). Hyperagents. <a href="https://arxiv.org/abs/2603.19461">arXiv:2603.19461</a></li>
+</ul>
 
 <h3 id="cite">Citation</h3>
 

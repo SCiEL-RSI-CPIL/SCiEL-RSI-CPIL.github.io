@@ -425,10 +425,9 @@ header.masthead {
   border-top: 1px solid var(--rule);
   margin: 64px 0 0;
 }
+/* Author–year citations, e.g. (Novikov et al., 2025): same size as the text, in the link colour. */
 .cite {
-  font-family: var(--font-sans);
-  font-size: 0.78em;
-  color: var(--muted);
+  color: var(--accent);
   white-space: nowrap;
 }
 .cite:hover {
@@ -711,7 +710,9 @@ sup.fnref a {
 
 /* ---------- references, citation, footer ---------- */
 .refs {
+  list-style: none;
   padding-left: 1.6em !important;
+  text-indent: -1.6em;
 }
 .refs li {
   font-family: var(--font-sans) !important;

@@ -15,7 +15,6 @@ export const SECTIONS: Section[] = [
   { id: "culture", nav: "Does it help", title: "Does culture help?" },
   { id: "top", nav: "Near the top", title: "Why the last digits are hard" },
   { id: "related", nav: "Related", title: "Related work" },
-  { id: "next", nav: "Next", title: "What comes next" },
 ];
 
 export const sectionNumber = (id: string) => String(SECTIONS.findIndex((s) => s.id === id) + 1).padStart(2, "0");
