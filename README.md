@@ -18,8 +18,8 @@ The code is at [Doldrums/sciel](https://github.com/Doldrums/sciel); the runs sho
 - `src/components/` – layout pieces (figure, TOC, citation, …).
 - `src/figures/` – interactive figures, one ES module each.
 - `public/` – files served as-is (icons, OG card, run data).
-- `public/legacy/` – the original hand-written page, kept unchanged and served at `/legacy/`.
-  The same version is also tagged `legacy-v1` in git.
+- `legacy/` – the original hand-written page, kept unchanged for reference and not deployed.
+  The same version is also tagged `legacy-v1` in git. To view it: `python3 -m http.server -d legacy 8000`.
 
 ## Working on it
 
