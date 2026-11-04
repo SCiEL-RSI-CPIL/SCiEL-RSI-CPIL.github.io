@@ -1,0 +1,24 @@
+---
+import Figure from "../Figure.astro";
+// Four ways to climb the same toy landscape, one trial each, animated by src/figures/climb.ts.
+---
+<Figure width="wide">
+  <div class="climb" id="climb"></div>
+  <div class="racebar">
+    <button class="playb" id="climbPlay" type="button">Pause</button>
+    <input class="rng" type="range" id="climbT" min="0" max="200" step="1" value="0" aria-label="Evaluation" />
+    <span class="num" id="climbTv"></span>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--fig-ink)"></i>start</span>
+    <span><i style="background:transparent;border:1.5px solid var(--fig-ink)"></i>summit</span>
+    <span><i class="ln" style="background:#3A6EA5"></i>accepted step</span>
+    <span><i style="background:var(--fig-muted);opacity:.5;width:6px;height:6px"></i>rejected try</span>
+    <span><i class="ln" style="background:var(--fig-chord)"></i>culture: a lagging line jumps to the leader's finding</span>
+    <span><i class="dash" style="border-top-color:var(--fig-ink2)"></i>research probe: a long jump when a line stalls</span>
+  </div>
+  <Fragment slot="caption">
+    <b>Figure 3.</b> One trial each, 200 evaluations: one model sampled independently, one climber, five climbers
+    that share nothing, and SCiEL. Darker is higher; grey is invalid. Only SCiEL gets up the narrow ridge.
+  </Fragment>
+</Figure>

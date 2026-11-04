@@ -12,6 +12,7 @@ type Loader = () => Promise<{ mount: () => Promise<void> | void }>;
 const FIGURES: [string, Loader][] = [
   ["hero", () => import("../figures/disk")],
   ["cost", () => import("../figures/cost")],
+  ["climb", () => import("../figures/climb")],
   ["methods", () => import("../figures/methods")],
   ["ctest", () => import("../figures/culture")],
   ["edits", () => import("../figures/progress")],

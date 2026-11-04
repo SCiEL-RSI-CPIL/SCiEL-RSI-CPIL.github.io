@@ -3,6 +3,7 @@ import TocBox from "../components/TocBox.astro";
 import Citation from "../components/Citation.astro";
 import Hero from "../components/figures/Hero.astro";
 import Cost from "../components/figures/Cost.astro";
+import Climb from "../components/figures/Climb.astro";
 import Methods from "../components/figures/Methods.astro";
 import CultureTest from "../components/figures/CultureTest.astro";
 import Edits from "../components/figures/Edits.astro";
@@ -48,7 +49,11 @@ We run SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.worker
 
 <Sec id="why" />
 
-**A single model, a single climber or a crowd that does not share all stall; SCiEL keeps climbing.** A hard problem is a long climb seen one edit at a time. Sampling one model many times never builds on a success. One climber builds, but stops at the first bump. Several climbers that share nothing split the budget and each stop at their own bump. On a toy landscape with a trap and a narrow ridge to the summit, SCiEL reaches the top in 29 of 30 trials. Removing the learned policy, the world model or culture costs the most:
+**A single model, a single climber or a crowd that does not share all stall; SCiEL keeps climbing.** A hard problem is a long climb seen one edit at a time. Sampling one model many times never builds on a success. One climber builds, but stops at the first bump. Several climbers that share nothing split the budget and each stop at their own bump. On a toy landscape with a trap and a narrow ridge to the summit, the difference is visible in a single trial:
+
+<Climb />
+
+Over 30 trials, SCiEL reaches the top in 29. Removing the learned policy, the world model or culture costs the most:
 
 <Methods />
 
