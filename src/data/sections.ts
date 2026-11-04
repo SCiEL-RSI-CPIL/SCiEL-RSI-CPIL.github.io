@@ -14,7 +14,6 @@ export const SECTIONS: Section[] = [
   { id: "why", nav: "Why culture", title: "Why a population with culture?" },
   { id: "culture", nav: "Does it help", title: "Does culture help?" },
   { id: "top", nav: "Near the top", title: "Why the last digits are hard" },
-  { id: "use", nav: "Use it", title: "Use it on your problem" },
   { id: "related", nav: "Related", title: "Related work" },
   { id: "next", nav: "Next", title: "What comes next" },
 ];

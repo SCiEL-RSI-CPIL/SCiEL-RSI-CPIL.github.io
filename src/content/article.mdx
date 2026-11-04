@@ -6,7 +6,6 @@ import Cost from "../components/figures/Cost.astro";
 import Methods from "../components/figures/Methods.astro";
 import CultureTest from "../components/figures/CultureTest.astro";
 import Edits from "../components/figures/Edits.astro";
-import RunIt from "../components/figures/RunIt.astro";
 
 <div class="tldr prose">
   <p class="label">TL;DR</p>
@@ -64,18 +63,6 @@ We run SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.worker
 **Near the best program, most edits stop helping, and that is where a run's budget goes.** Across all edits, 30% to 80% beat their parent. Starting from a program close to the run's best, the share drops in five of the six runs, to as low as 7%. This is where shared lessons and long shots matter most, and the regime SCiEL is built for.
 
 <Edits />
-
-<Sec id="use" />
-
-**SCiEL fits a task when three things are true:**
-
-1. **You can check an answer you trust**, exactly or on data the search never saw.
-2. **The best known answer can still be beaten** by more than the noise in your score.
-3. **Progress hides behind rare long shots**: most tries fail, and the ones that matter are bold.
-
-Not sure? `sciel task ./materials` drafts a task from your papers, notebooks or data, and checks all three before any compute is spent.
-
-<RunIt />
 
 <Sec id="related" />
 
