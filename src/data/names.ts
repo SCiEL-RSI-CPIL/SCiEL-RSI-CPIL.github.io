@@ -49,3 +49,9 @@ export function runName(id: string): string {
 export function demeName(index: number): string {
   return `Deme ${index + 1}`;
 }
+
+/** Run ids in reader order: by task, then letter (Autocorrelation A, B, C, Circle packing A, …). */
+export function sortRuns(ids: readonly string[]): string[] {
+  const rank = new Map(RUNS.map((r, i) => [r.id, i]));
+  return [...ids].sort((a, b) => (rank.get(a) ?? 99) - (rank.get(b) ?? 99));
+}

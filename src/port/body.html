@@ -1,0 +1,398 @@
+<a class="skip" href="#ch-1">Skip to content</a>
+
+<nav class="top" id="nav"><div class="in"><a class="brand" href="#top">SCiEL<span>Getting better at getting better</span></a><div class="toc" id="toc"><a href="#ch-1">Overview</a><a href="#ch-2">Results</a><a href="#ch-3">Which tasks</a><a href="#ch-4">How it works</a><a href="#ch-5">What the runs show</a><a href="#ch-6">Outlook</a></div><button class="mtoc" id="mtoc" aria-expanded="false" aria-controls="toc">Contents</button><a class="gh" href="https://github.com/Doldrums/sciel" target="_blank" rel="noopener">Code</a></div></nav>
+
+<header class="col" id="top">
+  <div class="toprow"><div class="start"><button class="startb" id="startb" aria-expanded="false" aria-controls="startp"><span class="dotg"></span>Run SCiEL on your problem<span class="chev">›</span></button>
+  <div class="startp" id="startp" hidden>
+    <div class="seg" id="tmode"><button data-k="api" class="on">API key</button><button data-k="local">Local model</button></div>
+    <ol class="steps" id="tsteps"></ol>
+    <p class="snote" id="tnote"></p>
+  </div></div><a class="arenab" href="https://research-arena.small-pine-3af7.workers.dev" target="_blank" rel="noopener"><span class="dotb"></span>Empira arena<span class="sub">959 tasks · leaderboard</span><span class="ext">↗</span></a></div>
+  <h1>Let Them Get Better at Getting Better<a class="dag" href="#fn-dag">†</a></h1>
+  <p class="subt">Recursive self-improvement (RSI) through cultural transmission</p>
+  <p class="authors"><!--AUTHORS--><br><span class="orgs"><a href="https://cpil-lab.github.io/"><img src="/img/cpil.png" alt="CPIL logo" width="40" height="40">CPIL Research Group</a><a href="https://mbzuai.ac.ae/"><img src="/img/mbzuai.png" alt="MBZUAI logo" width="40" height="40">MBZUAI</a></span></p>
+  <div class="links"><a class="off" href="#">Preprint in progress</a><a href="https://github.com/Doldrums/sciel" target="_blank" rel="noopener">Code</a><a href="https://research-arena.small-pine-3af7.workers.dev" target="_blank" rel="noopener">Arena</a><a href="https://huggingface.co/datasets/autoresearchTasksSciel/autoresearch-tasks" target="_blank" rel="noopener">Dataset</a><a href="#bib">Cite</a></div>
+  <p class="contact">Questions and collaborations: write to any of us.</p>
+</header>
+
+<div class="gap s"></div>
+<section class="wide">
+  <div class="hero brushable" id="hero"><figure class="fig relwrap" id="heroDisk"></figure><figure class="fig relwrap" id="heroCode"></figure></div>
+  <p class="hint">Hover a program to follow its lineage in both views.</p>
+  <p class="cap" style="text-align:center;margin:28px auto 0;max-width:78ch"><b>Individuals learn; culture travels.</b> <a class="xp" href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">One run</a> on the third autocorrelation constant. On the disk, each sector is a deme, a subpopulation of programs with its own lineages, and each ring a generation; a crimson chord is a finding one deme passed to another. On the map, the same programs placed by their code.</p>
+</section>
+
+<div class="gap s"></div>
+<div class="chapter" id="ch-1"><span>01</span>Overview</div>
+<section class="col" id="overview">
+  <p class="lab">Abstract</p>
+  <p class="abstract">We use recursive self-improvement (RSI) for a process in which acquired improvements <span class="key">strengthen a system’s capacity for further improvement</span>: the system gets better at getting better<a class="dag" href="#fn-dag">†</a>. Here the system includes its procedures and inherited methods; its base model may or may not stay fixed.</p>
+  <p class="abstract">We approach this through cumulative culture. Experience persists in learned practices, routines and artifacts <a class="cit" href="#ref-15">(Henrich, 2016</a>; <a class="cit" href="#ref-16">Levitt and March, 1988)</a>; earlier instrument designs inform later ones <a class="cit" href="#ref-17">(Nersessian, 2009)</a>; existing technologies and the knowledge of how to combine them support further invention <a class="cit" href="#ref-18">(Arthur, 2007)</a>; and culturally acquired content may strengthen the very capacity to build on what is inherited <a class="cit" href="#ref-19">(Mesoudi and Thornton, 2018)</a>. <span class="key">SCiEL turns this feedback between inheritance and innovation into a mechanism for search.</span></p>
+  <p class="abstract">Its individuals are demes, subpopulations of programs with their own lineages, and research cells, standing questions that write and test their own tools. What they learn becomes culture: hypotheses tested as experiments, claims with measured effects in a shared knowledge base, tools, and the policy and world model that steer the search. <span class="key">Culture passes to others only after a trial at the recipient</span>, and <span class="key">it shapes how the population grows</span>: which lineages merge, where stalled demes respawn, which seeds and portfolios start new ones. Every decision is randomized and logged with its probability, so <span class="key">every run is a randomized experiment on itself</span>. We study SCiEL in the <a class="xp" href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a> with local inference on an open 27B model, both <span class="key">with the weights frozen and with LoRA adapters trained during the run</span>.</p>
+  <p class="abstract" style="color:var(--muted)">The research is ongoing. This page shows the mechanism on real runs and some results so far.</p>
+  <p class="fn" id="fn-dag">† A concise formulation of recursive self-improvement: a system “gets better at getting better” <a class="cit" href="#ref-14">(Yampolskiy, 2015)</a>.</p>
+</section>
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<section class="wide about">
+  <p class="lab">What this is about</p>
+  <ol>
+    <li><b>Getting better at getting better.</b> An improvement is recursive when it strengthens the capacity for the next one. In SCiEL the procedures improve along with the programs, and what one run learns is exported for the next. Most systems that evolve programs keep the best programs and forget how they got there.</li>
+    <li><b>Individuals learn, cultures accumulate.</b> A skill outlives the person who found it because it is taught, tried by the learner and dropped when it fails. In SCiEL a hypothesis is tested as an experiment; what holds becomes a claim in the knowledge base or a tool; it is delivered to other demes and kept only if the recipient’s trial confirms it.</li>
+    <li><b>The population is shaped by what it learned.</b> Crossing merges lineages that each solved part of the task; stalled demes respawn where the world model sees unexplored promise; new demes start from seeds and portfolios of distinct approaches, so an idea can survive long enough to pay.</li>
+    <li><b>A self-modification is an experiment.</b> Every choice, which deme, which parent, which operator, when to open research, is drawn from a logged distribution. The system can therefore estimate, from its own logs and without bias, whether a change to itself helped before it keeps it.</li>
+    <li><b>The landscape belongs to the model.</b> How hard a task is depends on how often the model’s edit beats its parent, π<sub>ε</sub>. Culture changes what the model sees, so it changes π<sub>ε</sub>. That is the lever recursive improvement pulls, and it can be measured.</li>
+  </ol>
+</section>
+
+<div class="gap"></div>
+
+<div class="chapter" id="ch-2"><span>02</span>Results</div>
+<section class="wide" id="results">
+  <p class="lab">Some results so far</p>
+  <ul class="res">
+    <li><span class="rc g">frontier</span><span><b>Circle packing, n = 26.</b> The best known value, reached under zero tolerance.</span></li>
+    <li><span class="rc g">frontier</span><span><b>Third autocorrelation constant.</b> A tighter bound than reported in <a href="#ref-3">[3]</a>, with a 27B model served locally.</span></li>
+    <li><span class="rc b">matched</span><span><b>Against <a href="#ref-1">[1</a>, <a href="#ref-2">2]</a> with the same model and budget.</b> Higher scores with about half the evaluations and fewer tokens.</span></li>
+    <li><span class="rc b">local</span><span><b>Local inference.</b> Circle packing to six digits of the best known value, with a 27B model on two GPUs, 4.4× smaller than in <a href="#ref-4">[4]</a>.</span></li>
+    <li><span class="rc w">weights</span><span><b>SCiEL with LoRA.</b> Inference-time LoRA adapters trained across the population during the run, on top of SCiEL, improve results further.</span></li>
+  </ul>
+  <p class="cap">Details in the preprint; runs in the <a class="xp" href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a>.</p>
+  <div class="fig-in">
+    <div class="figbar"><div><h2>What the results cost</h2><p>Best score so far against cumulative model spend, six runs from scratch. Height is digits of agreement with the best known value.</p></div>
+      <div class="segs"><span class="seglab">Spend</span><div class="seg" id="cxm"><button data-m="cost" class="on">Dollars</button><button data-m="calls">Model calls</button></div></div></div>
+    <figure class="chart" id="cost"></figure>
+    <div class="legend" id="costleg"></div>
+    <p class="cap">Hover a line for its final score and spend. Every gridline up is ten times closer to the best known value. Most of the climb happens in the first few cents; the rest of the budget buys the last digits, where improvements are rare and what the system has learned matters most.</p>
+  </div>
+</section>
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<div class="chapter" id="ch-3"><span>03</span>Which tasks</div>
+<section class="col" id="tasks">
+  <p class="lead"><b>Why not one model, one climber, or a swarm.</b> A hard problem is a long climb through a landscape the model sees only one edit at a time: most edits go down, some go off the feasible set, and local bumps stop a greedy climber. A single model sampled many times never chains steps. A single climber chains them but stops on the first bump. A swarm splits the budget and its members never learn from each other. SCiEL is built for the climb: demes explore in parallel, a policy learns which way pays, a world model screens edits before they cost an evaluation, and culture moves what one deme learned to the others.</p>
+</section>
+
+<section class="full fig-in">
+  <div class="figbar">
+    <div><h2>Four ways to search the same landscape</h2><p>Same task, same budget of 200 evaluations, run side by side. Height is the score; the glowing line is the feasible set F; the white dot is the seed and the glow is the best known value.</p></div>
+    <div class="segs">
+      
+      <button class="playb" id="mplay">Play</button>
+    </div>
+  </div>
+  <div class="figbar" style="margin-top:-10px">
+    <div class="segs"><span class="seglab">SCiEL uses</span><div class="seg chips" id="mcomp"><button data-c="policy" class="on">Policy · bandits, RL</button><button data-c="world" class="on">World model</button><button data-c="culture" class="on">Culture</button><button data-c="research" class="on">Research cells</button></div></div>
+  </div>
+  <div id="mech3d" class="three"><canvas id="cmech"></canvas><div class="ov" id="ovmech"></div></div>
+  <div class="racebar"><input class="rng" type="range" id="mT" min="0" max="200" step="1" value="200"><span class="num" id="mTv"></span></div>
+  <div class="legend"><span><i style="background:#0A84FF"></i><i style="background:#E8A33D;margin-left:-3px"></i><i style="background:#3DAE7C;margin-left:-3px"></i>demes or climbers</span><span><i class="ln" style="background:#C7C7CC"></i>accepted step</span><span>halo: proposal policy</span><span><i style="background:transparent;border:1.5px solid #98989D"></i>screened by the world model</span><span><i class="ln" style="background:#E0637F"></i>culture, adopted after a trial</span><span><i class="dash"></i>culture, rejected</span><span><i class="ln" style="background:#A66BE0"></i>research probe</span></div>
+  <div class="mcompare" id="mcompare"></div>
+  <p class="cap"><b>One call</b> samples edits of the seed independently. <b>One climber</b> keeps one line and accepts improvements. <b>Swarm</b> runs five such lines that share nothing. <b>SCiEL</b> runs five demes with a learned proposal policy (the halo around each head, stretched along recent progress), a world model that fits the local slope and screens proposals before they are evaluated (hollow rings), culture that moves a lagging deme to the leader after a trial (crimson arcs), and research cells that probe far when a line stalls (violet arcs). The bars below average 30 runs of each mode; switch components off to see what each one is worth. In this landscape research cells add little: the slope always leads somewhere.</p>
+</section>
+
+<section class="wide fig-in">
+  <div class="two">
+    <div>
+      <p class="lead" style="font-size:15px"><b>Does your task fit?</b> Three rules, checked before any compute is spent: the check is exact or survives leak probes; the headroom above the best reference exceeds 4ε; and the upper bound of π at the frontier is at least 5/B. <code>sciel task</code> measures them from your materials before any search starts.</p>
+      <details><summary>The definition in full</summary><p class="cap">A task is ⟨X, F, h, h<sup>*</sup>, M, B⟩: candidates the model writes, a feasible set, the objective the run sees and the true one, the model's edit operator, and the budget. It is read on five axes: solution space, feasible set, noise (the radius ε below which a difference is not real), the landscape for the model (π<sub>ε</sub> at the frontier) and verifiability. Because the landscape is defined by the model's operator, it moves as culture changes what the model sees.</p></details>
+    </div>
+    <div>
+      <p class="lab">What fits, in plain words</p>
+      <ol class="fits">
+        <li><b>You can check an answer you can trust.</b>Exactly, like arithmetic or a replay, or on data the search never saw, like held-out days or a held-out regime.</li>
+        <li><b>The best known answer can still be beaten.</b>There is room above it, and that room is larger than the noise in your score.</li>
+        <li><b>Progress hides behind rare long shots.</b>Most tries fail, and the ones that matter are bold guesses a single attempt would never risk. <span class="key">SCiEL makes long shots affordable</span>: a population holds them, niches keep odd ones alive, a world model screens them before they cost an evaluation, a policy learns which kinds pay, and culture spreads the rare hit.</li>
+      </ol>
+      <p class="nofit">Poor fits: puzzles solved in one shot, tasks already at their ceiling, and anything without a score you would bet on.</p>
+      <div class="skillcta"><div><b>Not sure?</b> Point <code>sciel task</code> at a folder of materials. It drafts the task, audits all three rules before any compute is spent, and repairs what it can.</div>
+        <div class="ctab"><button class="playb" id="openStart">How to run it</button><a href="https://github.com/Doldrums/sciel#quick-start">Quick start on GitHub</a></div></div>
+
+    </div>
+  </div>
+  <div class="whowrites">
+    <p class="lab" style="margin:0 0 14px">Who writes what</p>
+    <div class="ww">
+      <div><span class="who">A person</span><b>The goal and the materials</b><p>What to improve and how it is judged: a description, a paper, a notebook, data. Then approves the audit.</p></div>
+      <div><span class="who"><code>sciel task</code></span><b>The task</b><p>An exact or held-out checker, helper modules candidates may import, and a seed that runs; then the audit for leaks, noise, headroom and frontier, with fixes for what it finds.</p></div>
+      <div><span class="who">SCiEL</span><b>Everything during the run</b><p>Every program, proposal, tool, finding and decision, each logged with its probability. <span class="key">Nobody edits prompts or restarts demes by hand once it starts.</span></p></div>
+    </div>
+    <p class="cap" style="margin-top:14px">In the runs on this page the task packages, checker, seed and helper modules, were built before the run; <code>sciel task</code> builds the same parts from your materials and shows its audit before any search starts.</p>
+  </div>
+</section>
+
+<div class="gap"></div>
+<div class="runline wide"><div id="runs" style="display:none"></div><span id="runmeta"></span></div>
+<div class="gap s"></div>
+
+<div class="chapter" id="ch-4"><span>04</span>How it works</div>
+<section class="col" id="culture">
+  <p class="lead"><b>Culture is a tree with chords.</b> <span id="s-disk"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="two">
+    <div>
+      <figure class="fig relwrap" id="disk"></figure>
+      <div class="replay"><button id="play">Play</button><input type="range" id="tslider" min="0" max="1" value="1"><span class="num" id="tlabel"></span></div>
+    </div>
+    <div>
+      <p class="lab">Findings, by how far they travelled</p>
+      <div id="findings"></div>
+    </div>
+  </div>
+  <div class="legend" id="diskleg"></div>
+  <p class="cap">Sector = deme. Distance from the centre = generation. Lines join a parent to its child. Filled dot = still in the population, hollow = dropped, bigger = higher score. Crimson chord = a finding from one deme delivered to a child on another: solid if the child improved on its parent, dashed if not. The run replays on a loop; hover a program for its score and lineage.</p>
+</section>
+
+<div class="gap s"></div>
+
+<section class="col" id="culture-test">
+  <p class="lead"><b>Does culture raise the odds? A randomized test.</b> <span id="s-ct"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="two">
+    <figure class="fig" id="ctA"></figure>
+    <figure class="fig" id="ctB"></figure>
+  </div>
+  <p class="cap">First chart: probability that a step succeeds, with and without a finding from another deme in the prompt, weighted by the inverse of the logged probability of each choice. Second chart: the difference by phase of the run with 95% intervals from a bootstrap over runs, and each run's own difference as a dot, sized by its number of steps.</p>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="leaks">
+  <p class="lead"><b>From a question to a transmitted method.</b> <span id="s-funnel"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="two">
+    <div><p class="lab">From question to chord, this run</p><div class="funnel" id="funnel"></div></div>
+    
+  </div>
+  <p class="cap">Hover a stage name for what it counts. Each research cell is a standing question. A step asks the model to plan an experiment, write a tool, run it in a sandbox and conclude. A conclusion becomes a finding; a finding is shared, adopted for trials by other demes, and drawn as a chord when it reaches a child there.</p>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="swm">
+  <p class="lead"><b>A world model of the search.</b> Before the language model is called, SCiEL forecasts whether a proposed step will raise its lineage’s best. It does not model the task; it models the search itself, from the parent, the deme, the kind of edit, an embedding of the code and the run’s history so far. It starts from a pretrained tabular model, so it is useful after a few dozen steps, and refines itself with a residual network on the run’s own rows; rows inherited from earlier runs give it a head start. Like every learned part of SCiEL, <span class="key">it acts only while it earns it</span>: at each refit it must beat the base rate and the per-cell means out of fold, or it is held back.</p>
+</section>
+<section class="wide fig-in">
+  <div class="tloop">
+    <p class="lab">The world model in the loop</p>
+    <ol class="five">
+      <li><b>Describe</b>parent, deme, edit, code embedding, history</li>
+      <li><b>Prior</b>a pretrained tabular model, useful within dozens of steps</li>
+      <li class="w"><b>Refine</b>a residual network on this run’s rows, plus inherited ones</li>
+      <li><b>Gate</b>acts only if it beats simple estimates out of fold</li>
+      <li><b>Use</b>screen proposals, weigh moves, point research where it is unsure</li>
+    </ol>
+  </div>
+  <p class="cap">Its record in this run, refit by refit, is in <a class="cit" href="#controllers">the ladder of controllers</a> below.</p>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="niches">
+  <p class="lead"><b>Where the long shots live.</b> A guess that lands somewhere new is usually worse than the current best at first. If the population kept only the best, it would be evicted before anyone could build on it. So each deme is a map of niches, one elite per cell of behaviour, and <span class="key">a newcomer competes only with its own cell</span>. <span id="s-niche"></span></p>
+</section>
+<section class="full fig-in">
+  <div class="figbar">
+    <div><h2>Niches, deme by deme</h2><p>Each board is a deme's map: learned niches across, score bins back to front; a bar is the best program in its cell, taller when closer to the best known value.</p></div>
+    <div class="segs"><button class="playb" id="nplay">Pause</button><span class="num" id="nIt" style="color:var(--ink);font-size:12.5px;min-width:110px"></span></div>
+  </div>
+  <div class="nichegrid"><div id="niche3d" class="three"><canvas id="cniche"></canvas><div class="ov" id="ovniche"></div><div class="tip" id="tipniche" hidden></div></div>
+  <figure class="fig relwrap" id="vqmap"><p class="lab" style="margin:0 0 10px">The niches themselves</p></figure></div>
+  <p class="cap"><b>Boards:</b> each board is one deme. Across, the run's twelve learned niches; back to front, score bins; a bar is the best program in its cell, taller when closer to the best known value. <b>Map:</b> the same twelve niches as points: centroids of a vector-quantised codebook over a 32-dimensional embedding of the programs' code, projected onto their two main directions. A bubble's size is how many demes hold an elite there; its dots are those demes. The codebook grows and is re-fitted as the population moves, <span class="key">so a new kind of program opens a new niche instead of being thrown out</span>. Three demes were spawned during the run, aimed at regions the others had not reached. Hover a bar or a bubble for details.</p>
+</section>
+<section class="wide fig-in">
+  <p class="lab">The machinery around the population, in this run</p>
+  <div class="mach" id="mach"></div>
+</section>
+
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<div class="chapter" id="ch-5"><span>05</span>What the runs show</div>
+<section class="col" id="relief">
+  <p class="lead"><b>Relief in behaviour axes is smooth; in code axes it is not.</b> Place every program by the two behaviour metrics that track the score most closely and lift it by its distance to the best known value: the programs lie on one tilted sheet, and edits climb it in steps. Place the same programs by their code and the relief breaks into clusters of good code with valleys between them. Code similarity is a weak predictor of quality.</p>
+</section>
+<section class="full fig-in">
+  <div class="figbar">
+    <div><h2>Relief</h2><p>The same programs on four maps. Height is −log<sub>10</sub>(1 − score); the surface interpolates between programs.</p></div>
+    <div class="segs">
+      <span class="seglab">Axes</span><div class="seg" id="amode"><button data-m="disk" class="on">Culture disk</button><button data-m="code">Code</button><button data-m="landscape">Behaviour</button><button data-m="time">Time × deme</button></div>
+      <span class="seglab">Show</span><div class="seg" id="smode"><button data-m="surface" class="on">Surface</button><button data-m="contours">Contours</button><button data-m="points">Points</button></div>
+      <span class="seglab">View</span><div class="seg" id="views"><button data-v="corner" class="on">Corner</button><button data-v="front">Front</button><button data-v="side">Side</button><button data-v="top">Top</button><button data-v="low">Low</button><button data-v="orbit">Orbit</button></div>
+    </div>
+  </div>
+  <div id="map3d"><canvas id="c3d"></canvas><div id="ov3d"></div><div class="tip" id="tip3d" hidden></div></div>
+  <div class="legend" id="leg3d"></div>
+  <p class="cap"><b>Culture disk:</b> the disk above, lifted by score, so lineages become ridges. <b>Code:</b> the first two components of the programs' identifier counts; good code forms clusters with valleys between them. <b>Behaviour:</b> the two metrics the task reports that track the score most closely; the relief is one tilted sheet and edits climb it in steps. <b>Time × deme:</b> when each program was written and on which deme. Contours or the top view turn any map into a contour plot. Drag to rotate, scroll to zoom, hover a program for its score.</p>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="along-edits">
+  <p class="lead"><b>The landscape along edits.</b> Plot each child against its parent. Points above the diagonal are steps up; their share is π, the task's gradient as the model sees it. <span id="s-edits"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="two">
+    <figure class="fig" id="edits"></figure>
+    <div>
+      <p class="lab">π across runs</p>
+      <div id="pis"></div>
+      <p class="cap">Upper bar: share of all edits that beat their parent. Lower bar: the same share at the frontier, for edits whose parent is within 0.01 of the run's best. Axes on the left are distance to the best known value, so the top right is the frontier; hover a point for its scores.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<section class="col" id="controllers">
+  <p class="lead"><b>Cold, warm, hot: who steers the search, and when.</b> A run starts knowing nothing about which moves pay, and some of what it could learn takes hundreds of steps to see. So control passes through three stages, each taking over only once it has the data to do better than the stage before. <span id="s-ladder"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="tloop">
+    <ol class="three">
+      <li><b>Cold start · from step one</b>Bandits choose the operator, the parent and when to refine from recent rewards alone, with a floor so every option stays tried. Nothing to learn yet, so nothing is assumed.</li>
+      <li class="w"><b>Warm · after a few dozen steps</b>The world model joins with a pretrained prior and the run’s own rows. It forecasts which steps will pay and screens the rest, but only while it beats the simple estimates out of fold.</li>
+      <li><b>Hot · a few hundred steps, or inherited</b>The RL step policy learns from the whole population’s logged decisions. A run that inherits rows and a policy from an earlier one starts here, which is the hot start.</li>
+    </ol>
+  </div>
+  <figure class="chart fig-in" id="ladder"></figure>
+  <div class="legend"><span><i style="background:#48484D"></i>bandits plan the step</span><span><i style="background:#0A84FF"></i>world model plans</span><span><i style="background:#3DAE7C"></i>RL policy plans</span><span><i class="ln" style="background:#0A84FF"></i>world model error</span><span><i class="ln" style="background:#98989D"></i>simple estimate</span></div>
+  <p class="cap">Top: who planned each step of this run. Bottom: how well the world model forecasts at each refit, against the best simple estimate; lower is better. A filled marker means it passed the check and steers; a hollow one means it was held back.</p>
+</section>
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<section class="col" id="records">
+  <p class="lead"><b>Records come in steps.</b> <span id="s-steps"></span></p>
+</section>
+<section class="wide fig-in">
+  <div class="chart" id="chart"></div>
+  <div class="legend" id="chartleg"></div>
+  <p class="cap"><b>Best score by deme</b>, on the same log scale as the relief. Each line is the best program a deme holds; the white line is the population.</p>
+</section>
+<section class="wide fig-in">
+  <div class="split">
+    <div>
+      <p class="lab">Attempts that moved the record · click a row for its diff</p>
+      <div class="scroll"><table><thead><tr><th>Attempt</th><th>Score</th><th>Move</th><th class="ideah">The bet</th></tr></thead><tbody id="recs"></tbody></table></div>
+      <p class="cap" id="demonote"></p>
+    </div>
+    <div class="panel"><p class="dtitle" id="dtitle"></p><pre class="diff" id="diff"></pre></div>
+  </div>
+</section>
+
+<div class="gap"></div><hr><div class="gap"></div>
+
+<div class="chapter" id="ch-6"><span>06</span>Outlook</div>
+<section class="col" id="runs-all">
+  <p class="lead"><b>Generations and second order.</b> First order: a generation that inherits the vetted repertoire of the last one should improve faster than one that starts from scratch. Second order: the procedures that create culture, when to open research, how to share, what to keep, should themselves improve across generations. Below, <a class="xp" href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">six first-generation runs</a> from scratch.</p>
+</section>
+<section class="wide fig-in">
+  <div class="multi" id="multi"></div>
+  <div class="legend"><span><i class="ln" style="background:#F5F5F7"></i>best so far</span><span><i style="background:#0A84FF"></i>diff</span><span><i style="background:#E8A33D"></i>rewrite</span><span><i style="background:#3DAE7C"></i>cross</span><span><i style="background:#A66BE0"></i>idea</span><span>each dot is one attempt</span></div>
+  <div class="pending"><b>Next: the ratchet.</b> Same tasks, generations 1 → 2 → 3, each starting from the repertoire the previous one exported, against matched runs from scratch at equal cost: evaluations to threshold and π at the frontier by generation, and, for second order, the procedures of each generation against the last.</div>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="weights">
+  <p class="lead"><b>Culture into weights: SCiEL with DeltaServe.</b> Everything above leaves the model untouched; culture lives in the prompts, tools and policies around it. The deepest tier of consolidation is the model itself: episode, claim, method, procedure, and finally weights. DeltaServe <a class="cit" href="#ref-13">[13]</a> trains and serves LoRA adapters inside the same inference engine on one GPU, hot-swapping them by name, so a run can learn while it searches.</p>
+  <p class="lead">Training a model on its own search usually goes wrong in two ways: it learns from its own samples and collapses onto a few programs, or it learns from noisy wins. SCiEL is built to supply better data. <span class="key">Every step comes with a logged probability</span>, so the training set can be reweighted for the policy that produced it, as in off-policy RL. The world model marks which transitions were genuinely informative. Niches and demes keep many kinds of program alive over long runs, so the adapter sees many routes to the frontier instead of one. And the data is transitions from a weaker parent to a stronger child that held up under re-measurement, not the best programs themselves.</p>
+  <p class="lead"><span class="key">An adapter does not replace the generator.</span> It is one more randomized arm, adopted only through the same trial at the recipient as any other piece of culture, so the base model keeps proposing and its diversity is not traded away.</p>
+  <p class="soon"><span></span>This line is under way and reported separately.</p>
+</section>
+<section class="wide fig-in">
+  <div class="tiers">
+    <p class="lab">Tiers of consolidation</p>
+    <ol>
+      <li><b>Episode</b>one attempt and its outcome</li>
+      <li><b>Claim</b>a finding with its measured effect</li>
+      <li><b>Method</b>a tool that worked</li>
+      <li><b>Procedure</b>how the next run searches</li>
+      <li class="w"><b>Weights</b>a LoRA adapter</li>
+    </ol>
+    <div class="tscale"><span>around the model · inherited by the next run</span><span>in the model</span></div>
+  </div>
+  <div class="tloop">
+    <p class="lab">The loop with DeltaServe</p>
+    <ol>
+      <li><b>Run</b>every transition is logged</li>
+      <li><b>Select</b>weaker parent → stronger child</li>
+      <li class="w"><b>Train</b>a LoRA adapter, while the engine keeps serving</li>
+      <li><b>Trial</b>one more randomized arm, kept if it wins</li>
+    </ol>
+    <p class="tback">↺ an adopted adapter serves the next proposals</p>
+  </div>
+  <p class="cap">Culture consolidates in tiers, each slower and more durable than the last. The first four live around the model and are inherited by the next run; the fifth changes the model itself. DeltaServe trains a LoRA adapter on transitions from weaker to stronger programs while the same engine keeps serving, and the adapter joins the search as one more randomized arm, adopted only if it passes the trial at the recipient.</p>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="related">
+  <p class="lead"><b>How this differs from other self-improving systems.</b> Recent systems that claim RSI change their own code, prompts or weights. They differ mainly in what they change, how a change is accepted and how its effect is measured. The last column says where SCiEL stands relative to each.</p>
+</section>
+<section class="wide fig-in">
+  <table class="stack rel"><thead><tr><th>System</th><th>What improves</th><th>How a change is accepted</th><th>How SCiEL relates</th></tr></thead><tbody>
+    <tr><td><b>MASS</b> <a class="cit" href="#ref-5">[5]</a></td><td>model weights, from its own team's best trajectories</td><td>a training round</td><td class="muted">complementary: SCiEL improves between training rounds, and consolidates into weights only through the same trial as any other culture</td></tr>
+    <tr><td><b>AIDE²</b> <a class="cit" href="#ref-6">[6]</a></td><td>its own pipeline</td><td>greedy</td><td class="muted">a change is kept after a trial at the recipient, with its effect estimated from randomized logs</td></tr>
+    <tr><td><b>DGM · SICA · HGM</b> <a class="cit" href="#ref-7">[7</a>, <a class="cit" href="#ref-8">8</a>, <a class="cit" href="#ref-9">9]</a></td><td>its own code</td><td>benchmark score</td><td class="muted">changes the repertoire around the model rather than its own code, and is judged on new problems in the Empira arena</td></tr>
+    <tr><td><b>Hyperagents</b> <a class="cit" href="#ref-10">[10]</a></td><td>the improver</td><td>fixed-k</td><td class="muted">compounding is measured as an effect: culture is delivered at random, so its contribution can be estimated</td></tr>
+    <tr><td><b>MetaRSI</b> <a class="cit" href="#ref-11">[11]</a></td><td>the improver of the improver</td><td>meta-level search</td><td class="muted">every self-change is paid from the run’s own budget and logged with it</td></tr>
+    <tr><td><b>TTT-Discover · ThetaEvolve</b> <a class="cit" href="#ref-4">[4</a>, <a class="cit" href="#ref-12">12]</a></td><td>model weights during the run</td><td>RL reward</td><td class="muted">uses an open model as it is; weights change only as one optional, randomized arm</td></tr>
+    <tr><td><b>SCiEL</b></td><td>methods, claims, world model, policy, procedures</td><td>trial at the recipient, on randomized logs</td><td>this page</td></tr>
+  </tbody></table>
+</section>
+
+<div class="gap"></div>
+
+<section class="col" id="limits">
+  <p class="lead"><b>Open questions.</b> <span id="s-limits"></span></p>
+</section>
+
+<div class="gap"></div><hr><div class="gap s"></div>
+
+<section class="col" id="refs">
+  <p class="lab">References</p>
+  <ol class="refs">
+    <li id="ref-1">OpenEvolve: an open-source evolutionary coding agent. 2025. <a href="https://github.com/codelion/openevolve">github.com/codelion/openevolve</a></li>
+    <li id="ref-2">ShinkaEvolve: towards open-ended and sample-efficient program evolution. 2025. <a href="https://arxiv.org/abs/2509.19349">arXiv:2509.19349</a></li>
+    <li id="ref-3">AlphaEvolve: a coding agent for scientific and algorithmic discovery. 2025. <a href="https://arxiv.org/abs/2506.13131">arXiv:2506.13131</a></li>
+    <li id="ref-4">Learning to discover at test time. 2026. <a href="https://arxiv.org/abs/2601.16175">arXiv:2601.16175</a></li>
+    <li id="ref-5">MASS: recursive self-improvement through multi-agent self-supervision. 2026. <a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a></li>
+    <li id="ref-6">Recursive self-improvement of AI research agents (AIDE²). 2026. <a href="https://arxiv.org/abs/2609.26457">arXiv:2609.26457</a></li>
+    <li id="ref-7">Darwin Gödel Machine: open-ended evolution of self-improving agents. 2025. <a href="https://arxiv.org/abs/2505.22954">arXiv:2505.22954</a></li>
+    <li id="ref-8">A self-improving coding agent. 2025. <a href="https://arxiv.org/abs/2504.15228">arXiv:2504.15228</a></li>
+    <li id="ref-9">Huxley-Gödel Machine: human-level coding agent development by an approximation of the optimal self-improving machine. 2025. <a href="https://arxiv.org/abs/2510.21614">arXiv:2510.21614</a></li>
+    <li id="ref-10">Hyperagents. 2026. <a href="https://arxiv.org/abs/2603.19461">arXiv:2603.19461</a></li>
+    <li id="ref-11">MetaRSI / RSI²: a meta-recursive self-improving system for recursive self-improving systems themselves. 2026. <a href="https://arxiv.org/abs/2609.06396">arXiv:2609.06396</a></li>
+    <li id="ref-12">ThetaEvolve: test-time learning on open problems. 2025. <a href="https://arxiv.org/abs/2511.23473">arXiv:2511.23473</a></li>
+    <li id="ref-13">DeltaServe: host-agnostic co-serving of inference and fine-tuning for LLMs. 2026. <a href="https://arxiv.org/abs/2607.28848">arXiv:2607.28848</a></li>
+    <li id="ref-14">R. V. Yampolskiy. From seed AI to technological singularity via recursively self-improving software. 2015. <a href="https://arxiv.org/abs/1502.06512">arXiv:1502.06512</a></li>
+    <li id="ref-15">J. Henrich. The Secret of Our Success: How Culture Is Driving Human Evolution. Princeton University Press, 2016.</li>
+    <li id="ref-16">B. Levitt and J. G. March. Organizational learning. Annual Review of Sociology, 1988.</li>
+    <li id="ref-17">N. J. Nersessian. How do engineering scientists think? Model-based simulation in biomedical engineering research laboratories. Topics in Cognitive Science, 2009.</li>
+    <li id="ref-18">W. B. Arthur. The structure of invention. Research Policy, 2007.</li>
+    <li id="ref-19">A. Mesoudi and A. Thornton. What is cumulative cultural evolution? Proceedings of the Royal Society B, 2018.</li>
+  </ol>
+</section>
+
+<div class="gap s"></div>
+
+<section class="col" id="bib">
+  <p class="lab">Cite</p>
+<pre class="bib">@misc{cpil2026sciel,
+  title  = {Let Them Get Better at Getting Better:
+            Recursive Self-Improvement through Cultural Transmission},
+  author = {<!--BIBAUTHORS-->},
+  year   = {2026},
+  url    = {https://github.com/Doldrums/sciel}
+}</pre>
+</section>
+
+<footer class="col">Figures are drawn from SCiEL runs with Qwen3.8-27B served locally, folded with the same code as the run viewer (<code>sciel web</code>); the runs are in the <a class="xp" href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a>. Demes are called islands in the code and in the viewer. Research ongoing; the preprint is in progress.</footer>
