@@ -138,8 +138,8 @@ export async function mount(): Promise<void> {
     g.add(l);
     return l;
   }
-  const LOW = new THREE.Color("#0B1626");
-  const HIGH = new THREE.Color("#5AB0FF");
+  const LOW = new THREE.Color("#F1F3F7");
+  const HIGH = new THREE.Color("#2F5597");
 
   function build() {
     if (!run) return;
@@ -235,7 +235,7 @@ export async function mount(): Promise<void> {
     if (smode === "contours") {
       const cl: number[] = [];
       const cc2: number[] = [];
-      const CONTOUR = new THREE.Color("#9AD0FF");
+      const CONTOUR = new THREE.Color("#6F8FBF");
       for (let lv = Math.ceil(dlo * 4) / 4; lv < dhi; lv += 0.25) {
         const tc = Math.max(0, Math.min(1, (lv - dlo) / (dhi - dlo)));
         const ccol = LOW.clone().lerp(CONTOUR, 0.25 + 0.75 * tc);
@@ -334,7 +334,7 @@ export async function mount(): Promise<void> {
         0.85,
       );
     for (const id of chainIds) {
-      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glow, transparent: true, opacity: 0.35, depthWrite: false }));
+      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glow, color: recCol, transparent: true, opacity: 0.18, depthWrite: false }));
       s.position.copy(pmap[id]);
       s.scale.set(3, 3, 1);
       grp.add(s);

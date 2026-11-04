@@ -6,7 +6,7 @@ import { C, OP_COLORS, el, esc, f4, opName } from "../lib/core";
 import { loadDemo, loadOverview, type Demo, type Overview } from "../lib/data";
 import { ARENA_URL, runName, sortRuns } from "../data/names";
 
-const opColor = (op: string) => OP_COLORS[op] || "#8E8E93";
+const opColor = (op: string) => OP_COLORS[op] || "#8C8C8C";
 
 function demo(M: Demo): void {
   if (!M || !M.steps.length) return;

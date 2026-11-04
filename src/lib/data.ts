@@ -2,6 +2,7 @@
 // Every loader is memoised: the first call fetches, later calls share the same promise.
 
 import type { TaskKey } from "../data/names";
+import { legacyColor } from "./core";
 
 /**
  * One program in a run:
@@ -162,6 +163,7 @@ export function loadRun(id: string): Promise<Run> {
     p = Promise.all([loadOverview(), getJSON<RunDetail>(`data/runs/${id}.json`)]).then(([o, d]) => {
       const s = o.runs[id];
       if (!s) throw new Error(`run ${id} missing from overview.json`);
+      for (const i of d.disk) if (typeof i.c === "string") i.c = legacyColor(i.c);
       return { id, ...s, ...d };
     });
     runCache.set(id, p);

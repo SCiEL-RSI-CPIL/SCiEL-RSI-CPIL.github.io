@@ -215,9 +215,6 @@ pre.diff {
   line-height: 1.5;
   pointer-events: none;
 }
-.stage .tip {
-  background: #111113;
-}
 .tip[hidden] {
   display: none;
 }
@@ -364,7 +361,7 @@ pre.diff {
   translate: -50% -100%;
   font-size: 11.5px;
   font-weight: 600;
-  text-shadow: 0 0 6px #000, 0 0 3px #000;
+  text-shadow: 0 0 5px #fff, 0 0 2px #fff, 0 0 1px #fff;
 }
 .l3.mlab.sm {
   font-size: 10.5px;
@@ -376,7 +373,7 @@ pre.diff {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(255, 255, 255, 0.88);
   border: 1px solid;
   backdrop-filter: blur(6px);
 }

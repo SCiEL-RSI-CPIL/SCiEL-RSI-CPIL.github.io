@@ -15,20 +15,20 @@ export const C = {
   soft: "var(--fig-soft)", // #1C1C1E  faint gridlines, fills
   rule: "var(--fig-rule)", // #2C2C2E  gridlines, rings, borders
   ruleStrong: "var(--fig-rule-strong)", // #48484D
-  faint: "var(--fig-faint)", // #636366 / #8E8E93  de-emphasised marks
+  faint: "var(--fig-faint)", // #636366 / #8C8C8C  de-emphasised marks
   muted: "var(--fig-muted)", // #98989D  axis labels, secondary text
   ink2: "var(--fig-ink2)", // #C7C7CC  body text inside figures
   ink: "var(--fig-ink)", // #F5F5F7  primary text / bright marks
-  accent: "var(--fig-accent)", // #0A84FF
-  chord: "var(--fig-chord)", // #E0637F  a finding passed between demes
-  up: "var(--fig-up)", // #3DAE7C
+  accent: "var(--fig-accent)", // #3A6EA5
+  chord: "var(--fig-chord)", // #A63D3D  a finding passed between demes
+  up: "var(--fig-up)", // #3F8F5C
   down: "var(--fig-down)", // #E5484D
-  warn: "var(--fig-warn)", // #E8A33D
+  warn: "var(--fig-warn)", // #D0702F
 } as const;
 
 /**
  * Resolve a `var(--x)` token (or any CSS colour) to a concrete colour string, for canvas/WebGL.
- * WebGL figures sit in a `.stage` (always dark: additive glows need a dark ground), so tokens
+ * WebGL figures sit in a `.stage` (white, framed), so tokens
  * resolve against the first stage on the page unless an element is given.
  */
 export function cssColor(token: string, el?: Element): string {
@@ -39,7 +39,19 @@ export function cssColor(token: string, el?: Element): string {
 }
 
 /** Deme colours, indexed by 0-based deme. */
-export const DEME_COLORS = ["#E8A33D", "#3DAE7C", "#0A84FF", "#A66BE0", "#2BB3C0", "#D67AB1", "#D1B23F", "#4F7BE8"];
+export const DEME_COLORS = ["#D0702F", "#3A6EA5", "#B08A20", "#6E5BB5", "#3F8F5C", "#A63D3D", "#1A9BB5", "#B5547F"];
+/**
+ * Run data (public/data/runs/*.json) carries the original, more saturated colours baked into the
+ * culture-disk drawing. Map them onto the current palette when a run is loaded.
+ */
+const LEGACY_COLORS: Record<string, string> = {
+  "#E8A33D": DEME_COLORS[0], "#3DAE7C": DEME_COLORS[1], "#0A84FF": DEME_COLORS[2], "#A66BE0": DEME_COLORS[3],
+  "#2BB3C0": DEME_COLORS[4], "#D67AB1": DEME_COLORS[5], "#D1B23F": DEME_COLORS[6], "#4F7BE8": DEME_COLORS[7],
+  "#E0637F": "#A63D3D", "#98989D": "#8C8C8C", "#2C2C2E": "#E2E2DF", "#E8E8EA": "#1A1A1A",
+};
+export function legacyColor(c: string): string {
+  return LEGACY_COLORS[c.toUpperCase()] || c;
+}
 export function demeColor(i: number | null | undefined): string {
   return DEME_COLORS[(i || 0) % DEME_COLORS.length];
 }
@@ -55,11 +67,11 @@ export const OP_NAMES: Record<string, string> = {
   seed: "seed",
 };
 export const OP_COLORS: Record<string, string> = {
-  diff: "#0A84FF",
-  full_rewrite: "#E8A33D",
-  cross: "#3DAE7C",
-  idea: "#A66BE0",
-  seed: "#8E8E93",
+  diff: "#3A6EA5",
+  full_rewrite: "#D0702F",
+  cross: "#3F8F5C",
+  idea: "#6E5BB5",
+  seed: "#8C8C8C",
 };
 export function opName(op: string | null | undefined): string {
   return op ? OP_NAMES[op] || op : "";

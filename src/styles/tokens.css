@@ -21,13 +21,13 @@
   --muted: #5c5c63;
   --rule: #e3e3e0;
   --rule-strong: #c9c9c5;
-  --accent: #1f5fd1;
+  --accent: #2f5597;
   --accent-ink: #ffffff;
-  --accent-soft: rgba(31, 95, 209, 0.08);
-  --mark: rgba(31, 95, 209, 0.13);
-  --chord: #d6336c;
-  --up: #2b8a5e;
-  --down: #c9373c;
+  --accent-soft: rgba(47, 85, 151, 0.07);
+  --mark: rgba(47, 85, 151, 0.12);
+  --chord: #a63d3d;
+  --up: #3f8a52;
+  --down: #b8423f;
   --warn: #b7711a;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
 
@@ -40,32 +40,15 @@
   --fig-muted: #6b6b72;
   --fig-ink2: #1a1a1a;
   --fig-ink: #000000;
-  --fig-accent: #0a84ff;
-  --fig-chord: #e0637f;
-  --fig-up: #2f9e6e;
-  --fig-down: #d6404a;
-  --fig-warn: #d08a1f;
+  --fig-accent: #3a6ea5;
+  --fig-chord: #a63d3d;
+  --fig-up: #3f8f5c;
+  --fig-down: #b8423f;
+  --fig-warn: #d0702f;
 }
 
-/* WebGL figures always sit on a dark stage: their glows use additive blending. */
+/* WebGL figures sit in a .stage: same white ground, a hairline frame. */
 .stage {
-  --fig-bg: #050506;
-  --fig-panel: #0b0b0c;
-  --fig-soft: #1c1c1e;
-  --fig-rule: #2c2c2e;
-  --fig-rule-strong: #48484d;
-  --fig-faint: #636366;
-  --fig-muted: #98989d;
-  --fig-ink2: #c7c7cc;
-  --fig-ink: #f5f5f7;
-  --fig-chord: #e0637f;
-  --fig-up: #3dae7c;
-  --fig-down: #e5484d;
-  --fig-warn: #e8a33d;
-  --ink: #f5f5f7;
-  --muted: #98989d;
-  --rule: #2c2c2e;
-  color: var(--fig-ink);
   background: var(--fig-bg);
-  color-scheme: dark;
+  border: 1px solid var(--rule);
 }

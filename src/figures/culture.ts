@@ -160,7 +160,7 @@ function funnel(r: Run): void {
     ["cells opened", x.cells, C.ruleStrong],
     ["experiments planned", x.decisions, C.ruleStrong],
     ["tools written", ac.create || 0, C.accent],
-    ["concluded supported or refuted", verdicts, "#A66BE0"],
+    ["concluded supported or refuted", verdicts, "#6E5BB5"],
     ["findings shared", ph.sharing_completed || 0, C.up],
     ["adopted for trials", st.adopted_for_trials || 0, C.up],
     ["reached a child on another deme", r.transfers.length, C.chord],

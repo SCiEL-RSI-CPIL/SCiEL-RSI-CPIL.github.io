@@ -95,15 +95,15 @@ export async function mount(): Promise<void> {
         const line = new THREE.Line(
           new THREE.BufferGeometry().setFromPoints(arc(e.from, e.p, 7, 30)),
           e.acc
-            ? new THREE.LineBasicMaterial({ color: 0xe0637f })
-            : new THREE.LineDashedMaterial({ color: 0xe0637f, dashSize: 0.7, gapSize: 0.6, transparent: true, opacity: 0.7 }),
+            ? new THREE.LineBasicMaterial({ color: 0xa63d3d })
+            : new THREE.LineDashedMaterial({ color: 0xa63d3d, dashSize: 0.7, gapSize: 0.6, transparent: true, opacity: 0.7 }),
         );
         if (!e.acc) line.computeLineDistances();
         obj = line;
       } else if (e.k === "jump") {
         const line = new THREE.Line(
           new THREE.BufferGeometry().setFromPoints(arc(e.from, e.p, 5, 24)),
-          new THREE.LineDashedMaterial({ color: 0xa66be0, dashSize: 0.5, gapSize: 0.4 }),
+          new THREE.LineDashedMaterial({ color: 0x6e5bb5, dashSize: 0.5, gapSize: 0.4 }),
         );
         line.computeLineDistances();
         obj = line;
@@ -354,7 +354,7 @@ export async function mount(): Promise<void> {
       }
       const m = s / 30;
       const isS = name === "SCiEL";
-      const bar = mode === "sciel" ? (isS ? "#0A84FF" : "rgba(10,132,255,.45)") : C.ruleStrong;
+      const bar = mode === "sciel" ? (isS ? "#3A6EA5" : "rgba(58,110,165,.45)") : C.ruleStrong;
       out +=
         `<span class="s" style="${isS ? "color:var(--ink);font-weight:600" : ""}">${name}</span>` +
         `<div class="b"><i style="width:${m * 100}%;background:${bar}"></i></div>` +

@@ -122,15 +122,7 @@ export function codeSvg(r: Run, W: number, H: number): string {
 
   let s =
     `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Code map">` +
-    `<defs><radialGradient id="bl"><stop offset="0" style="stop-color:${C.accent}" stop-opacity="1"/><stop offset="1" style="stop-color:${C.accent}" stop-opacity="0"/></radialGradient></defs>` +
     `<rect x="${L}" y="${T}" width="${W - L - Rr}" height="${H - T - B}" style="fill:${C.panel};stroke:${C.rule}"/>`;
-  // A soft glow under each scored program, brighter for better scores.
-  for (const id of ids) {
-    const p = by.get(id);
-    if (!p || p[4] == null) continue;
-    const op = 0.05 + 0.3 * Math.pow((p[4] - lo) / (hi - lo || 1), 3);
-    s += `<circle cx="${X(c[id][0]).toFixed(1)}" cy="${Y(c[id][1]).toFixed(1)}" r="${W * 0.045}" fill="url(#bl)" opacity="${op.toFixed(3)}"/>`;
-  }
   for (const id of ids) {
     const p = by.get(id);
     const q = p && p[1] ? c[p[1]] : undefined;

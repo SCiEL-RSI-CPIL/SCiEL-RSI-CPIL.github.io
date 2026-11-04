@@ -23,7 +23,7 @@ export interface Spherical {
   r: number;
 }
 
-export const MCOL0 = ["#0A84FF", "#E8A33D", "#3DAE7C", "#E0637F", "#A66BE0"];
+export const MCOL0 = ["#3A6EA5", "#D0702F", "#3F8F5C", "#A63D3D", "#6E5BB5"];
 export const MODES: [Mode, string][] = [
   ["bestn", "One call · best of N"],
   ["climber", "One climber"],
@@ -114,9 +114,9 @@ export function mechanismScene(WD: World) {
   const col: number[] = [];
   const ix: number[] = [];
   const vals: number[] = [];
-  const LOW = new THREE.Color("#0A1828");
-  const HIGH = new THREE.Color("#7CC0FF");
-  const OFF = new THREE.Color("#121214");
+  const LOW = new THREE.Color("#F1F3F7");
+  const HIGH = new THREE.Color("#2F5597");
+  const OFF = new THREE.Color("#E4E4E2");
   for (let j = 0; j <= N; j++)
     for (let i = 0; i <= N; i++) {
       const x = -1 + (2 * i) / N;
@@ -174,13 +174,13 @@ export function mechanismScene(WD: World) {
     g.setAttribute("position", new THREE.Float32BufferAttribute(out, 3));
     sc.add(new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color, transparent: true, opacity: op })));
   }
-  for (const lv of [0.2, 0.4, 0.6, 0.8]) march((k) => vals[k], lv, Hh(lv) + 0.08, 0x9ad0ff, 0.28);
-  march((k) => (vals[k] >= 0 ? 1 : 0), 0.5, 0.25, 0x64d2ff, 0.95);
+  for (const lv of [0.2, 0.4, 0.6, 0.8]) march((k) => vals[k], lv, Hh(lv) + 0.08, 0x6f8fbf, 0.28);
+  march((k) => (vals[k] >= 0 ? 1 : 0), 0.5, 0.25, 0x1a9bb5, 0.95);
 
   const glowT = glowTexture();
   const discT = discTexture();
   const ringT = ringTexture();
-  const sm = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowT, transparent: true, opacity: 0.75, depthWrite: false }));
+  const sm = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowT, color: new THREE.Color(cssColor(C.ink)), transparent: true, opacity: 0.15, depthWrite: false }));
   sm.position.copy(at(WD.summit, 0.8));
   sm.scale.set(11, 11, 1);
   sc.add(sm);
@@ -195,10 +195,10 @@ export function mechanismScene(WD: World) {
     mlab(pi, "seed", "mlab", C.ink2).p.copy(at(WD.seed, 3));
     mlab(pi, "best known", "mlab", C.ink).p.copy(at(WD.summit, 5));
   }
-  mlab(0, "feasible set F", "mlab land", "#64D2FF").p.copy(at([-0.9, 0.62], 1.5));
-  mlab(0, "constraint: no solutions here", "mlab land", "#64D2FF").p.copy(new THREE.Vector3(X(0.08), 1.6, Z(0.1)));
-  mlab(0, "local bump: a trap", "mlab land", "#9AD0FF").p.copy(at([0.02, -0.4], 2.4));
-  mlab(0, "narrow ridge to the summit", "mlab land", "#9AD0FF").p.copy(at([0.6, 0.52], 2.6));
+  mlab(0, "feasible set F", "mlab land", "#1A9BB5").p.copy(at([-0.9, 0.62], 1.5));
+  mlab(0, "constraint: no solutions here", "mlab land", "#1A9BB5").p.copy(new THREE.Vector3(X(0.08), 1.6, Z(0.1)));
+  mlab(0, "local bump: a trap", "mlab land", "#6F8FBF").p.copy(at([0.02, -0.4], 2.4));
+  mlab(0, "narrow ridge to the summit", "mlab land", "#6F8FBF").p.copy(at([0.6, 0.52], 2.6));
   const heads5 = [0, 1, 2, 3, 4];
   const DL = {
     bestn: { best: mlab(0, "best sample", "mlab", C.ink) },
@@ -206,9 +206,9 @@ export function mechanismScene(WD: World) {
     swarm: { heads: heads5.map((i) => mlab(2, `climber ${i + 1}`, "mlab sm", MCOL0[i])) },
     sciel: {
       heads: heads5.map((i) => mlab(3, demeName(i), "mlab sm", MCOL0[i])),
-      chord: mlab(3, "culture: moved to the leader", "mlab", "#E0637F"),
+      chord: mlab(3, "culture: moved to the leader", "mlab", "#A63D3D"),
       screen: mlab(3, "screened before evaluation", "mlab opt", C.muted),
-      jump: mlab(3, "research probe", "mlab", "#C9A6F0"),
+      jump: mlab(3, "research probe", "mlab", "#6E5BB5"),
       policy: mlab(3, "policy: where to propose next", "mlab opt", C.ink2),
     },
   };

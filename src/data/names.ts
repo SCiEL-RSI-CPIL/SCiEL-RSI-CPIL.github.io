@@ -23,12 +23,12 @@ export interface RunMeta {
 // Ranked within each task by final score:
 // autocorrelation 0.99945 > 0.99823 > 0.99766; circle packing 1.00012 > 0.99973 > 0.99852.
 export const RUNS: RunMeta[] = [
-  { id: "4188325b", task: "autocorrelation", letter: "A", color: "#0A84FF" },
-  { id: "8e06385e", task: "autocorrelation", letter: "B", color: "#4F7BE8" },
-  { id: "bfd1c068", task: "autocorrelation", letter: "C", color: "#64D2FF" },
-  { id: "aa8fed08", task: "circles", letter: "A", color: "#E8A33D" },
-  { id: "dc9726aa", task: "circles", letter: "B", color: "#D1B23F" },
-  { id: "560bd98d", task: "circles", letter: "C", color: "#E0637F" },
+  { id: "4188325b", task: "autocorrelation", letter: "A", color: "#3A6EA5" },
+  { id: "8e06385e", task: "autocorrelation", letter: "B", color: "#6E5BB5" },
+  { id: "bfd1c068", task: "autocorrelation", letter: "C", color: "#1A9BB5" },
+  { id: "aa8fed08", task: "circles", letter: "A", color: "#D0702F" },
+  { id: "dc9726aa", task: "circles", letter: "B", color: "#B08A20" },
+  { id: "560bd98d", task: "circles", letter: "C", color: "#A63D3D" },
 ];
 
 const byId = new Map(RUNS.map((r) => [r.id, r]));
