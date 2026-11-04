@@ -3,7 +3,7 @@
 
 import { C, demeColor, el, esc, f4 } from "../lib/core";
 import { loadOverview, loadRun, programsById, type Run } from "../lib/data";
-import { chordLabel, hover } from "../lib/tooltip";
+import { hover } from "../lib/tooltip";
 import { demeName } from "../data/names";
 import { demeIndexOfLabel, diskModel, geodesic, type Pt } from "./disk-model";
 
@@ -55,7 +55,7 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     if (!shown(c.to)) continue;
     const mark = c.rose && !labelled;
     s.push(
-      `<path${mark ? ' data-chord="1"' : ""} d="${path(geodesic(m.pos[c.from], m.pos[c.to], 40))}" fill="none" style="stroke:${C.chord}" stroke-width="2"${c.rose ? "" : ' stroke-dasharray="5 5"'}/>`,
+      `<path${mark ? ' data-chord="1"' : ""} d="${path(geodesic(m.pos[c.from], m.pos[c.to], 40))}" fill="none" style="stroke:${C.chord}" stroke-width="1.5"${c.rose ? "" : ' stroke-dasharray="5 5"'}/>`,
     );
     if (mark) labelled = true;
   }
@@ -149,7 +149,6 @@ export async function mount(): Promise<void> {
   const r = await loadRun(o.order[0]);
   const disk = el("heroDisk");
   disk.innerHTML = diskSvg(r, 640);
-  chordLabel(disk);
   hover(disk, r);
   brushLineage(el("hero"), r);
   // Numbers in the "how to read it" key.

@@ -26,17 +26,17 @@ function landscape(W: World): string {
   const g = cv.getContext("2d");
   if (!g) return "";
   const img = g.createImageData(N, N);
-  const lo = [247, 248, 251];
-  const hi = [118, 148, 196];
+  const lo = [250, 250, 251];
+  const hi = [150, 172, 205];
   for (let j = 0; j < N; j++) {
     for (let i = 0; i < N; i++) {
       const x = -1 + (2 * (i + 0.5)) / N;
       const y = 1 - (2 * (j + 0.5)) / N;
       const k = 4 * (j * N + i);
       let rgb: number[];
-      if (!W.feasible(x, y)) rgb = [232, 232, 229];
+      if (!W.feasible(x, y)) rgb = [238, 238, 236];
       else {
-        const band = Math.min(1, Math.floor(W.f(x, y) * 8) / 8);
+        const band = Math.min(1, Math.floor(W.f(x, y) * 6) / 6);
         rgb = lo.map((a, c) => Math.round(a + (hi[c] - a) * band));
       }
       img.data[k] = rgb[0];
@@ -75,28 +75,27 @@ function marks(mode: Mode, evs: SearchEvent[], t: number): { svg: string; best: 
     const col = DEME_COLORS[e.i % DEME_COLORS.length];
     if (e.k === "screen") continue;
     if (mode === "bestn") {
-      dots.push(`<circle cx="${X(e.p)}" cy="${Y(e.p)}" r="2" fill="${col}" opacity=".45"/>`);
+      dots.push(`<circle cx="${X(e.p)}" cy="${Y(e.p)}" r="1.8" fill="${col}" opacity=".4"/>`);
       continue;
     }
     if (e.acc) {
       const stroke =
         e.k === "chord"
-          ? `style="stroke:${C.chord}" stroke-width="2.2"`
+          ? `style="stroke:${C.chord}" stroke-width="1.8"`
           : e.k === "jump"
             ? `style="stroke:${C.ink2}" stroke-width="1.4" stroke-dasharray="3 3"`
-            : `stroke="${col}" stroke-width="1.8"`;
+            : `stroke="${col}" stroke-width="1.4"`;
       lines.push(`<line x1="${X(e.from)}" y1="${Y(e.from)}" x2="${X(e.p)}" y2="${Y(e.p)}" ${stroke} stroke-linecap="round"/>`);
       head[e.i] = e.p;
     } else {
-      dots.push(`<circle cx="${X(e.p)}" cy="${Y(e.p)}" r="1.6" style="fill:${C.muted}" opacity=".35"/>`);
     }
   }
   let heads = "";
   if (mode === "bestn") {
-    if (bestP) heads = `<circle cx="${X(bestP)}" cy="${Y(bestP)}" r="5" fill="${DEME_COLORS[0]}" stroke="#fff" stroke-width="1.5"/>`;
+    if (bestP) heads = `<circle cx="${X(bestP)}" cy="${Y(bestP)}" r="4" fill="${DEME_COLORS[0]}" stroke="#fff" stroke-width="1.2"/>`;
   } else {
     for (const [i, p] of Object.entries(head)) {
-      heads += `<circle cx="${X(p)}" cy="${Y(p)}" r="5" fill="${DEME_COLORS[+i % DEME_COLORS.length]}" stroke="#fff" stroke-width="1.5"/>`;
+      heads += `<circle cx="${X(p)}" cy="${Y(p)}" r="4" fill="${DEME_COLORS[+i % DEME_COLORS.length]}" stroke="#fff" stroke-width="1.2"/>`;
     }
   }
   return { svg: dots.join("") + lines.join("") + heads, best };

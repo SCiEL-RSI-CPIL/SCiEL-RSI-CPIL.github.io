@@ -65,25 +65,3 @@ export function hover(fig: HTMLElement, r: Run): void {
   };
 }
 
-/** Label the first chord path (path[data-chord]) in a figure, along its midpoint. */
-export function chordLabel(fig: Element): void {
-  const pth = fig.querySelector<SVGPathElement>("path[data-chord]");
-  if (!pth) return;
-  const svg = pth.ownerSVGElement;
-  if (!svg) return;
-  const L = pth.getTotalLength();
-  const q = pth.getPointAtLength(L * 0.5);
-  const q2 = pth.getPointAtLength(L * 0.52);
-  let ang = (Math.atan2(q2.y - q.y, q2.x - q.x) * 180) / Math.PI;
-  if (ang > 90) ang -= 180;
-  if (ang < -90) ang += 180;
-  const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  t.setAttribute("x", String(q.x));
-  t.setAttribute("y", String(q.y - 8));
-  t.setAttribute("style", `fill:${C.chord}`);
-  t.setAttribute("font-size", "13");
-  t.setAttribute("text-anchor", "middle");
-  t.setAttribute("transform", `rotate(${ang.toFixed(1)} ${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
-  t.textContent = "finding passed on";
-  svg.appendChild(t);
-}

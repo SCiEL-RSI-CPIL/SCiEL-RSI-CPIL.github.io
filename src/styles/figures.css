@@ -108,16 +108,19 @@ pre.diff {
 .playb {
   font: inherit;
   font-size: var(--fs-xs);
-  font-weight: 600;
-  border: 0;
+  font-weight: 500;
+  border: 1px solid var(--rule-strong);
   border-radius: 999px;
-  padding: 5px 16px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  padding: 4px 14px;
+  background: var(--bg);
+  color: var(--ink);
   cursor: pointer;
 }
+.playb:hover {
+  border-color: var(--ink);
+}
 .rng {
-  accent-color: var(--accent);
+  accent-color: var(--ink-2);
   width: 120px;
 }
 .racebar {

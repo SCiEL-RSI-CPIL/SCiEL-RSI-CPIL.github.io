@@ -246,8 +246,8 @@ header.masthead {
 }
 .masthead .kicker {
   font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--accent);
+  font-weight: 500;
+  color: var(--muted);
   margin: 0 0 18px;
 }
 .masthead h1 {
@@ -334,19 +334,20 @@ header.masthead {
   font-size: var(--fs-sm);
   font-weight: 600;
   border-radius: 999px;
-  padding: 8px 18px;
-  background: var(--ink);
-  color: var(--bg);
+  padding: 7px 16px;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink);
 }
 .buttons .ico {
   flex: none;
 }
 .buttons a:hover {
   text-decoration: none;
-  opacity: 0.88;
+  border-color: var(--ink);
 }
 .buttons a.off {
-  background: var(--bg-soft);
+  border-style: dashed;
   color: var(--muted);
   pointer-events: none;
 }
@@ -402,8 +403,8 @@ header.masthead {
 .article h2 .num {
   font-family: var(--font-mono);
   font-size: var(--fs-md);
-  font-weight: 500;
-  color: var(--accent);
+  font-weight: 400;
+  color: var(--muted);
   flex: none;
 }
 .article h3 {
@@ -441,16 +442,16 @@ sup.fnref a {
 /* ---------- TL;DR, glossary, callouts ---------- */
 .tldr {
   margin: 8px 0 0;
-  padding: 26px 30px 12px;
-  border-radius: 14px;
-  background: var(--bg-soft);
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
 }
 .tldr > .label,
 .box > .label {
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
-  font-weight: 700;
-  color: var(--accent);
+  font-weight: 600;
+  color: var(--ink);
   margin: 0 0 10px;
 }
 .tldr p.claim {
@@ -472,14 +473,11 @@ sup.fnref a {
   margin: 0;
 }
 .tldr li::before {
-  content: "";
+  content: "–";
   position: absolute;
   left: 2px;
-  top: 21px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
+  top: 10px;
+  color: var(--muted);
 }
 .tldr li b {
   color: var(--ink);
