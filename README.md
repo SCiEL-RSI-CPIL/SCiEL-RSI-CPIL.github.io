@@ -13,11 +13,18 @@ The code is at [Doldrums/sciel](https://github.com/Doldrums/sciel); the runs sho
 
 ## Layout
 
-- `src/pages/` – routes.
-- `src/content/` – the article text (MDX).
-- `src/components/` – layout pieces (figure, TOC, citation, …).
-- `src/figures/` – interactive figures, one ES module each.
-- `public/` – files served as-is (icons, OG card, run data).
+- `src/content/article.mdx` – the article text. Edit prose here.
+- `src/data/` – single sources for authors and metadata (`site.ts`), section numbering (`sections.ts`)
+  and the names readers see for runs and demes (`names.ts`). Internal IDs (run hashes, program ids)
+  are never shown on the page.
+- `src/components/` – page pieces (masthead, contents, citation) and `figures/*.astro`, the markup of
+  each figure.
+- `src/figures/*.ts` – the interactive figures, one ES module each, loaded when they near the viewport.
+- `src/lib/` – data loading, shared figure helpers and colour tokens, tooltips.
+- `src/styles/` – `tokens.css` (light/dark themes), `site.css` (layout, type), `figures.css`.
+- `public/data/` – run data as JSON, produced by `node scripts/split-data.mjs <runs.js>` from the run
+  viewer export.
+- `public/og-card.png` – the share card, rendered from `scripts/og-card.html` by `node scripts/og-card.mjs`.
 - `legacy/` – the original hand-written page, kept unchanged for reference and not deployed.
   The same version is also tagged `legacy-v1` in git. To view it: `python3 -m http.server -d legacy 8000`.
 

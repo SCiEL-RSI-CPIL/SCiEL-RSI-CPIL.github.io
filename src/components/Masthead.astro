@@ -1,0 +1,27 @@
+---
+import { SITE, AUTHORS } from "../data/site";
+---
+<header class="masthead" id="top">
+  <p class="kicker">SCiEL · research in progress</p>
+  <h1>Let Them Get Better at Getting Better<span class="sub">Recursive Self-Improvement (RSI) through Cultural Transmission</span></h1>
+  <p class="authors">
+    {AUTHORS.map((a, i) => (
+      <Fragment>
+        {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+        {a.href ? <a href={a.href} target="_blank" rel="noopener">{a.name}</a> : <span>{a.name}</span>}
+      </Fragment>
+    ))}
+  </p>
+  <div class="orgs">
+    <a href="https://cpil-lab.github.io/" target="_blank" rel="noopener"><img src="/img/cpil.png" alt="" width="34" height="34" />CPIL Research Group</a>
+    <a href="https://mbzuai.ac.ae/" target="_blank" rel="noopener"><img src="/img/mbzuai.png" alt="" width="34" height="34" />MBZUAI</a>
+  </div>
+  <p class="meta">{SITE.date}</p>
+  <div class="buttons">
+    <a class="off" href="#" aria-disabled="true">Preprint · in progress</a>
+    <a href="https://github.com/Doldrums/sciel" target="_blank" rel="noopener">Code</a>
+    <a href="https://research-arena.small-pine-3af7.workers.dev" target="_blank" rel="noopener">Arena</a>
+    <a href="https://huggingface.co/datasets/autoresearchTasksSciel/autoresearch-tasks" target="_blank" rel="noopener">Dataset</a>
+    <a href="#cite">Cite</a>
+  </div>
+</header>

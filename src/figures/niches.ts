@@ -90,8 +90,8 @@ function vqMap(o: Overview, fin: NicheIsland[]): void {
   s.push(`<rect x="${L0}" y="12" width="${W - L0 - 12}" height="${H - 12 - B0}" style="fill:${C.panel};stroke:${C.rule}"/>`);
   const ly = (H - B0) / 2 + 6;
   s.push(
-    `<text x="${L0 + (W - L0) / 2}" y="${H - 12}" style="fill:${C.muted}" font-size="12" text-anchor="middle">codebook, component 1</text>` +
-      `<text x="16" y="${ly}" style="fill:${C.muted}" font-size="12" text-anchor="middle" transform="rotate(-90 16 ${ly})">codebook, component 2</text>`,
+    `<text x="${L0 + (W - L0) / 2}" y="${H - 12}" style="fill:${C.muted}" font-size="12" text-anchor="middle">code embedding, direction 1</text>` +
+      `<text x="16" y="${ly}" style="fill:${C.muted}" font-size="12" text-anchor="middle" transform="rotate(-90 16 ${ly})">code embedding, direction 2</text>`,
   );
   V.xy.forEach((p, i) => {
     const d = V.xy
@@ -143,38 +143,38 @@ function summary(NI: Niches, runId: string | null): void {
   const cn = (k: string) => CN[k] || 0;
   el("s-niche").innerHTML =
     `In <a class="xp" href="${ARENA_URL}" target="_blank" rel="noopener">${runId ? runName(runId) : "this run"}</a>, ${fin.length} demes held ${cells} occupied cells ` +
-    `at the end, across twelve learned niches; the codebook was re-fitted ${cn("niches/rebuild")} times as the population moved.`;
+    `at the end, across twelve learned niches; the niches were regrouped ${cn("niches/rebuild")} times as the population moved.`;
   const M: [string, string, string][] = [
     [
       "Niches per deme",
       `${fin.length} demes · ${cells} cells`,
-      'MAP-Elites over learned niches: a VQ codebook of up to twelve centroids in an embedding of the code, crossed with score bins. <span class="key">One elite per cell, so a new idea competes only with its own niche.</span>',
+      'A grid of up to twelve niches (kinds of program, found by grouping an embedding of their code) by score bands, holding the best program per cell. <span class="key">A new idea competes only with its own niche.</span>',
     ],
     [
       "Demes spawned mid-run",
       `${cn("dynamic_islands/spawn")}`,
-      'Aimed at unexplored regions, chosen by a diffusion target, by density or by an untried paradigm. <span class="key">A new deme starts where the others are not.</span>',
+      'Aimed at regions no deme has reached, chosen by a target from a diffusion model, by how crowded each region is, or by an approach not yet tried. <span class="key">A new deme starts where the others are not.</span>',
     ],
     [
-      "Novelty, run-wide",
+      "Repeats caught, run-wide",
       `${cn("candidate_novelty/accept")} accepted · ${cn("candidate_novelty/reject")} rejected`,
-      'Repeats are caught by hash, AST and output before they cost an evaluation, <span class="key">so the budget goes to new guesses</span>.',
+      'A candidate that repeats an earlier one, in its text, its code structure or its output, is caught before it costs an evaluation, <span class="key">so the budget goes to new guesses</span>.',
     ],
     [
-      "Smoke → full → confirm",
+      "Quick test → full → re-measure",
       `${NI.reached.full || 0} reached full`,
-      `A cheap smoke test first, the full stage next, then re-measurement of records: ${cn("confirmation/consistent")} agreed, ` +
+      `A cheap quick test first, then the full evaluation, then every new record is measured again: ${cn("confirmation/consistent")} agreed, ` +
         `${cn("confirmation/inconsistent")} did not, and <span class="key">the worst repeat is kept</span>.`,
     ],
     [
       "Parallel waves",
       `${cn("parallel_search/wave_dispatch")} waves · ${cn("parallel_search/job_committed")} jobs`,
-      'Demes propose in parallel against shared capacity; every job is journaled, <span class="key">so a crashed run replays and continues</span>.',
+      'Demes propose in parallel on shared hardware; every job is written to a log, <span class="key">so a crashed run replays the log and continues</span>.',
     ],
     [
-      "Population view",
+      "Continue, don’t rebuild",
       " 1.55 → 1.462",
-      'A candidate imports its deme’s best construction and the task’s own objective while it runs, <span class="key">so it continues the measured object instead of rebuilding it</span>. On this task: the bound after the same 50 evaluations.',
+      'A candidate can import its deme’s best construction and the task’s own objective while it runs, <span class="key">so it continues from the measured result instead of rebuilding it</span>. On this task: the bound after the same 50 evaluations.',
     ],
   ];
   el("mach").innerHTML = M.map((m) => `<div><b>${m[0]}</b><div class="n">${m[1]}</div><p>${m[2]}</p></div>`).join("");

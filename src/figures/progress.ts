@@ -152,7 +152,7 @@ function ladder(r: Run): void {
   }
   const fits = sw.filter((q) => q[1] === "fit").length;
   el("s-ladder").innerHTML =
-    `In ${runLink(r.id)} the bandits planned ${count.base || 0} steps and the world model ${count.swm || 0}` +
+    `In ${runLink(r.id)} the bandit rules (which favour whatever paid off recently) planned ${count.base || 0} steps and the world model ${count.swm || 0}` +
     `${count.rl ? `, the RL policy ${count.rl}` : ""}; the world model passed its check at ${fits} of ${sw.length} refits.`;
 }
 

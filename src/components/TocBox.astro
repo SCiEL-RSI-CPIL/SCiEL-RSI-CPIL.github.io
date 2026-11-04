@@ -1,0 +1,11 @@
+---
+import { SECTIONS, sectionNumber } from "../data/sections";
+---
+<nav class="toc-box" aria-label="Contents">
+  <p class="label">Contents</p>
+  <ol>
+    {SECTIONS.map((s) => (
+      <li><a href={`#${s.id}`}><span>{sectionNumber(s.id)}</span>{s.title}</a></li>
+    ))}
+  </ol>
+</nav>

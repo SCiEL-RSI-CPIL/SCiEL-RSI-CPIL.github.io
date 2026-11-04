@@ -1,0 +1,15 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <ol class="steps-row arrows" style="--n:5">
+    <li><b>Describe</b>the parent, its deme, the kind of edit, an embedding of the code, the run so far</li>
+    <li><b>Prior</b>a pretrained model for tables of data, useful within a few dozen steps</li>
+    <li class="w"><b>Refine</b>a small network trained on this run's own steps, plus steps inherited from earlier runs</li>
+    <li><b>Check</b>it acts only if it beats simple estimates on steps it was not trained on</li>
+    <li><b>Use</b>screen proposals, weigh moves, point research where it is unsure</li>
+  </ol>
+  <Fragment slot="caption">
+    <b>The world model in the loop.</b> Its record in this run, refit by refit, is in the controller figure below.
+  </Fragment>
+</Figure>

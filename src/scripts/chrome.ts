@@ -1,5 +1,5 @@
-// Page chrome ported from legacy/assets/page.js: the "Run SCiEL on your problem" panel,
-// the mobile contents toggle and the scroll-tracking table of contents.
+// Page chrome: the "Run SCiEL on your problem" steps, copy buttons, the mobile contents toggle
+// and the scroll-tracking section links in the top bar.
 
 import { el, esc } from "../lib/core";
 
@@ -29,49 +29,48 @@ const START: Record<"api" | "local", { steps: [string, string][]; note: string }
   },
 };
 
-function startPanel(): void {
-  const panel = el("startp");
-  const btn = el("startb");
-  const setOpen = (open: boolean) => {
-    panel.hidden = !open;
-    btn.setAttribute("aria-expanded", String(open));
-  };
+/** The "Run SCiEL on your problem" steps: API key vs local model, with copy buttons. */
+function runSteps(): void {
+  const mode = document.getElementById("tmode");
+  if (!mode) return;
   const show = (k: "api" | "local") => {
     const d = START[k];
     el("tsteps").innerHTML = d.steps
       .map(
         ([what, cmd]) =>
           `<li><span>${esc(what)}</span><div class="cmd"><pre>${esc(cmd)}</pre>` +
-          `<button class="cp" data-c="${esc(cmd)}">Copy</button></div></li>`,
+          `<button class="cp" type="button" data-c="${esc(cmd)}">Copy</button></div></li>`,
       )
       .join("");
     el("tnote").textContent = d.note;
-    for (const b of el("tmode").children) b.classList.toggle("on", (b as HTMLElement).dataset.k === k);
+    for (const b of mode.children) b.classList.toggle("on", (b as HTMLElement).dataset.k === k);
   };
-  el("tmode").addEventListener("click", (e) => {
+  mode.addEventListener("click", (e) => {
     const b = (e.target as Element).closest("button");
     if (b) show(b.dataset.k as "api" | "local");
   });
   el("tsteps").addEventListener("click", (e) => {
     const b = (e.target as Element).closest<HTMLButtonElement>("button.cp");
-    if (!b || !navigator.clipboard) return;
-    navigator.clipboard.writeText(b.dataset.c || "").then(() => {
-      b.textContent = "Copied";
-      setTimeout(() => (b.textContent = "Copy"), 1400);
-    });
-  });
-  btn.addEventListener("click", () => setOpen(panel.hidden !== false));
-  document.addEventListener("click", (e) => {
-    if (!(e.target as Element).closest(".start")) setOpen(false);
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setOpen(false);
+    if (b) copy(b, b.dataset.c || "");
   });
   show("api");
-  document.getElementById("openStart")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(() => setOpen(true), 450);
+}
+
+function copy(button: HTMLButtonElement, text: string): void {
+  if (!navigator.clipboard) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const was = button.textContent;
+    button.textContent = "Copied";
+    setTimeout(() => {
+      button.textContent = was;
+    }, 1400);
+  });
+}
+
+/** Buttons with data-copy="<element id>" copy that element's text (the BibTeX block). */
+function copyButtons(): void {
+  document.querySelectorAll<HTMLButtonElement>("button[data-copy]").forEach((b) => {
+    b.addEventListener("click", () => copy(b, document.getElementById(b.dataset.copy || "")?.textContent || ""));
   });
 }
 
@@ -98,7 +97,7 @@ function toc(): void {
   const secs = links.map((a) => document.querySelector(a.getAttribute("href") || ""));
   const onScroll = () => {
     nav.classList.toggle("scrolled", scrollY > 8);
-    const y = scrollY + 230;
+    const y = scrollY + 220;
     let on = -1;
     secs.forEach((s, k) => {
       if (s && s.getBoundingClientRect().top + scrollY <= y) on = k;
@@ -114,6 +113,7 @@ function toc(): void {
 }
 
 export function initChrome(): void {
-  startPanel();
+  runSteps();
+  copyButtons();
   toc();
 }

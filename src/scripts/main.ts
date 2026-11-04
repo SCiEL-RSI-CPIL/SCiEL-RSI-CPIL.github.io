@@ -1,4 +1,4 @@
-// Page entry: navigation, the "Run SCiEL" panel, the run line, and lazy mounting of figures.
+// Page entry: page chrome, the run note, and lazy mounting of figures.
 // Each figure lives in src/figures/<name>.ts and exports `mount(): Promise<void> | void`.
 // A figure's module (and its data, and three.js if it needs it) loads only when its root element
 // comes within ~800px of the viewport.
@@ -67,10 +67,10 @@ async function runLine(): Promise<void> {
     const demes = new Set(r.programs.map((p) => p[2])).size;
     const last = r.steps[r.steps.length - 1];
     box.innerHTML =
-      `<span class="rl">Figures below</span> ` +
-      `<a class="runlink" href="${ARENA_URL}" target="_blank" rel="noopener" title="Arena record ${esc(id)}">${esc(runName(id))} ↗</a> · ` +
-      `${esc(TASK_NAMES[runMeta(id).task].toLowerCase())} · ${r.programs.length} programs in ${demes} demes · ` +
-      `$${last[1].toFixed(2)} · ${r.hours} h`;
+      `<span class="rl">Figures below show</span>` +
+      `<a href="${ARENA_URL}" target="_blank" rel="noopener" title="Open the run in the Empira arena">${esc(runName(id))}</a>: ` +
+      `the ${esc(TASK_NAMES[runMeta(id).task].toLowerCase())} task, ${r.programs.length} programs in ${demes} demes, ` +
+      `$${last[1].toFixed(2)} of model calls over ${r.hours} hours.`;
   };
   onRunChange(render);
   await render();

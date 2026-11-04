@@ -18,6 +18,9 @@ export const SITE = {
   title:
     "Let Them Get Better at Getting Better: Recursive Self-Improvement (RSI) through Cultural Transmission",
   shortTitle: "SCiEL",
+  date: "November 2026",
+  description:
+    "SCiEL improves how it searches, not only what it finds: what one subpopulation of programs learns is tested, passed on, and kept only if it helps where it lands.",
   url: "https://sciel-rsi-cpil.github.io/",
   ogImage: "https://sciel-rsi-cpil.github.io/og-card.png",
   authors: AUTHORS,

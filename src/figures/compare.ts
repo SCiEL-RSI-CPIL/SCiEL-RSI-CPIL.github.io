@@ -342,7 +342,7 @@ export async function mount(): Promise<void> {
       ["SCiEL without research cells", "sciel", { research: false }],
     ];
     let out =
-      '<span class="hd">30 runs each, 200 evaluations</span><span class="hd">mean best score</span>' +
+      '<span class="hd">30 trials each, 200 evaluations</span><span class="hd">mean best score</span>' +
       '<span class="hd" style="text-align:right">reached the summit</span>';
     for (const [name, mode, o] of rows) {
       let s = 0;

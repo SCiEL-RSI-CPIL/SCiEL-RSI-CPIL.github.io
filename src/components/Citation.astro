@@ -1,0 +1,14 @@
+---
+import { BIBTEX_AUTHORS } from "../data/site";
+const bib = `@misc{cpil2026sciel,
+  title  = {Let Them Get Better at Getting Better:
+            Recursive Self-Improvement through Cultural Transmission},
+  author = {${BIBTEX_AUTHORS}},
+  year   = {2026},
+  url    = {https://github.com/Doldrums/sciel}
+}`;
+---
+<div class="bibwrap">
+  <pre class="bib" id="bibtex">{bib}</pre>
+  <button class="copy" type="button" data-copy="bibtex">Copy</button>
+</div>

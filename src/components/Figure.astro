@@ -1,0 +1,30 @@
+---
+// A figure block: optional title row with controls, the figure body, and a caption whose first
+// <b> is the bold lead. `width` picks the article track; `stage` puts the body on the dark stage
+// that WebGL figures need.
+interface Props {
+  id?: string;
+  title?: string;
+  sub?: string;
+  width?: "col" | "wide" | "full";
+  stage?: boolean;
+  class?: string;
+}
+const { id, title, sub, width = "wide", stage = false, class: cls = "" } = Astro.props;
+const hasControls = Astro.slots.has("controls");
+---
+<figure id={id} class:list={["figure", width !== "col" && width, stage && "stage-wrap", cls]}>
+  {(title || hasControls) && (
+    <div class="figbar">
+      {title && (
+        <div>
+          <p class="ftitle">{title}</p>
+          {sub && <p class="fsub" set:html={sub} />}
+        </div>
+      )}
+      {hasControls && <div class="segs"><slot name="controls" /></div>}
+    </div>
+  )}
+  {stage ? <div class="stage stage-pad"><slot /></div> : <slot />}
+  {Astro.slots.has("caption") && <figcaption><slot name="caption" /></figcaption>}
+</figure>

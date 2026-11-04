@@ -1,0 +1,17 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <ol class="steps-row" style="--n:3">
+    <li><b>Cold · from step one</b>Simple bandit rules choose the edit type, the parent and when to refine, from recent rewards alone, keeping every option in play. Nothing is known yet, so nothing is assumed.</li>
+    <li class="w"><b>Warm · after a few dozen steps</b>The world model joins: it forecasts which steps will pay and screens the rest, but only while it beats the simple estimates on steps it was not trained on.</li>
+    <li><b>Hot · after a few hundred steps, or inherited</b>A policy trained by reinforcement learning on the whole population's logged decisions. A run that inherits steps and a policy from an earlier run starts here.</li>
+  </ol>
+  <div class="chart" id="ladder" style="margin-top:28px"></div>
+  <div class="legend"><span><i style="background:var(--fig-rule-strong)"></i>bandits plan the step</span><span><i style="background:#0A84FF"></i>world model plans</span><span><i style="background:#3DAE7C"></i>RL policy plans</span><span><i class="ln" style="background:#0A84FF"></i>world-model error</span><span><i class="ln" style="background:var(--fig-muted)"></i>simple estimate</span></div>
+  <Fragment slot="caption">
+    <b>Control passes on only when it is earned.</b> Top: who planned each step of this run. Bottom: the world model's
+    forecast error at each refit against the best simple estimate (lower is better). A filled marker means it passed
+    the check and steers; a hollow one means it was held back.
+  </Fragment>
+</Figure>

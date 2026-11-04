@@ -1,0 +1,259 @@
+import Sec from "../components/Sec.astro";
+import TocBox from "../components/TocBox.astro";
+import Citation from "../components/Citation.astro";
+import Hero from "../components/figures/Hero.astro";
+import Cost from "../components/figures/Cost.astro";
+import Compare from "../components/figures/Compare.astro";
+import DiskReplay from "../components/figures/DiskReplay.astro";
+import Funnel from "../components/figures/Funnel.astro";
+import CultureTest from "../components/figures/CultureTest.astro";
+import WorldModelLoop from "../components/figures/WorldModelLoop.astro";
+import Niches from "../components/figures/Niches.astro";
+import Controllers from "../components/figures/Controllers.astro";
+import Relief from "../components/figures/Relief.astro";
+import Edits from "../components/figures/Edits.astro";
+import Records from "../components/figures/Records.astro";
+import Runs from "../components/figures/Runs.astro";
+import Tiers from "../components/figures/Tiers.astro";
+import RunIt from "../components/figures/RunIt.astro";
+
+<div class="tldr prose">
+  <p class="label">TL;DR</p>
+  <p class="claim">Systems that evolve programs with a language model usually keep the best programs and forget how they got there. <b>SCiEL also improves how it searches</b>: what one part of the population learns is tested as an experiment, passed to the others, and kept only if it helps where it lands.</p>
+  <ul>
+    <li><b>Circle packing (n = 26): the best known value</b>, reached under zero tolerance.</li>
+    <li><b>Third autocorrelation constant: a tighter bound</b> than reported for AlphaEvolve <a class="cite" href="#ref-3">[3]</a>, with a 27B model served locally.</li>
+    <li><b>Higher scores with about half the evaluations</b> and fewer tokens than OpenEvolve and ShinkaEvolve <a class="cite" href="#ref-1">[1, 2]</a>, with the same model and budget.</li>
+    <li><b>A 4.4× smaller model</b> than in <a class="cite" href="#ref-4">[4]</a> takes circle packing to six digits of the best known value, on two GPUs.</li>
+    <li><b>Culture measurably helps.</b> In a randomised test over 31 runs, a finding passed from another subpopulation raised the chance that an edit beats its parent <b>from 54% to 62%</b>.</li>
+  </ul>
+  <p class="note">Research in progress; full details will be in the preprint. Every figure on this page is drawn from real runs.</p>
+</div>
+
+<Hero />
+
+<TocBox />
+
+<Sec id="idea" />
+
+We use *recursive self-improvement* (RSI) for a process in which the improvements a system makes <span class="key">strengthen its capacity for further improvement</span>: the system gets better at getting better <a class="cite" href="#ref-14">(Yampolskiy, 2015)</a>. Here “the system” includes its procedures and inherited methods; the underlying language model may or may not stay fixed.
+
+We approach this through cumulative culture. In people and organisations, experience persists in practices, routines and artifacts <a class="cite" href="#ref-15">(Henrich, 2016;</a> <a class="cite" href="#ref-16">Levitt and March, 1988)</a>; earlier instrument designs inform later ones <a class="cite" href="#ref-17">(Nersessian, 2009)</a>; existing technologies, and the know-how to combine them, support further invention <a class="cite" href="#ref-18">(Arthur, 2007)</a>; and what is inherited can strengthen the very capacity to build on it <a class="cite" href="#ref-19">(Mesoudi and Thornton, 2018)</a>. <span class="key">SCiEL turns this loop between inheritance and innovation into a way to search.</span>
+
+<div class="box prose">
+  <p class="label">Terms used throughout</p>
+  <dl>
+    <dt>Deme</dt>
+    <dd>A subpopulation of programs that evolves on its own, with its own lineages. A run has several; most runs here have eight. (The code and the run viewer call them islands.)</dd>
+    <dt>Research cell</dt>
+    <dd>A standing question a deme keeps open. It plans experiments, writes and runs its own tools, and draws conclusions.</dd>
+    <dt>Finding</dt>
+    <dd>A conclusion from a research cell, with its measured effect. Findings are what travels between demes.</dd>
+    <dt>Culture</dt>
+    <dd>Everything the population has learned and can pass on: findings, tools, and the policy and world model that steer the search.</dd>
+    <dt>World model</dt>
+    <dd>A learned forecast of whether a proposed edit will pay off, used to screen proposals before they cost an evaluation.</dd>
+    <dt>Frontier</dt>
+    <dd>The best scores reached so far. An edit “at the frontier” starts from a parent close to the run's best.</dd>
+    <dt>π</dt>
+    <dd>The share of the model's edits that beat their parent: the slope of the task as the model sees it. Differences smaller than the task's noise level ε do not count.</dd>
+  </dl>
+</div>
+
+Five ideas carry the design:
+
+1. **The procedures improve along with the programs.** An improvement is recursive when it strengthens the capacity for the next one. SCiEL keeps what it learned while searching, and exports it to the next run.
+2. **Culture passes on only after a trial at the recipient.** A skill outlives the person who found it because it is taught, tried by the learner, and dropped when it fails. In SCiEL a hypothesis is tested as an experiment; what holds becomes a finding or a tool; it is delivered to other demes and kept only if the recipient's own trial confirms it.
+3. **What the population learned shapes how it grows.** Crossing merges lineages that each solved part of the task; stalled demes restart where the world model sees unexplored promise; new demes start from a varied set of approaches, so an idea can survive long enough to pay off.
+4. **Every self-modification is an experiment.** Every choice (which deme, which parent, which kind of edit, when to open research) is drawn at random from a logged distribution. So the system can estimate from its own logs, without bias, whether a change to itself helped before it keeps it.
+5. **The landscape belongs to the model.** How hard a task is depends on π, how often the model's edit beats its parent. Culture changes what the model sees, so it changes π. That is the lever recursive improvement pulls, and it can be measured.
+
+We study SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments), an independent benchmark of research tasks for self-improving systems, with an open 27B model served locally, both <span class="key">with its weights frozen and with LoRA adapters trained during the run</span>.
+
+<Sec id="results" />
+
+SCiEL reaches or beats the best known values on two open mathematical problems, and matches stronger baselines at a fraction of their cost.
+
+<ul class="results">
+  <li><span class="lab">Frontier</span><span><b>Circle packing, n = 26.</b> The best known value, reached under zero tolerance.</span></li>
+  <li><span class="lab">Frontier</span><span><b>Third autocorrelation constant.</b> A tighter bound than reported in <a class="cite" href="#ref-3">[3]</a>, with a 27B model served locally.</span></li>
+  <li><span class="lab">Matched</span><span><b>Against <a class="cite" href="#ref-1">[1, 2]</a> with the same model and budget.</b> Higher scores with about half the evaluations and fewer tokens.</span></li>
+  <li><span class="lab">Local</span><span><b>Local inference.</b> Circle packing to six digits of the best known value, with a 27B model on two GPUs, 4.4× smaller than in <a class="cite" href="#ref-4">[4]</a>.</span></li>
+  <li><span class="lab">Weights</span><span><b>SCiEL with LoRA.</b> Adapters trained across the population during the run, on top of SCiEL, improve results further (see <a href="#weights">section 6</a>).</span></li>
+</ul>
+
+The six runs below started from scratch. Each autocorrelation run cost under $0.55 in model calls, each circle-packing run under $2.80. The runs are public in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments).
+
+<Cost />
+
+<Sec id="why" />
+
+A hard problem is a long climb that the model sees one edit at a time. Most edits go down, some produce invalid solutions, and small local bumps stop a greedy climber. A single model sampled many times never chains steps. A single climber chains them but stops at the first bump. A swarm splits the budget, and its members never learn from each other.
+
+<span class="key">SCiEL is built for the climb.</span> Demes explore in parallel, a policy learns which moves pay, a world model screens edits before they cost an evaluation, and culture moves what one deme learned to the others. The toy landscape below shows the difference.
+
+<Compare />
+
+<Sec id="how" />
+
+Five mechanisms turn a population of programs into one that accumulates culture: findings that travel between demes, a randomised test of whether they help, a world model of the search, niches that keep unusual ideas alive, and a ladder that decides who steers. The figures in this section follow one run.
+
+<p class="runnote" id="runmeta"></p>
+
+### Culture is a tree with chords
+
+<p><span id="s-disk"></span></p>
+
+<DiskReplay />
+
+### From a question to a shared finding
+
+<p><span id="s-funnel"></span></p>
+
+<Funnel />
+
+### Does culture raise the odds?
+
+<p><span id="s-ct"></span></p>
+
+<CultureTest />
+
+### A world model of the search
+
+Before the language model is called, SCiEL forecasts whether a proposed step will raise its lineage's best score. It does not model the task; it models the search itself, from the parent, the deme, the kind of edit, an embedding of the code and the run's history so far. It starts from a model pretrained on tabular data, so it is useful after a few dozen steps, and refines itself on the run's own steps; steps inherited from earlier runs give it a head start.
+
+Like every learned part of SCiEL, <span class="key">it acts only while it earns it</span>: at each refit it must beat the base rate and simple per-group averages on steps it was not fitted to, or it is held back.
+
+<WorldModelLoop />
+
+### Where the long shots live
+
+A guess that lands somewhere new is usually worse than the current best at first. If the population kept only the best, it would be thrown out before anyone could build on it. So each deme keeps a map of niches (groups of programs whose code is alike) with one best program per niche, and <span class="key">a newcomer competes only within its own niche</span>. <span id="s-niche"></span>
+
+<Niches />
+
+### Cold, warm, hot: who steers the search
+
+A run starts knowing nothing about which moves pay, and some of what it could learn takes hundreds of steps to see. So control passes through three stages, each taking over only once it has the data to do better than the stage before. <span id="s-ladder"></span>
+
+<Controllers />
+
+<Sec id="runs" />
+
+### Smooth in behaviour, rugged in code
+
+Place every program by the two behaviour metrics that track the score most closely, and lift it by its distance to the best known value: the programs lie on one tilted sheet, and edits climb it in steps. Place the same programs by their code and the relief breaks into clusters of good code with valleys between them. <span class="key">Similar code is a weak predictor of similar quality.</span>
+
+<Relief />
+
+### The landscape along edits
+
+Plot each child against its parent. Points above the diagonal are steps up; their share is π. <span id="s-edits"></span>
+
+<Edits />
+
+### Records come in steps
+
+<p><span id="s-steps"></span></p>
+
+<Records />
+
+### Generations, and the second order
+
+The runs so far are one generation. Two predictions come next. **First order:** a generation that inherits the tested repertoire of the last one should improve faster than one that starts from scratch. **Second order:** the procedures that create culture (when to open research, how to share, what to keep) should themselves improve across generations.
+
+<Runs />
+
+<div class="box note prose">
+  <p><b>Next: the ratchet.</b> A ratchet only turns forward: each generation keeps what the last one gained. We will run the same tasks over generations 1 → 2 → 3, each starting from what the previous one exported, against matched runs from scratch at equal cost, and report evaluations to reach a threshold and π at the frontier by generation; for the second order, each generation's procedures against the last.</p>
+</div>
+
+<Sec id="weights" />
+
+Everything above leaves the model untouched: culture lives in the prompts, tools and policies around it. The deepest place to keep culture is the model itself. DeltaServe <a class="cite" href="#ref-13">[13]</a> trains and serves LoRA adapters (small sets of extra weights that adjust a model without retraining it) inside the same inference engine on one GPU, swapping them in by name, so a run can learn while it searches.
+
+Training a model on its own search usually goes wrong in one of two ways: it learns from its own samples and collapses onto a few programs, or it learns from wins that were only noise. SCiEL is built to supply better data:
+
+- <span class="key">Every step comes with a logged probability</span>, so the training set can be reweighted for the policy that produced it, as in off-policy reinforcement learning.
+- The world model marks which transitions were genuinely informative.
+- Niches and demes keep many kinds of program alive over long runs, so the adapter sees many routes to the frontier instead of one.
+- The data is transitions from a weaker parent to a stronger child that held up when re-measured, not just the best programs.
+
+<span class="key">An adapter does not replace the generator.</span> It is one more randomised option, adopted only through the same trial at the recipient as any other piece of culture, so the base model keeps proposing and its diversity is kept. This line of work is under way and will be reported separately.
+
+<Tiers />
+
+<Sec id="use" />
+
+SCiEL pays off on a particular kind of task, and whether yours is one can be checked before any compute is spent. It fits when three things are true:
+
+1. **You can check an answer you can trust:** exactly, like arithmetic or a replay, or on data the search never saw, like held-out days.
+2. **The best known answer can still be beaten:** there is room above it, and that room is larger than the noise in your score.
+3. **Progress hides behind rare long shots:** most tries fail, and the ones that matter are bold guesses a single attempt would never risk. <span class="key">SCiEL makes long shots affordable</span>: a population holds them, niches keep odd ones alive, the world model screens them before they cost an evaluation, the policy learns which kinds pay, and culture spreads the rare hit.
+
+Poor fits are puzzles solved in one shot, tasks already at their ceiling, and anything without a score you would bet on.
+
+<details class="box prose">
+  <summary><b>The precise conditions</b></summary>
+  <p>The checker is exact or survives probes for leaks; the headroom above the best reference exceeds 4ε, four times the noise level; and the upper bound of π at the frontier is at least 5/B, where B is the evaluation budget, so the run can expect several improvements before the budget runs out.</p>
+  <p>Formally, a task is ⟨X, F, h, h<sup>*</sup>, M, B⟩: the candidates the model writes, the set of valid solutions, the objective the run sees and the true one, the model's edit operator, and the budget. Because the landscape is defined by the model's edits, it moves as culture changes what the model sees.</p>
+</details>
+
+Not sure? Point `sciel task` at a folder of materials. It drafts the task, checks all three conditions before any compute is spent, and repairs what it can. See also the [quick start on GitHub](https://github.com/Doldrums/sciel#quick-start).
+
+<RunIt />
+
+<Sec id="related" />
+
+Recent systems that claim recursive self-improvement change their own code, prompts or weights. They differ mainly in what they change, how a change is accepted, and how its effect is measured.
+
+<div class="wide" style="overflow-x:auto">
+  <table>
+    <thead><tr><th>System</th><th>What improves</th><th>How a change is accepted</th><th>How SCiEL relates</th></tr></thead>
+    <tbody>
+      <tr><td><b>MASS</b> <a class="cite" href="#ref-5">[5]</a></td><td>model weights, from its own team's best trajectories</td><td>a training round</td><td>complementary: SCiEL improves between training rounds, and moves culture into weights only through the same trial as any other culture</td></tr>
+      <tr><td><b>AIDE²</b> <a class="cite" href="#ref-6">[6]</a></td><td>its own pipeline</td><td>greedy</td><td>a change is kept after a trial at the recipient, with its effect estimated from randomised logs</td></tr>
+      <tr><td><b>DGM · SICA · HGM</b> <a class="cite" href="#ref-7">[7–9]</a></td><td>its own code</td><td>benchmark score</td><td>changes the repertoire around the model rather than its own code, and is judged on new problems in the Empira arena</td></tr>
+      <tr><td><b>Hyperagents</b> <a class="cite" href="#ref-10">[10]</a></td><td>the improver</td><td>a fixed number of rounds</td><td>compounding is measured as an effect: culture is delivered at random, so its contribution can be estimated</td></tr>
+      <tr><td><b>MetaRSI</b> <a class="cite" href="#ref-11">[11]</a></td><td>the improver of the improver</td><td>meta-level search</td><td>every self-change is paid from the run's own budget and logged with it</td></tr>
+      <tr><td><b>TTT-Discover · ThetaEvolve</b> <a class="cite" href="#ref-4">[4, 12]</a></td><td>model weights during the run</td><td>reinforcement-learning reward</td><td>uses an open model as it is; weights change only as one optional, randomised option</td></tr>
+      <tr class="self"><td><b>SCiEL</b></td><td>methods, claims, world model, policy, procedures</td><td>a trial at the recipient, on randomised logs</td><td>this page</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<Sec id="open" />
+
+- How fast the ratchet turns across generations, and whether the procedures that create culture improve too.
+- How the noise level ε sets what counts as a real step, measured per task before a run.
+- How far the mechanism carries beyond program discovery, to the 959 task packages of the [Empira arena](https://research-arena.small-pine-3af7.workers.dev).
+
+<hr />
+
+### References
+
+<ol class="refs">
+  <li id="ref-1">OpenEvolve: an open-source evolutionary coding agent. 2025. <a href="https://github.com/codelion/openevolve">github.com/codelion/openevolve</a></li>
+  <li id="ref-2">ShinkaEvolve: towards open-ended and sample-efficient program evolution. 2025. <a href="https://arxiv.org/abs/2509.19349">arXiv:2509.19349</a></li>
+  <li id="ref-3">AlphaEvolve: a coding agent for scientific and algorithmic discovery. 2025. <a href="https://arxiv.org/abs/2506.13131">arXiv:2506.13131</a></li>
+  <li id="ref-4">Learning to discover at test time. 2026. <a href="https://arxiv.org/abs/2601.16175">arXiv:2601.16175</a></li>
+  <li id="ref-5">MASS: recursive self-improvement through multi-agent self-supervision. 2026. <a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a></li>
+  <li id="ref-6">Recursive self-improvement of AI research agents (AIDE²). 2026. <a href="https://arxiv.org/abs/2609.26457">arXiv:2609.26457</a></li>
+  <li id="ref-7">Darwin Gödel Machine: open-ended evolution of self-improving agents. 2025. <a href="https://arxiv.org/abs/2505.22954">arXiv:2505.22954</a></li>
+  <li id="ref-8">A self-improving coding agent. 2025. <a href="https://arxiv.org/abs/2504.15228">arXiv:2504.15228</a></li>
+  <li id="ref-9">Huxley-Gödel Machine: human-level coding agent development by an approximation of the optimal self-improving machine. 2025. <a href="https://arxiv.org/abs/2510.21614">arXiv:2510.21614</a></li>
+  <li id="ref-10">Hyperagents. 2026. <a href="https://arxiv.org/abs/2603.19461">arXiv:2603.19461</a></li>
+  <li id="ref-11">MetaRSI / RSI²: a meta-recursive self-improving system for recursive self-improving systems themselves. 2026. <a href="https://arxiv.org/abs/2609.06396">arXiv:2609.06396</a></li>
+  <li id="ref-12">ThetaEvolve: test-time learning on open problems. 2025. <a href="https://arxiv.org/abs/2511.23473">arXiv:2511.23473</a></li>
+  <li id="ref-13">DeltaServe: host-agnostic co-serving of inference and fine-tuning for LLMs. 2026. <a href="https://arxiv.org/abs/2607.28848">arXiv:2607.28848</a></li>
+  <li id="ref-14">R. V. Yampolskiy. From seed AI to technological singularity via recursively self-improving software. 2015. <a href="https://arxiv.org/abs/1502.06512">arXiv:1502.06512</a></li>
+  <li id="ref-15">J. Henrich. The Secret of Our Success: How Culture Is Driving Human Evolution. Princeton University Press, 2016.</li>
+  <li id="ref-16">B. Levitt and J. G. March. Organizational learning. Annual Review of Sociology, 1988.</li>
+  <li id="ref-17">N. J. Nersessian. How do engineering scientists think? Model-based simulation in biomedical engineering research laboratories. Topics in Cognitive Science, 2009.</li>
+  <li id="ref-18">W. B. Arthur. The structure of invention. Research Policy, 2007.</li>
+  <li id="ref-19">A. Mesoudi and A. Thornton. What is cumulative cultural evolution? Proceedings of the Royal Society B, 2018.</li>
+</ol>
+
+<h3 id="cite">Citation</h3>
+
+<Citation />

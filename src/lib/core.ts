@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 // Colour tokens.
 // Neutral colours (text, gridlines, panels) follow the page theme and are CSS custom properties,
-// defined in src/styles/figure-theme.css. In SVG strings use them through `style="…"`
+// defined in src/styles/tokens.css. In SVG strings use them through `style="…"`
 // (SVG presentation attributes do not accept var()), e.g.
 //   `<line … style="stroke:${C.rule}"/>`  `<text … style="fill:${C.muted}">`
 // For canvas / WebGL, read the resolved value with cssColor(C.rule).
@@ -26,11 +26,16 @@ export const C = {
   warn: "var(--fig-warn)", // #E8A33D
 } as const;
 
-/** Resolve a `var(--x)` token (or any CSS colour) to a concrete colour string, for canvas/WebGL. */
-export function cssColor(token: string, el: Element = document.documentElement): string {
+/**
+ * Resolve a `var(--x)` token (or any CSS colour) to a concrete colour string, for canvas/WebGL.
+ * WebGL figures sit in a `.stage` (always dark: additive glows need a dark ground), so tokens
+ * resolve against the first stage on the page unless an element is given.
+ */
+export function cssColor(token: string, el?: Element): string {
   const m = /^var\((--[^)]+)\)$/.exec(token);
   if (!m) return token;
-  return getComputedStyle(el).getPropertyValue(m[1]).trim() || "#888";
+  const scope = el ?? document.querySelector(".stage") ?? document.documentElement;
+  return getComputedStyle(scope).getPropertyValue(m[1]).trim() || "#888";
 }
 
 /** Deme colours, indexed by 0-based deme. */

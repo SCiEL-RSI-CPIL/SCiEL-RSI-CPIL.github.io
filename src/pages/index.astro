@@ -1,25 +1,22 @@
 ---
-// P1: the original page body, ported as-is so each figure can be checked against the legacy page.
-// The layout and text are replaced in P2/P3; the figures (src/figures) carry over.
-import body from "../port/body.html?raw";
-import { SITE, AUTHORS, BIBTEX_AUTHORS } from "../data/site";
-import "../styles/legacy.css";
-import "../styles/figure-theme.css";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/source-serif-4";
+import "@fontsource-variable/source-serif-4/wght-italic.css";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/tokens.css";
+import "../styles/site.css";
+import "../styles/figures.css";
 
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const authorsHtml = AUTHORS.map((a) =>
-  a.href
-    ? `<a class="au" href="${esc(a.href)}" target="_blank" rel="noopener">${esc(a.name)}</a>`
-    : `<span class="au">${esc(a.name)}</span>`,
-).join(" · ");
-const html = body.replace("<!--AUTHORS-->", authorsHtml).replace("<!--BIBAUTHORS-->", esc(BIBTEX_AUTHORS));
+import Masthead from "../components/Masthead.astro";
+import Article from "../content/article.mdx";
+import { SITE, AUTHORS } from "../data/site";
+import { SECTIONS, sectionNumber } from "../data/sections";
 
-const description =
-  "SCiEL: recursive self-improvement (RSI) through cultural transmission. Demes of programs and research cells learn, pass on what survives a trial at the recipient, and every decision is a randomized experiment on the system itself.";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ScholarlyArticle",
   headline: SITE.title,
+  description: SITE.description,
   author: AUTHORS.map((a) => ({ "@type": "Person", name: a.name, ...(a.href ? { url: a.href } : {}) })),
   publisher: { "@type": "Organization", name: "CPIL Research Group, MBZUAI" },
   about: "recursive self-improvement (RSI)",
@@ -33,26 +30,55 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{SITE.title} · {SITE.shortTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={SITE.description} />
     <meta name="author" content={AUTHORS.map((a) => a.name).join(", ")} />
-    <meta name="theme-color" content="#000000" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f11" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={SITE.url} />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content={SITE.shortTitle} />
     <meta property="og:title" content={SITE.title} />
-    <meta property="og:description" content="Recursive self-improvement (RSI) through cultural transmission. Research ongoing; every figure is drawn from real runs." />
+    <meta property="og:description" content={SITE.description} />
     <meta property="og:image" content={SITE.ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Let Them Get Better at Getting Better: recursive self-improvement through cultural transmission." />
     <meta property="og:url" content={SITE.url} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={SITE.title} />
+    <meta name="twitter:description" content={SITE.description} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
-    <Fragment set:html={html} />
+    <a class="skip" href="#idea">Skip to content</a>
+    <nav class="top" id="nav" aria-label="Sections">
+      <div class="in">
+        <a class="brand" href="#top">SCiEL</a>
+        <div class="toc" id="toc">
+          {SECTIONS.map((s) => <a href={`#${s.id}`}><span>{sectionNumber(s.id)}</span>{s.nav}</a>)}
+        </div>
+        <button class="mtoc" id="mtoc" aria-expanded="false" aria-controls="toc">Contents</button>
+        <a class="gh" href="https://github.com/Doldrums/sciel" target="_blank" rel="noopener">Code</a>
+      </div>
+    </nav>
+
+    <Masthead />
+
+    <main class="article">
+      <Article />
+    </main>
+
+    <footer class="site">
+      Figures are drawn from SCiEL runs with Qwen3.8-27B served locally, processed with the same code as the run
+      viewer (<code>sciel web</code>); the runs are in the
+      <a href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a>.
+      Research is ongoing and the preprint is in progress. Questions and collaborations: write to any of the authors.
+      <br /><a class="top" href="#top">Back to top ↑</a>
+    </footer>
+
     <script>
       import "../scripts/main";
     </script>

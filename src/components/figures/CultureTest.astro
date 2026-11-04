@@ -1,0 +1,15 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <div class="two">
+    <div class="fig" id="ctA"></div>
+    <div class="fig" id="ctB"></div>
+  </div>
+  <Fragment slot="caption">
+    <b>A randomised test of culture.</b> Left: the probability that a step succeeds, with and without a finding from
+    another deme in the prompt, weighted by the inverse of each choice's logged probability. Right: the difference by
+    phase of the run, with 95% intervals from a bootstrap over runs; each dot is one run's own difference, sized by its
+    number of steps.
+  </Fragment>
+</Figure>

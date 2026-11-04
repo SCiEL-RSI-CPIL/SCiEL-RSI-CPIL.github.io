@@ -1,0 +1,19 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="full" stage title="Relief" sub="The same programs on four maps. Height is −log<sub>10</sub>(1 − score), i.e. digits of agreement with the best known value; the surface interpolates between programs.">
+  <Fragment slot="controls">
+    <span class="seglab">Axes</span><div class="seg" id="amode"><button data-m="disk" class="on">Culture disk</button><button data-m="code">Code</button><button data-m="landscape">Behaviour</button><button data-m="time">Time × deme</button></div>
+    <span class="seglab">Show</span><div class="seg" id="smode"><button data-m="surface" class="on">Surface</button><button data-m="contours">Contours</button><button data-m="points">Points</button></div>
+    <span class="seglab">View</span><div class="seg" id="views"><button data-v="corner" class="on">Corner</button><button data-v="front">Front</button><button data-v="side">Side</button><button data-v="top">Top</button><button data-v="low">Low</button><button data-v="orbit">Orbit</button></div>
+  </Fragment>
+  <div id="map3d"><canvas id="c3d"></canvas><div id="ov3d"></div><div class="tip" id="tip3d" hidden></div></div>
+  <div class="legend" id="leg3d"></div>
+  <Fragment slot="caption">
+    <b>Smooth in behaviour, rugged in code.</b> <b>Culture disk:</b> the disk above, lifted by score, so lineages
+    become ridges. <b>Code:</b> the first two principal components of the programs' identifier counts; good code forms
+    clusters with valleys between them. <b>Behaviour:</b> the two metrics the task reports that track the score most
+    closely; the programs lie on one tilted sheet that edits climb in steps. <b>Time × deme:</b> when each program was
+    written, and on which deme. Drag to rotate, scroll to zoom, hover a program for its score.
+  </Fragment>
+</Figure>

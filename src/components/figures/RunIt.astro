@@ -1,0 +1,23 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <div class="ww">
+    <div><span class="who">A person</span><b>The goal and the materials</b><p>What to improve and how it is judged: a description, a paper, a notebook, data. Then approves the audit.</p></div>
+    <div><span class="who"><code>sciel task</code></span><b>The task</b><p>A checker that is exact or uses held-out data, helper modules candidates may import, and a starting program that runs; then an audit for leaks, noise, headroom and frontier, with fixes for what it finds.</p></div>
+    <div><span class="who">SCiEL</span><b>Everything during the run</b><p>Every program, proposal, tool, finding and decision, each logged with its probability. <span class="key">Nobody edits prompts or restarts demes by hand once it starts.</span></p></div>
+  </div>
+  <Fragment slot="caption">
+    <b>Who writes what.</b> In the runs on this page the task packages (checker, starting program and helper modules)
+    were built before the run; <code>sciel task</code> builds the same parts from your materials and shows its audit
+    before any search starts.
+  </Fragment>
+</Figure>
+<div class="runsteps wide" id="start">
+  <div class="figbar">
+    <p class="ftitle" style="margin:0">Run SCiEL on your problem</p>
+    <div class="seg" id="tmode"><button data-k="api" class="on">API key</button><button data-k="local">Local model</button></div>
+  </div>
+  <ol class="steps" id="tsteps"></ol>
+  <p class="snote" id="tnote"></p>
+</div>

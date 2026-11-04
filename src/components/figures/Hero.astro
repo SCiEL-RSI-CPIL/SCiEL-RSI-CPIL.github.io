@@ -1,0 +1,17 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide" class="teaser">
+  <div class="hero brushable" id="hero">
+    <div class="fig relwrap" id="heroDisk"></div>
+    <div class="fig relwrap" id="heroCode"></div>
+  </div>
+  <p class="hint">Hover a program to follow its lineage in both views.</p>
+  <Fragment slot="caption">
+    <b>Individuals learn; culture travels.</b> One run on the third autocorrelation constant (Autocorrelation A).
+    <b>Left:</b> each sector of the disk is a deme, a subpopulation of programs evolving on its own; each ring outward
+    is a generation, starting from the seed (the starting program) at the centre, and lines join parents to
+    children. A crimson chord is a finding one deme passed to another.
+    <b>Right:</b> the same programs, placed by how similar their code is.
+  </Fragment>
+</Figure>

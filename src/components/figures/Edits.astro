@@ -1,0 +1,18 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <div class="two">
+    <div class="fig" id="edits"></div>
+    <div>
+      <p class="lab">π across runs</p>
+      <div id="pis"></div>
+    </div>
+  </div>
+  <Fragment slot="caption">
+    <b>Steps up get rarer near the top.</b> Left: each child against its parent; axes are distance to the best known
+    value, so the frontier is top right, and points above the diagonal are improvements. Right: upper bar, the share of
+    all edits that beat their parent (π); lower bar, the same share at the frontier, for edits whose parent is within
+    0.01 of the run's best. Hover a point for its scores.
+  </Fragment>
+</Figure>
