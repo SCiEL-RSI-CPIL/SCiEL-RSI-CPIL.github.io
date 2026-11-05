@@ -163,10 +163,9 @@ export async function mount(): Promise<void> {
   const o = await loadOverview();
   const r = await loadRun(o.order[0]);
   const disk = el("heroDisk");
-  disk.innerHTML = diskSvg(r, 640);
   hover(disk, r);
   brushLineage(el("hero"), r);
-  const svg = disk.querySelector("svg")!;
+  let svg: SVGSVGElement;
   const by = programsById(r);
   const m = diskModel(r);
 
@@ -198,6 +197,56 @@ export async function mount(): Promise<void> {
     demes.map((d) => `<button type="button" data-k="${d}"><i style="background:${demeColor(d)}"></i>${esc(demeName(d))}</button>`).join("");
   const line = el("hero-info");
   let cur: number | null = null;
+
+  // Replay: the disk grows attempt by attempt, once on arrival, then on request.
+  const T = Math.max(...r.programs.map((p) => p[6] || 0));
+  const range = el<HTMLInputElement>("heroT");
+  const label = el("heroTv");
+  const btn = el<HTMLButtonElement>("heroPlay");
+  range.max = String(T);
+  let shownT = -1;
+  const render = (t: number) => {
+    t = Math.round(t);
+    if (t === shownT) return;
+    shownT = t;
+    disk.innerHTML = diskSvg(r, 640, t >= T ? null : t);
+    svg = disk.querySelector("svg")!;
+    focusDeme(svg, cur);
+    range.value = String(t);
+    label.textContent = `attempt ${t} of ${T}`;
+  };
+  let playing = !prefersReducedMotion();
+  let t = playing ? 0 : T;
+  let last = 0;
+  const setBtn = () => (btn.textContent = playing ? "Pause" : t >= T ? "Replay" : "Play");
+  btn.addEventListener("click", () => {
+    playing = !playing;
+    if (playing && t >= T) t = 0;
+    setBtn();
+  });
+  range.addEventListener("input", () => {
+    playing = false;
+    t = +range.value;
+    render(t);
+    setBtn();
+  });
+  const frame = (now: number) => {
+    const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
+    last = now;
+    if (playing && isVisible(disk)) {
+      t = Math.min(T, t + (dt * T) / 9); // the whole run in about nine seconds
+      render(t);
+      if (t >= T) {
+        playing = false;
+        setBtn();
+      }
+    }
+    requestAnimationFrame(frame);
+  };
+  render(t);
+  setBtn();
+  requestAnimationFrame(frame);
+
   const show = (d: number | null) => {
     cur = d;
     focusDeme(svg, d);
@@ -218,7 +267,7 @@ export async function mount(): Promise<void> {
   const order: (number | null)[] = [null, ...demes];
   let k = 0;
   setInterval(() => {
-    if (!touring || !isVisible(disk)) return;
+    if (!touring || playing || t < T || !isVisible(disk)) return;
     k = (k + 1) % order.length;
     show(order[k]);
   }, 2600);

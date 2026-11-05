@@ -83,7 +83,7 @@ function hatch(W: World): string {
   return cv.toDataURL();
 }
 
-/** A trial in which SCiEL reaches the summit and the three baselines do not (the typical case in Figure 4). */
+/** A trial in which SCiEL reaches the summit and the three baselines do not (the typical case in Figure 5). */
 function pickTrial(W: World): Record<Mode, SearchRun> {
   let out: Record<Mode, SearchRun> | null = null;
   for (let seed = 500; seed < 530; seed++) {

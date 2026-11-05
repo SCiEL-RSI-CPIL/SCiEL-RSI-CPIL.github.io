@@ -11,6 +11,7 @@ type Loader = () => Promise<{ mount: () => Promise<void> | void }>;
 // [root element id, module]. Order matters only for modules that import each other.
 const FIGURES: [string, Loader][] = [
   ["hero", () => import("../figures/disk")],
+  ["steps", () => import("../figures/steps")],
   ["cost", () => import("../figures/cost")],
   ["climb", () => import("../figures/climb")],
   ["methods", () => import("../figures/methods")],

@@ -2,6 +2,7 @@ import Sec from "../components/Sec.astro";
 import TocBox from "../components/TocBox.astro";
 import Citation from "../components/Citation.astro";
 import Hero from "../components/figures/Hero.astro";
+import Steps from "../components/figures/Steps.astro";
 import Cost from "../components/figures/Cost.astro";
 import Climb from "../components/figures/Climb.astro";
 import Methods from "../components/figures/Methods.astro";
@@ -33,6 +34,10 @@ A system improves *recursively* when its improvements <span class="key">make it 
 - **Every choice is randomised and logged**, so SCiEL can measure from its own records whether a change to itself helped.
 
 We run SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments), an independent benchmark of research tasks, with an open 27B model served locally.
+
+Each step is an edit the model proposes, with its reason in plain words. Most steps fail; the ones that set a record look like this:
+
+<Steps />
 
 <Sec id="results" />
 

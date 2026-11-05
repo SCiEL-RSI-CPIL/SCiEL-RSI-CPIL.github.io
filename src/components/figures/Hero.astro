@@ -6,6 +6,11 @@ import Figure from "../Figure.astro";
 <Figure width="wide" class="teaser">
   <div class="hero">
     <div class="hero-main"><div class="fig relwrap brushable" id="hero"><div id="heroDisk"></div></div>
+      <div class="racebar">
+        <button class="playb" id="heroPlay" type="button">Pause</button>
+        <input class="rng" type="range" id="heroT" min="0" max="100" step="1" value="0" aria-label="Attempt" />
+        <span class="num" id="heroTv"></span>
+      </div>
       <div class="chips-row" id="hero-chips" aria-label="Focus one deme"></div>
       <p class="hero-info" id="hero-info"></p></div>
     <div class="howto">
@@ -35,7 +40,7 @@ import Figure from "../Figure.astro";
     </div>
   </div>
   <Fragment slot="caption">
-    <b>Figure 1.</b> Every program in one SCiEL run on the third autocorrelation constant. Pick a deme to follow it;
-    hover a program to trace its ancestry.
+    <b>Figure 1.</b> Every program in one SCiEL run on the third autocorrelation constant. It grows attempt by attempt;
+    pick a deme to follow it, or tap a program to trace its ancestry.
   </Fragment>
 </Figure>
