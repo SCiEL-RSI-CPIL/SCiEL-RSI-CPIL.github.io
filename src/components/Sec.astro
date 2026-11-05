@@ -1,0 +1,10 @@
+---
+import { SECTIONS, sectionNumber } from "../data/sections";
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const s = SECTIONS.find((x) => x.id === id);
+if (!s) throw new Error(`Unknown section ${id}: add it to src/data/sections.ts`);
+---
+<h2 id={id}><span class="num">{sectionNumber(id)}</span>{s.title}</h2>

@@ -3,25 +3,37 @@
 The project page of SCiEL, recursive self-improvement through cultural transmission:
 https://sciel-rsi-cpil.github.io/
 
-A static page served by GitHub Pages from `main`. The code is at
-[Doldrums/sciel](https://github.com/Doldrums/sciel); the runs shown on the page are in the
+The code is at [Doldrums/sciel](https://github.com/Doldrums/sciel); the runs shown on the page are in the
 [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments).
+
+## Stack
+
+[Astro](https://astro.build) + MDX + TypeScript, built and deployed to GitHub Pages by
+`.github/workflows/deploy.yml` on every push to `main`.
 
 ## Layout
 
-- `index.html` – the page.
-- `assets/style.css` – the styles.
-- `assets/runs.js` – the six runs the figures are drawn from, exported from the run viewer.
-- `assets/*.js` – one file per figure or section, loaded in the order listed in `index.html`:
-  `page` (helpers, navigation, run selector, tooltips), `disk`, `cost`, `replay`, `culture`,
-  `progress`, `records`, `world` (the toy landscape and the four searchers), `compare-scene`,
-  `compare`, `niches`, `relief`.
+- `src/content/article.mdx` – the article text. Edit prose here.
+- `src/data/` – single sources for authors and metadata (`site.ts`), section numbering (`sections.ts`)
+  and the names readers see for runs and demes (`names.ts`). Internal IDs (run hashes, program ids)
+  are never shown on the page.
+- `src/components/` – page pieces (masthead, contents, citation) and `figures/*.astro`, the markup of
+  each figure.
+- `src/figures/*.ts` – the interactive figures, one ES module each, loaded when they near the viewport.
+- `src/lib/` – data loading, shared figure helpers and colour tokens, tooltips.
+- `src/styles/` – `tokens.css` (light/dark themes), `site.css` (layout, type), `figures.css`.
+- `public/data/` – run data as JSON, produced by `node scripts/split-data.mjs <runs.js>` from the run
+  viewer export.
+- `public/og-card.png` – the share card, rendered from `scripts/og-card.html` by `node scripts/og-card.mjs`.
+- `legacy/` – the original hand-written page, kept unchanged for reference and not deployed.
+  The same version is also tagged `legacy-v1` in git. To view it: `python3 -m http.server -d legacy 8000`.
 
 ## Working on it
 
 ```sh
-python3 -m http.server 8000
+npm install
+npm run dev      # http://localhost:4321/
+npm run build    # outputs dist/
 ```
 
-Then open http://localhost:8000/. Keep each file at or below 500 lines, and keep comments out of
-the code; the README is the only Markdown file in the repository. Use Conventional Commit messages.
+Use Conventional Commit messages.
