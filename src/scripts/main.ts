@@ -16,6 +16,7 @@ const FIGURES: [string, Loader][] = [
   ["cost", () => import("../figures/cost")],
   ["climb", () => import("../figures/climb")],
   ["methods", () => import("../figures/methods")],
+  ["ablate", () => import("../figures/ablation")],
   ["ctest", () => import("../figures/culture")],
   ["edits", () => import("../figures/progress")],
 ];
