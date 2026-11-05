@@ -2,6 +2,7 @@ import Sec from "../components/Sec.astro";
 import TocBox from "../components/TocBox.astro";
 import Citation from "../components/Citation.astro";
 import Hero from "../components/figures/Hero.astro";
+import Framework from "../components/figures/Framework.astro";
 import Steps from "../components/figures/Steps.astro";
 import Cost from "../components/figures/Cost.astro";
 import Climb from "../components/figures/Climb.astro";
@@ -26,22 +27,17 @@ import Edits from "../components/figures/Edits.astro";
 
 <Sec id="idea" />
 
-A system improves *recursively* when its improvements <span class="key">make it better at improving</span> (<a class="cite" href="#ref-14">Yampolskiy, 2015</a>). People do this through culture: what one person learns is taught, tried by others, and kept if it works (<a class="cite" href="#ref-15">Henrich, 2016</a>). SCiEL applies the same loop to a population of programs written by a language model:
+A system improves *recursively* when its improvements <span class="key">make it better at improving</span> (<a class="cite" href="#ref-14">Yampolskiy, 2015</a>). People do this through culture: what one person learns is taught, tried by others, and kept if it works (<a class="cite" href="#ref-15">Henrich, 2016</a>). SCiEL applies the same loop to programs written by a language model. Its population is split into *demes*, groups of programs that evolve on their own, in parallel. Each deme repeats one step; between demes, what one deme learns travels as a tested *finding*:
 
-- **Demes.** The population is split into demes, groups of programs that evolve on their own, in parallel.
-- **Findings travel after a test.** A deme turns a hunch into an experiment. What holds becomes a *finding*, which is delivered to other demes and kept only if it helps there.
-- **A policy and a world model steer.** The policy learns which kinds of edit pay off; the world model predicts whether an edit will pay off and skips likely failures before they cost an evaluation.
-- **Every choice is randomised and logged**, so SCiEL can measure from its own records whether a change to itself helped.
+<Framework />
 
-We run SCiEL in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments), an independent benchmark of research tasks, with an open 27B model served locally.
-
-Each step is an edit the model proposes, with its reason in plain words. Most steps fail; the ones that set a record look like this:
+Because every choice in step 1 is drawn at random and logged with its odds, SCiEL can measure from its own records whether a change to itself helped ([Section 4](#culture)). In step 3, most edits fail. The ones that set a record look like this:
 
 <Steps />
 
 <Sec id="results" />
 
-**SCiEL reaches or beats the best known values on two open mathematical problems, at a cost of a few dollars per run.**
+**SCiEL reaches or beats the best known values on two open mathematical problems, at a cost of a few dollars per run.** All runs are in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments), an independent benchmark of research tasks, with an open 27B model served locally.
 
 | Task | Result | Compared with |
 |---|---|---|
@@ -54,17 +50,17 @@ Each step is an edit the model proposes, with its reason in plain words. Most st
 
 <Sec id="why" />
 
-**A single model, a single climber or a crowd that does not share all stall; SCiEL keeps climbing.** A hard problem is a long climb seen one edit at a time. Sampling one model many times never builds on a success. One climber builds, but stops at the first bump. Several climbers that share nothing split the budget and each stop at their own bump. On a toy landscape with a trap and a narrow ridge to the summit, the difference is visible in a single trial:
+**A single model, a single climber or a crowd that does not share all stall; SCiEL keeps climbing.** To see why SCiEL needs every part of Figure 2, we use a toy landscape small enough to search thousands of times. A hard problem is a long climb seen one edit at a time. Sampling one model many times never builds on a success. One climber builds, but stops at the first bump. Several climbers that share nothing split the budget and each stop at their own bump. The toy has a trap and a narrow ridge to the summit, and the difference is visible in a single trial:
 
 <Climb />
 
-Over 30 trials, SCiEL reaches the top in 29. Removing the learned policy, the world model or culture costs the most:
+Over 30 trials, SCiEL reaches the summit in 29. Switching off one part of Figure 2 at a time shows what each is worth: without the learned policy, the world model or culture, it gets there in 8 to 15. Research cells add little here, because on this landscape the slope always leads somewhere.
 
 <Methods />
 
 <Sec id="culture" />
 
-**Yes: receiving a finding from another deme raises the chance that an edit improves from 54% to 62%.** When a deme writes its next prompt, SCiEL flips a weighted coin to decide whether to include a finding from another deme, and logs the odds. That turns every run into a randomised experiment. Across 31 runs and 1,022 such decisions:
+**Yes: receiving a finding from another deme raises the chance that an edit improves from 54% to 62%.** The toy above suggests culture matters; real runs can test it directly. When a deme writes its next prompt, SCiEL flips a weighted coin to decide whether to include a finding from another deme, and logs the odds. That turns every run into a randomised experiment. Across 31 runs and 1,022 such decisions:
 
 <CultureTest />
 
