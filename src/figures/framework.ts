@@ -11,6 +11,7 @@ export function mount(): void {
   arcs.forEach((a) => a.style.setProperty("--len", String(Math.ceil(a.getTotalLength()))));
   const set = (k: number) => steps.forEach((s, i) => s.classList.toggle("on", i === k));
   if (prefersReducedMotion()) return;
+  root.classList.add("anim");
 
   let k = -1;
   let held = false;

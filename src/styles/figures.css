@@ -1486,18 +1486,10 @@ pre.diff .c {
   color: var(--muted);
 }
 .fw-flow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 8px;
   margin: 0 0 4px;
   font-size: var(--fs-sm);
   line-height: 1.5;
   color: var(--ink-2);
-}
-.fw-flow i {
-  font-style: normal;
-  color: var(--muted);
 }
 .fw-lane {
   display: block;
@@ -1537,17 +1529,23 @@ pre.diff .c {
   .fw-steps li::after {
     display: none;
   }
-  .fw-flow i {
-    display: none;
-  }
-  .fw-flow {
-    display: block;
-  }
-  .fw-flow span::after {
-    content: " → ";
-    color: var(--muted);
-  }
-  .fw-flow span:last-of-type::after {
-    content: "";
+}
+
+.fw-ico {
+  display: block;
+  width: 120px;
+  height: 65px;
+  margin: 12px 0 4px;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.fw-steps li.on .fw-ico,
+.fw:not(.anim) .fw-ico {
+  opacity: 1;
+}
+@media (max-width: 760px) {
+  .fw-ico {
+    width: 96px;
+    height: 52px;
   }
 }
