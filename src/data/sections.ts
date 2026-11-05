@@ -9,7 +9,7 @@ export interface Section {
 }
 
 export const SECTIONS: Section[] = [
-  { id: "idea", nav: "Idea", title: "Getting better at getting better" },
+  { id: "idea", nav: "How it works", title: "How SCiEL works" },
   { id: "results", nav: "Results", title: "Results" },
   { id: "why", nav: "Why culture", title: "Why a population with culture?" },
   { id: "culture", nav: "Does it help", title: "Does culture help?" },

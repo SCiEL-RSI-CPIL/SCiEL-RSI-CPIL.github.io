@@ -1,0 +1,39 @@
+---
+import Figure from "../Figure.astro";
+// How SCiEL works: one step inside a deme (four stations), and culture between demes.
+// The bold part names are exactly the parts switched off in the ablation (methods.ts).
+// src/figures/framework.ts walks a highlight through the stations.
+---
+<Figure width="wide">
+  <div class="fw" id="fw">
+    <p class="fw-lab">Inside each deme: one step, repeated</p>
+    <ol class="fw-steps">
+      <li data-s="0"><span class="fw-n">1</span><b>Choose</b><p>The <strong>learned policy</strong> picks a parent program and the kind of edit.</p></li>
+      <li data-s="1"><span class="fw-n">2</span><b>Screen</b><p>The <strong>world model</strong> predicts whether the edit will pay off and skips likely failures.</p></li>
+      <li data-s="2"><span class="fw-n">3</span><b>Write and test</b><p>The language model writes the edit; a checker scores the new program.</p></li>
+      <li data-s="3"><span class="fw-n">4</span><b>Keep and log</b><p>A better program joins the deme. Every choice is logged with its odds.</p></li>
+    </ol>
+    <p class="fw-back">↺ back to 1, in every deme at once</p>
+
+    <p class="fw-lab" style="margin-top:28px">Between demes: culture</p>
+    <p class="fw-flow">
+      <span>A <strong>research cell</strong> in one deme</span><i>→</i><span>tests a hunch as an experiment</span><i>→</i><span>what holds becomes a <em>finding</em></span><i>→</i><span>it is sent to other demes, and kept only if it helps there</span>
+    </p>
+    <svg class="fw-lane" viewBox="0 -12 620 196" role="img" aria-label="A finding from Deme 1 helps in Deme 2 and is kept; it does not help in Deme 3 and is dropped">
+      <path class="fw-arc" d="M164 82 Q300 14 437 30" fill="none" style="stroke:var(--fig-chord)" stroke-width="2" />
+      <path class="fw-arc2" d="M164 96 Q300 164 437 148" fill="none" style="stroke:var(--fig-chord)" stroke-width="1.6" stroke-dasharray="6 6" />
+      <text x="300" y="20" text-anchor="middle" style="fill:var(--fig-chord)">kept: it helped</text>
+      <text x="300" y="176" text-anchor="middle" style="fill:var(--muted)">dropped: it did not</text>
+      <circle cx="150" cy="89" r="13" fill="#D0702F" />
+      <circle cx="450" cy="30" r="13" fill="#3A6EA5" />
+      <circle cx="450" cy="148" r="13" fill="#B08A20" />
+      <text x="128" y="94" text-anchor="end" style="fill:var(--ink)">Deme 1</text>
+      <text x="472" y="35" style="fill:var(--ink)">Deme 2</text>
+      <text x="472" y="153" style="fill:var(--ink)">Deme 3</text>
+    </svg>
+  </div>
+  <Fragment slot="caption">
+    <b>Figure 2.</b> How SCiEL works. The parts in bold are the ones switched off, one at a time, in Figure 6;
+    red lines mean the same as in Figure 1.
+  </Fragment>
+</Figure>
