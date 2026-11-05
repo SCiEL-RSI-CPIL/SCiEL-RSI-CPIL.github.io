@@ -62,6 +62,17 @@ import Figure from "../Figure.astro";
       <text x="472" y="35" style="fill:var(--ink)">Deme 2</text>
       <text x="472" y="153" style="fill:var(--ink)">Deme 3</text>
     </svg>
+
+    <dl class="fw-terms">
+      <div><dt>Deme</dt><dd>A group of programs that evolves on its own, in parallel with the others. The runs here have 6 to 12.</dd></div>
+      <div><dt>Parent and edit</dt><dd>An edit is a change the model makes to an existing program, its parent: a small diff, a full rewrite, or a cross of two programs.</dd></div>
+      <div><dt>Learned policy</dt><dd>Trained on the population's logged choices, it learns which parents and kinds of edit tend to pay off.</dd></div>
+      <div><dt>World model</dt><dd>A forecast, learned from the run's own steps, of whether an edit will beat its parent. It acts only while it beats simple estimates.</dd></div>
+      <div><dt>Checker</dt><dd>The task's scoring program: exact, or measured on data the search never sees.</dd></div>
+      <div><dt>Research cell</dt><dd>A question a deme keeps open. It plans an experiment, writes and runs its own tool, and draws a conclusion.</dd></div>
+      <div><dt>Finding</dt><dd>A research cell's conclusion, with its measured effect. Findings are what travel between demes.</dd></div>
+      <div><dt>Culture</dt><dd>Findings passed between demes and kept where they help. Without it, each deme searches alone.</dd></div>
+    </dl>
   </div>
   <Fragment slot="caption">
     <b>Figure 2.</b> How SCiEL works. The parts in bold are the ones switched off, one at a time, in Figure 6;

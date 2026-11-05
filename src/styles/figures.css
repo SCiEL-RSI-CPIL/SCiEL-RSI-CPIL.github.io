@@ -1549,3 +1549,31 @@ pre.diff .c {
     height: 52px;
   }
 }
+
+.fw-terms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--rule);
+}
+.fw-terms div {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.fw-terms dt {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+.fw-terms dd {
+  margin: 2px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 760px) {
+  .fw-terms {
+    grid-template-columns: 1fr;
+  }
+}
