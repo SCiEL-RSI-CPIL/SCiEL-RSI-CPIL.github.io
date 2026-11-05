@@ -7,6 +7,7 @@ import Steps from "../components/figures/Steps.astro";
 import Cost from "../components/figures/Cost.astro";
 import Climb from "../components/figures/Climb.astro";
 import Methods from "../components/figures/Methods.astro";
+import Ablation from "../components/figures/Ablation.astro";
 import CultureTest from "../components/figures/CultureTest.astro";
 import Edits from "../components/figures/Edits.astro";
 
@@ -54,9 +55,13 @@ Because every choice in step 1 is drawn at random and logged with its odds, SCiE
 
 <Climb />
 
-Over 30 trials, SCiEL reaches the summit in 29. Switching off one part of Figure 2 at a time shows what each is worth: without the learned policy, the world model or culture, it gets there in 8 to 15. Research cells add little here, because on this landscape the slope always leads somewhere.
+Over 30 trials, SCiEL reaches the summit in 29; none of the others does better than 5:
 
 <Methods />
+
+Which parts of Figure 2 does that take? Switching them off shows what each is worth: without the learned policy, the world model or culture, SCiEL gets there in 8 to 15 trials. Research cells add little here, because on this landscape the slope always leads somewhere. Try any combination:
+
+<Ablation />
 
 <Sec id="culture" />
 
