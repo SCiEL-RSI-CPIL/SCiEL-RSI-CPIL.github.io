@@ -10,7 +10,6 @@ import "../styles/figures.css";
 import Masthead from "../components/Masthead.astro";
 import Article from "../content/article.mdx";
 import { SITE, AUTHORS } from "../data/site";
-import { SECTIONS, sectionNumber } from "../data/sections";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -53,16 +52,6 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip" href="#idea">Skip to content</a>
-    <nav class="top" id="nav" aria-label="Sections">
-      <div class="in">
-        <a class="brand" href="#top">SCiEL</a>
-        <div class="toc" id="toc">
-          {SECTIONS.map((s) => <a href={`#${s.id}`}><span>{sectionNumber(s.id)}</span>{s.nav}</a>)}
-        </div>
-        <button class="mtoc" id="mtoc" aria-expanded="false" aria-controls="toc">Contents</button>
-        <a class="gh" href="https://github.com/Doldrums/sciel" target="_blank" rel="noopener">Code</a>
-      </div>
-    </nav>
 
     <Masthead />
 
