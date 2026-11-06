@@ -25,8 +25,9 @@ The code is at [SCiEL-RSI-CPIL/sciel-rsi-framework](https://github.com/SCiEL-RSI
 - `public/data/` – run data as JSON, produced by `node scripts/split-data.mjs <runs.js>` from the run
   viewer export.
 - `public/og-card.png` – the share card, rendered from `scripts/og-card.html` by `node scripts/og-card.mjs`.
-- `legacy/` – the original hand-written page, kept unchanged for reference and not deployed.
-  The same version is also tagged `legacy-v1` in git. To view it: `python3 -m http.server -d legacy 8000`.
+- `legacy/` – the original hand-written page, kept unchanged. `scripts/original.mjs` runs after
+  `astro build` and publishes it at `/orginal.html` (and `/original.html`), with its assets under `/orginal/`.
+  The same version is also tagged `legacy-v1` in git.
 
 ## Working on it
 
