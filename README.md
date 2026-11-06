@@ -3,7 +3,7 @@
 The project page of SCiEL, recursive self-improvement through cultural transmission:
 https://sciel-rsi-cpil.github.io/
 
-The code is at [Doldrums/sciel](https://github.com/Doldrums/sciel); the runs shown on the page are in the
+The code is at [SCiEL-RSI-CPIL/sciel-rsi-framework](https://github.com/SCiEL-RSI-CPIL/sciel-rsi-framework); the runs shown on the page are in the
 [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments).
 
 ## Stack
