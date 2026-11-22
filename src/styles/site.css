@@ -2706,12 +2706,3 @@ footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
     text-wrap: pretty;
   }
 }
-.article p a:not(.tc):not(.go)::after,
-.article li a:not(.tc):not(.go)::after,
-.article td a:not(.tc):not(.go)::after,
-.article figcaption a:not(.tc):not(.go)::after,
-.article .footnotes a:not([href^="#fnref"])::after {
-  display: inline;
-  margin-left: 0;
-  padding-left: 0.12em;
-}
