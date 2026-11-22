@@ -41,17 +41,8 @@ function tocRail(): void {
   document.querySelectorAll(".masthead, .article > .wide, .article > .full").forEach((n) => io.observe(n));
 }
 
-function labelCells(): void {
-  document.querySelectorAll<HTMLTableElement>(".article table").forEach((t) => {
-    const heads = [...t.querySelectorAll("thead th")].map((th) => th.textContent?.trim() ?? "");
-    t.querySelectorAll("tbody tr").forEach((tr) =>
-      [...tr.children].forEach((td, i) => td.setAttribute("data-label", heads[i] ?? "")),
-    );
-  });
-}
 
 export function initChrome(): void {
   copyButtons();
-  labelCells();
   tocRail();
 }
