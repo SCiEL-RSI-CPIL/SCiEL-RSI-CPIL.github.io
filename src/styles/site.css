@@ -2649,3 +2649,69 @@ footer.site a::after { content: none !important; }
 }
 .masthead .orgs img[src*="cpil-mark"] { width: 30px; height: 26px; }
 footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
+
+.buttons a.live {
+  gap: 8px;
+}
+.live-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4cc26a;
+  flex: none;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #4cc26a;
+  animation: live-pulse 2s ease-out infinite;
+}
+@keyframes live-pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(2.6); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-dot::after { animation: none; }
+}
+@media (max-width: 760px) {
+  .no-mobile { display: none !important; }
+}
+
+.article p a:not(.tc):not(.go),
+.article li a:not(.tc):not(.go),
+.article td a:not(.tc):not(.go),
+.article figcaption a:not(.tc):not(.go),
+.article .footnotes a,
+.cite {
+  white-space: normal;
+}
+.article p a:not(.tc):not(.go)::after,
+.article li a:not(.tc):not(.go)::after,
+.article td a:not(.tc):not(.go)::after,
+.article figcaption a:not(.tc):not(.go)::after,
+.article .footnotes a:not([href^="#fnref"])::after {
+  content: "\2060\21AA";
+  display: inline;
+  margin-left: 0;
+  padding-left: 0.12em;
+}
+@media (max-width: 760px) {
+  .article p,
+  .article li,
+  .article figcaption {
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+  }
+}
+.article p a:not(.tc):not(.go)::after,
+.article li a:not(.tc):not(.go)::after,
+.article td a:not(.tc):not(.go)::after,
+.article figcaption a:not(.tc):not(.go)::after,
+.article .footnotes a:not([href^="#fnref"])::after {
+  display: inline;
+  margin-left: 0;
+  padding-left: 0.12em;
+}
