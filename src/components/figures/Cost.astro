@@ -3,12 +3,24 @@ import Figure from "../Figure.astro";
 ---
 <Figure width="wide">
   <Fragment slot="controls">
-    <div class="seg" id="cxm"><button data-m="cost" class="on">Dollars</button><button data-m="calls">Model calls</button></div>
+    <div class="seg" id="cxm"><button data-m="cost" class="on">Dollars</button><button data-m="calls">Model calls</button><button data-m="gpus">GPUs</button><button data-m="size">Model size</button></div>
   </Fragment>
   <div class="chart" id="cost"></div>
   <div class="legend" id="costleg"></div>
+  <p class="scroll-hint">Swipe sideways to see the whole chart.</p>
   <Fragment slot="caption">
-    <b>Figure 4.</b> Best score so far against model spend for six runs from scratch, labelled with run, final score
-    and total spend. Every run gets within 1% of the best known value for a few cents.
+    <b>Figure 6.</b> One run of a recursive self-improvement system, as each paper reports it on its own task. The
+    tasks differ, so the rows show scale, not a ranking. <b>Dollars</b> are model spend at API list prices, as the other
+    papers report theirs; SCiEL's own model runs on two H100s shared by parallel runs, whose rental for a whole run
+    would be roughly $25 to $90 (6 to 15 hours at $2 to $3 per GPU-hour). The yellow marks compare with SCiEL's costliest
+    run and are left out where a figure is not the cost of one run: the Huxley–Gödel Machine reports $5,000 for all its
+    experiments together, and Dream-RSI's figure is its own estimate for one search on its costliest task.
+    <b>Model size</b> counts total parameters; gpt-oss-120b and Qwen3-Coder-480B are mixtures of experts with 5.1B and
+    35B active. Sources: Red Queen Gödel Machine (<a class="cite" href="#ref-23">Iacob et al., 2026</a>), whose authors
+    also price Hyperagents' search tokens (<a class="cite" href="#ref-10">Zhang et al., 2026</a>); TTT-Discover
+    (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>); ThetaEvolve (<a class="cite" href="#ref-12">Wang et al., 2025b</a>);
+    MASS (<a class="cite" href="#ref-5">Lee et al., 2026</a>); Huxley–Gödel Machine (<a class="cite" href="#ref-9">Wang et al., 2025a</a>);
+    SICA (<a class="cite" href="#ref-8">Robeyns et al., 2025</a>); Darwin Gödel Machine (<a class="cite" href="#ref-7">Zhang et al., 2025</a>);
+    Dream-RSI (<a class="cite" href="#ref-24">Zheng et al., 2026</a>).
   </Fragment>
 </Figure>

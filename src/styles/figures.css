@@ -1,4 +1,3 @@
-/* Figure internals, ported from the legacy stylesheet. Colours are theme tokens (tokens.css). */
 
 .figure,
 .figure * {
@@ -57,7 +56,6 @@ pre.diff {
   text-decoration: none;
 }
 
-/* controls */
 .figbar {
   display: flex;
   justify-content: space-between;
@@ -119,7 +117,6 @@ pre.diff {
 .playb:hover {
   border-color: var(--ink);
 }
-/* A thin, quiet slider: hairline track, small dark thumb. */
 .rng {
   -webkit-appearance: none;
   appearance: none;
@@ -195,7 +192,6 @@ pre.diff {
   text-align: right;
 }
 
-/* legends, tooltips */
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -260,7 +256,6 @@ pre.diff {
   border-top: 1px solid var(--rule);
 }
 
-/* grids */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
@@ -341,7 +336,6 @@ pre.diff {
   }
 }
 
-/* brushing in the hero */
 .brushable circle[data-id],
 .brushable [data-l] {
   transition: opacity 0.15s;
@@ -362,7 +356,6 @@ pre.diff {
   stroke-width: 2.2;
 }
 
-/* three.js */
 .three,
 #map3d {
   position: relative;
@@ -489,7 +482,6 @@ pre.diff {
   padding: 16px 18px 14px;
 }
 
-/* bar tables: compare, funnel */
 .mcompare {
   margin-top: 26px;
   display: grid;
@@ -543,7 +535,6 @@ pre.diff {
   color: var(--ink);
 }
 
-/* findings list (replay) */
 .row {
   border-top: 1px solid var(--rule);
   padding: 14px 0 16px;
@@ -560,7 +551,6 @@ pre.diff {
   background: linear-gradient(transparent 60%, var(--mark) 60%);
 }
 
-/* machinery tiles (niches) */
 .mach {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -597,7 +587,6 @@ pre.diff {
   }
 }
 
-/* records table and diff */
 .figure table {
   border-collapse: collapse;
   width: 100%;
@@ -695,7 +684,6 @@ pre.diff .c {
   }
 }
 
-/* small multiples */
 .multi {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -717,7 +705,6 @@ pre.diff .c {
   }
 }
 
-/* step diagrams (world model loop, controllers, consolidation tiers) */
 .steps-row {
   list-style: none;
   margin: 0;
@@ -790,7 +777,6 @@ pre.diff .c {
   }
 }
 
-/* "who writes what" and task-fit lists */
 .ww {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -833,7 +819,6 @@ pre.diff .c {
   }
 }
 
-/* "run it" steps */
 .runsteps {
   border: 1px solid var(--rule);
   border-radius: 12px;
@@ -942,8 +927,6 @@ pre.diff .c {
   }
 }
 
-/* Chart text keeps one on-screen size however wide the chart is drawn (see src/lib/svg-text.ts).
-   CSS outranks the font-size attributes the figure code writes. */
 .figure svg text {
   font-family: var(--font-sans);
   font-size: calc(var(--fs-fig) * min(var(--k, 1), var(--kmax, 9)));
@@ -952,12 +935,10 @@ pre.diff .c {
 .figure svg text[font-size="13"] {
   font-size: calc(var(--fs-xs) * min(var(--k, 1), var(--kmax, 9)));
 }
-/* On a phone the cost chart's labels may shrink a little rather than collide. */
 #cost svg {
   --kmax: 1.3;
 }
 
-/* Horizontal bar and dot charts, laid out in HTML so they reflow on a phone. */
 .hb {
   font-size: var(--fs-xs);
   color: var(--ink-2);
@@ -1098,7 +1079,6 @@ pre.diff .c {
   }
 }
 
-/* Four ways to climb: four framed cards side by side, two by two on a phone. */
 .climb {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1160,7 +1140,6 @@ pre.diff .c {
   }
 }
 
-/* Figure 1: focus one deme. */
 #heroDisk [data-d],
 #heroDisk [data-cf] {
   transition: opacity 0.35s;
@@ -1213,7 +1192,6 @@ pre.diff .c {
   color: var(--ink-2);
 }
 
-/* Stat cards: a large before → after number with a small scale under it (Figure 5). */
 .stat-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1328,13 +1306,11 @@ pre.diff .c {
     font-size: 18px;
   }
 }
-/* Figure 4 sits in the same thin frame as the other figures. */
 #methods .hb {
   border: 1px solid var(--rule);
   padding: 18px 20px 14px;
 }
 
-/* Figure 2: record steps, one card at a time */
 .stp-chart svg {
   display: block;
   width: 100%;
@@ -1412,7 +1388,6 @@ pre.diff .c {
   font-size: 24px;
 }
 
-/* Figure 2: how SCiEL works */
 .fw-lab {
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -1549,11 +1524,9 @@ pre.diff .c {
   }
 }
 
-/* Term definitions in Figure 2: shown on hover or tap, never as body text. */
 .fw-flow {
   position: relative;
 }
-/* The definition box spans the card (or the line) the term sits in, so it never leaves the screen. */
 .fw .term {
   position: static;
   text-decoration: underline dotted var(--rule-strong);
@@ -1578,7 +1551,6 @@ pre.diff .c {
   white-space: normal;
 }
 
-/* Figure 2: the steps are buttons; the tapped one opens a demo below */
 .fw-lab span {
   font-weight: 400;
   color: var(--muted);
@@ -1625,7 +1597,6 @@ pre.diff .c {
   gap: 8px;
   margin-top: 12px;
 }
-/* 1 · odds */
 .fwp-odds {
   display: grid;
   gap: 8px;
@@ -1657,7 +1628,6 @@ pre.diff .c {
   color: var(--ink);
   font-weight: 600;
 }
-/* 2 · forecast chips */
 .fwp-chips {
   display: flex;
   flex-wrap: wrap;
@@ -1721,13 +1691,11 @@ pre.diff .c {
   height: 12px;
   font-size: 0;
 }
-/* 3 · code */
 .fwp-code {
   max-height: none !important;
   min-height: 120px;
   font-family: var(--font-mono);
 }
-/* 4 · log */
 .fwp-keep {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -1785,7 +1753,6 @@ pre.diff .c {
   }
 }
 
-/* Figure 7: ablation with switches */
 #ablate {
   border: 1px solid var(--rule);
   padding: 16px 18px;
@@ -1882,4 +1849,10 @@ pre.diff .c {
   margin-top: 16px;
   padding-top: 4px;
   border-top: 1px solid var(--rule);
+}
+.l3.mlab {
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0 4px;
+  border-radius: 4px;
+  line-height: 16px;
 }

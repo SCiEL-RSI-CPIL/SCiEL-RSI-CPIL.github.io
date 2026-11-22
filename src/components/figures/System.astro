@@ -1,0 +1,17 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="full" class="sysfig">
+  <div class="method" id="method">
+    <video class="method-video" src="/video/sciel-method.mp4" poster="/video/sciel-method-poster.jpg"
+      autoplay muted loop playsinline preload="metadata"
+      aria-label="How SCiEL works. Run: one attempt in every deme, from the parent, its deme and the repertoire; a planner draws the choices from logged odds; a frozen LLM writes the child; novelty rejects repeats; an exact check scores it; eight demes run, the weaker half stops at 50% and 75% of the budget. Learn: controllers learn the odds from the journal, bandits from step one, a world model after about 60 steps, an RL step policy after about 200. Share: research cells write and run their own tools in Docker; a finding is tried in the receiving deme and enters the repertoire only if its e-value passes 1/alpha; the next run inherits the repertoire and re-tests each item."></video>
+  </div>
+  <Fragment slot="caption">
+    <b>Figure 3.</b> How SCiEL works. For each attempt, SCiEL draws its choices with learned odds, the frozen model writes a
+    program, and an exact checker scores it. SCiEL records every choice and its odds in a journal and learns the odds of
+    the next choices from it. A finding enters the repertoire <i>R</i> only after a randomised trial in the deme that
+    receives it. Because the next attempt depends on <i>R</i>, and <i>R</i> changes only after a test, the process is not
+    a loop that repeats itself.
+  </Fragment>
+</Figure>

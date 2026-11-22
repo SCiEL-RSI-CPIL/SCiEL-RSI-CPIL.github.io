@@ -1,5 +1,3 @@
-// Page-level metadata. The author list below is the single source for the byline,
-// <meta name="author">, JSON-LD, the OG card and the citation block.
 
 export interface Author {
   name: string;
@@ -18,9 +16,9 @@ export const SITE = {
   title:
     "Let Them Get Better at Getting Better: Recursive Self-Improvement (RSI) through Cultural Transmission",
   shortTitle: "SCiEL",
-  date: "November 2026",
+  date: "September 20, 2026",
   description:
-    "SCiEL improves how it searches, not only what it finds: what one subpopulation of programs learns is tested, passed on, and kept only if it helps where it lands.",
+    "A system built on a frozen 27B model that keeps improving from the experience it produces itself: what one group of programs learns is tested, passed on, and kept only if it helps where it lands.",
   url: "https://sciel-rsi-cpil.github.io/",
   ogImage: "https://sciel-rsi-cpil.github.io/og-card.png",
   authors: AUTHORS,
@@ -30,5 +28,4 @@ export const SITE = {
   ],
 };
 
-/** "Arina Kharlamova and Jikun Kang and …", for BibTeX. */
 export const BIBTEX_AUTHORS = AUTHORS.map((a) => a.name).join(" and ");

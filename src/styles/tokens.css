@@ -1,42 +1,51 @@
-/* Design tokens. One fixed theme: white page, black text.
-   --fig-* are the neutral colours used inside figures (see C in src/lib/core.ts). */
 
 :root {
   color-scheme: light;
 
-  --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-sans: "Google Sans", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-serif: "Source Serif 4 Variable", "Iowan Old Style", Georgia, serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Type scale. Body text is the serif at 19px; everything around it uses these five steps. */
-  --fs-2xs: 12px; /* small caps labels, axis ticks, tags */
-  --fs-xs: 13px; /* legends, controls, tooltips, notes */
-  --fs-sm: 14px; /* captions, tables, references */
-  --fs-md: 15px; /* figure subtitles, UI emphasis */
-  --fs-lg: 17px; /* figure titles, list text in boxes */
-  --fs-fig: 12px; /* text inside SVG charts, at its on-screen size */
+  --fs-2xs: 12px;
+  --fs-xs: 13px;
+  --fs-sm: 14px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-fig: 12px;
 
-  --col: 720px;
-  --wide: 1120px;
+  --col: 860px;
+  --wide: 1080px;
   --full: 1360px;
   --gutter: 24px;
 
   --bg: #ffffff;
-  --bg-soft: #f5f5f3;
+  --bg-soft: #f4f5f7;
   --bg-raised: #ffffff;
-  --ink: #000000;
-  --ink-2: #1a1a1a;
-  --muted: #5c5c63;
-  --rule: #e3e3e0;
-  --rule-strong: #c9c9c5;
-  --accent: #2f5597;
+  --ink: #363636;
+  --ink-2: #4a4a4a;
+  --muted: #7f8ba0;
+  --rule: #e1e4ea;
+  --rule-strong: #c2c8d1;
+  --accent: #1f5fc9;
   --accent-ink: #ffffff;
-  --accent-soft: rgba(47, 85, 151, 0.07);
+  --accent-soft: #dbe7f8;
+  --amber: #e8621f;
+  --hl: #ffd600;
+  --hl-soft: rgba(255, 214, 0, 0.22);
+  --film-blue: #1f5fc9;
+  --film-blue-soft: #dbe7f8;
+  --film-blue-mid: #9cc3f2;
+  --film-amber-2: #e8621f;
+  --film-amber-soft: #fdf0dc;
+  --film-red-soft: #f6e4e4;
+  --panel: #e8eaef;
+  --sheet: #f4f5f7;
+  --amber-soft: rgba(232, 98, 31, 0.1);
   --mark: rgba(47, 85, 151, 0.12);
   --chord: #a63d3d;
   --up: #3f8a52;
   --down: #b8423f;
-  --warn: #b7711a;
+  --warn: #e8621f;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
 
   --fig-bg: #ffffff;
@@ -48,14 +57,13 @@
   --fig-muted: #6b6b72;
   --fig-ink2: #1a1a1a;
   --fig-ink: #000000;
-  --fig-accent: #3a6ea5;
+  --fig-accent: #1f5fc9;
   --fig-chord: #a63d3d;
   --fig-up: #3f8f5c;
   --fig-down: #b8423f;
-  --fig-warn: #d0702f;
+  --fig-warn: #e8621f;
 }
 
-/* WebGL figures sit in a .stage: same white ground, a hairline frame. */
 .stage {
   background: var(--fig-bg);
   border: 1px solid var(--rule);

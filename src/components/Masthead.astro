@@ -2,13 +2,12 @@
 import { SITE, AUTHORS } from "../data/site";
 ---
 <header class="masthead" id="top">
-  <p class="kicker">SCiEL · research in progress</p>
+  <p class="kicker">SCiEL</p>
   <h1>Let Them Get Better at Getting Better<span class="sub">Recursive Self-Improvement (RSI) through Cultural Transmission</span></h1>
   <p class="authors">
     {AUTHORS.map((a, i) => (
       <Fragment>
-        {i > 0 && <span class="sep" aria-hidden="true">·</span>}
-        {a.href ? <a href={a.href} target="_blank" rel="noopener">{a.name}</a> : <span>{a.name}</span>}
+        <span class="author-block">{a.href ? <a href={a.href} target="_blank" rel="noopener">{a.name}</a> : <span>{a.name}</span>}{i < AUTHORS.length - 1 ? "," : ""}</span>
       </Fragment>
     ))}
   </p>

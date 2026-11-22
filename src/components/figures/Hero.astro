@@ -1,13 +1,11 @@
 ---
 import Figure from "../Figure.astro";
-// The first figure: one run drawn as a disk, with a short key beside it.
-// #hero-demes and #hero-best are filled from the data by src/figures/disk.ts.
 ---
 <Figure width="wide" class="teaser">
   <div class="hero">
     <div class="hero-main"><div class="fig relwrap brushable" id="hero"><div id="heroDisk"></div></div>
       <div class="racebar">
-        <button class="playb" id="heroPlay" type="button">Pause</button>
+        <button class="playb" id="heroPlay" type="button" data-state="pause" aria-label="Pause">Pause</button>
         <input class="rng" type="range" id="heroT" min="0" max="100" step="1" value="0" aria-label="Attempt" />
         <span class="num" id="heroTv"></span>
       </div>

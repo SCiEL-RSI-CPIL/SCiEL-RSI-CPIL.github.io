@@ -1,22 +1,16 @@
-// Page entry: page chrome and lazy mounting of figures.
-// Each figure lives in src/figures/<name>.ts and exports `mount(): Promise<void> | void`.
-// A figure's module (and its data) loads only when its root element
-// comes within ~800px of the viewport.
 
 import { initChrome } from "./chrome";
 import { initSvgText } from "../lib/svg-text";
+import { initFilm } from "./film";
 
 type Loader = () => Promise<{ mount: () => Promise<void> | void }>;
 
-// [root element id, module]. Order matters only for modules that import each other.
 const FIGURES: [string, Loader][] = [
   ["hero", () => import("../figures/disk")],
-  ["fw", () => import("../figures/framework")],
+  ["map3d", () => import("../figures/relief")],
+  ["mech3d", () => import("../figures/compare")],
   ["steps", () => import("../figures/steps")],
   ["cost", () => import("../figures/cost")],
-  ["climb", () => import("../figures/climb")],
-  ["methods", () => import("../figures/methods")],
-  ["ablate", () => import("../figures/ablation")],
   ["ctest", () => import("../figures/culture")],
   ["edits", () => import("../figures/progress")],
 ];
@@ -55,5 +49,6 @@ function mountLazily(): void {
 }
 
 initChrome();
+initFilm();
 initSvgText();
 mountLazily();

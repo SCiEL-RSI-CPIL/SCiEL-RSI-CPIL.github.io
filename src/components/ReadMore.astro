@@ -1,0 +1,15 @@
+---
+interface Props {
+  href: string;
+  kind: string;
+  title: string;
+  desc: string;
+}
+const { href, kind, title, desc } = Astro.props;
+---
+<a class="readmore" href={href} target="_blank" rel="noopener">
+  <span class="rm-kind">{kind}</span>
+  <span class="rm-title">{title}</span>
+  <span class="rm-desc">{desc}</span>
+  <span class="rm-go" aria-hidden="true">↗</span>
+</a>

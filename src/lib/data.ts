@@ -1,14 +1,7 @@
-// Typed access to the run data in public/data (produced by scripts/split-data.mjs).
-// Every loader is memoised: the first call fetches, later calls share the same promise.
 
 import type { TaskKey } from "../data/names";
 import { legacyColor } from "./core";
 
-/**
- * One program in a run:
- * [id, parentId | null, deme (0-based), generation, score | null, valid, attempt | null, operator, idea text]
- * `id`/`parentId` are internal and must never be shown to readers.
- */
 export type Program = [
   id: string,
   parent: string | null,
@@ -21,13 +14,10 @@ export type Program = [
   idea: string,
 ];
 
-/** [parent score, child score, deme (0-based)] */
 export type Edit = [before: number, after: number, deme: number];
 
-/** [step, cumulative dollars, cumulative model calls, best score so far] */
 export type CostStep = [step: number, dollars: number, calls: number, best: number];
 
-/** A full engine step: CostStep columns, then extra columns (tokens, policy draws, …). */
 export type EngineStep = [number, number, number, number, number, Record<string, [string, Record<string, number>]>];
 
 export interface RunSummary {
@@ -107,13 +97,10 @@ export interface RunDetail {
   };
 }
 
-/** Summary and detail of one run, merged. */
 export type Run = RunSummary & RunDetail & { id: string };
 
 export interface Overview {
   order: string[];
-  // The structures below are passed through from the run viewer export; figures that use them
-  // narrow the types locally.
   tasks: Record<string, any>[];
   oppi: Record<string, [number, number]>;
   field: { fams: string[]; cells: Record<string, [number, number]> } & Record<string, any>;
@@ -172,7 +159,6 @@ export function loadRun(id: string): Promise<Run> {
 }
 
 const byIdCache = new WeakMap<Run | RunSummary, Map<string, Program>>();
-/** Program lookup by internal id (for hover targets that carry data-id). */
 export function programsById(r: Run | RunSummary): Map<string, Program> {
   let m = byIdCache.get(r);
   if (!m) {

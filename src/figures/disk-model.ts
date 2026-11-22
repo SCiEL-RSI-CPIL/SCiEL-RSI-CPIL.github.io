@@ -1,11 +1,8 @@
-// Geometry of the "culture disk" (ported from the top of legacy/assets/disk.js).
-// Pure functions shared by the disk, replay and relief figures.
 
 import { programsById, type DiskItem, type Run } from "../lib/data";
 
 export type Pt = [number, number];
 
-/** Points along the Poincaré-disk geodesic from p to q (both inside the unit disk). */
 export function geodesic(p: Pt, q: Pt, steps = 18): Pt[] {
   const [x1, y1] = p;
   const [x2, y2] = q;
@@ -28,18 +25,14 @@ export function geodesic(p: Pt, q: Pt, steps = 18): Pt[] {
 }
 
 export interface Chord {
-  /** Internal program ids (never shown). */
   from: string;
   to: string;
   rose: boolean;
 }
 
 export interface DiskModel {
-  /** Program id → position in [-1, 1]². */
   pos: Record<string, Pt>;
-  /** Program id → its "dot" item from run.disk (x, y in [0, 1]). */
   dots: Record<string, DiskItem>;
-  /** The "text" items from run.disk (sector labels; their `s` is an internal "I<n>" deme label). */
   texts: DiskItem[];
   chords: Chord[];
 }
@@ -77,7 +70,6 @@ export function diskModel(r: Run): DiskModel {
   return m;
 }
 
-/** Sector label items carry "I0", "I1", … (internal island ids). Return the 0-based deme index. */
 export function demeIndexOfLabel(s: unknown): number | null {
   const m = /^I(\d+)$/.exec(String(s ?? ""));
   return m ? +m[1] : null;

@@ -1,6 +1,3 @@
-// "Inside one run": every record-setting step of an early run, one at a time. A staircase of the best
-// score on top; below it a card with the step's gain, the model's own reason for the edit, and the
-// code it changed (folded). Built for a phone first: tap a step or swipe the card.
 
 import { C, el, esc } from "../lib/core";
 import { loadDemo, type DemoStep } from "../lib/data";
@@ -12,7 +9,6 @@ const KIND: Record<string, string> = {
 };
 
 const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
-/** A small gain as "1.6 × 10⁻⁵"; a larger one to four decimals. */
 function fmtGain(g: number): string {
   if (g >= 1e-4) return g.toFixed(4);
   const e = Math.floor(Math.log10(g));
@@ -79,7 +75,6 @@ export async function mount(): Promise<void> {
     k = Math.max(0, Math.min(steps.length - 1, i));
     const s = steps[k];
     const gain = s.score - s.before;
-    // Enough decimals that the two scores differ.
     let dp = 4;
     while (dp < 12 && s.before.toFixed(dp) === s.score.toFixed(dp)) dp++;
     const add = s.diff.filter(([t]) => t === "a").length;
@@ -106,7 +101,6 @@ export async function mount(): Promise<void> {
     const dot = t.closest<SVGGElement>("g[data-k]");
     if (dot) show(+dot.dataset.k!);
   });
-  // Swipe the card left or right on a phone.
   let sx = 0;
   let sy = 0;
   card.addEventListener("touchstart", (e) => ((sx = e.touches[0].clientX), (sy = e.touches[0].clientY)), { passive: true });
@@ -120,7 +114,6 @@ export async function mount(): Promise<void> {
     { passive: true },
   );
 
-  // Open on the biggest single gain.
   let big = 0;
   steps.forEach((s, i) => {
     if (s.score - s.before > steps[big].score - steps[big].before) big = i;

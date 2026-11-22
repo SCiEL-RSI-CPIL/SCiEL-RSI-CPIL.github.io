@@ -1,85 +1,133 @@
 import Sec from "../components/Sec.astro";
 import TocBox from "../components/TocBox.astro";
 import Citation from "../components/Citation.astro";
+import Film from "../components/Film.astro";
+import Glance from "../components/Glance.astro";
+import ReadMore from "../components/ReadMore.astro";
 import Hero from "../components/figures/Hero.astro";
-import Framework from "../components/figures/Framework.astro";
+import System from "../components/figures/System.astro";
+import Tiers from "../components/figures/Tiers.astro";
 import Steps from "../components/figures/Steps.astro";
 import Cost from "../components/figures/Cost.astro";
-import Climb from "../components/figures/Climb.astro";
-import Methods from "../components/figures/Methods.astro";
-import Ablation from "../components/figures/Ablation.astro";
+import Compare from "../components/figures/Compare.astro";
+import Relief from "../components/figures/Relief.astro";
 import CultureTest from "../components/figures/CultureTest.astro";
 import Edits from "../components/figures/Edits.astro";
 
+<Film />
+
 <div class="tldr prose">
+  <Glance />
   <p class="label">TL;DR</p>
-  <p class="claim">Systems that evolve programs with a language model keep the best programs and forget how they got there. <b>SCiEL also keeps and shares what it learns about searching</b>, and tests each lesson before it is adopted.</p>
+  <p class="claim">SCiEL is a <b>recursive self-improvement</b> system built on cultural transmission. It learns from the experience it produces itself: groups of programs pass tested findings, tools and strategies to one another and on to the next run, so each gain also improves how the next one is found.</p>
   <ul>
-    <li><b>Circle packing (n = 26): the best known value</b>, under zero tolerance.</li>
-    <li><b>Third autocorrelation constant: a tighter bound</b> than reported for AlphaEvolve (<a class="cite" href="#ref-3">Novikov et al., 2025</a>), with a 27B model served locally.</li>
-    <li><b>Higher scores with about half the evaluations</b> of OpenEvolve and ShinkaEvolve (<a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>), same model and budget.</li>
-    <li><b>Culture measurably helps:</b> a finding from another subpopulation raises the chance that an edit improves <b>from 54% to 62%</b> in a randomised test.</li>
+    <li><b>New records from one open 27B model.</b> A new upper bound on the autocorrelation constant C<sub>1d</sub>, merged into Terence Tao's list of optimization constants; bounds in review on three more; hundreds of circle packings and spherical codes above their published tables (<a href="#results">Section 3</a>).</li>
+    <li><b>Run at scale in an open arena.</b> 2,011 runs across 236 task families in mathematics, physics, chemistry and more, every one with its best value and the literature value it is compared with, live on the <a href="https://sciel-cpil.github.io/sciel-results/">results page</a> and in the <a href="https://research-arena.small-pine-3af7.workers.dev/experiments">arena</a>.</li>
   </ul>
 </div>
-
-<Hero />
 
 <TocBox />
 
 <Sec id="idea" />
 
-A system improves *recursively* when its improvements <span class="key">make it better at improving</span> (<a class="cite" href="#ref-14">Yampolskiy, 2015</a>). People do this through culture: what one person learns is taught, tried by others, and kept if it works (<a class="cite" href="#ref-15">Henrich, 2016</a>). SCiEL applies the same loop to programs written by a language model. Its population is split into *demes*, groups of programs that evolve on their own, in parallel. Each deme repeats one step; between demes, what one deme learns travels as a tested *finding*:
+A system improves *recursively* when its improvements <span class="key">make it better at improving</span>. SCiEL keeps the language model fixed<sup class="fnref" id="fnref-1"><a href="#fn-1">1</a></sup> and improves everything around it. Around the model it builds a repertoire: findings, tools and learned rules for choosing the next edit. It splits its programs into *demes*, groups that evolve on their own and in parallel. When one deme learns something useful, SCiEL tests it and passes it to the other demes as a *finding*; at the end of a run, it passes the repertoire to the next run (<a class="cite" href="#ref-15">Henrich, 2016</a>; <a class="cite" href="#ref-20">Boyd and Richerson, 1985</a>).
 
-<Framework />
+<Hero />
 
-Because every choice in step 1 is drawn at random and logged with its odds, SCiEL can measure from its own records whether a change to itself helped ([Section 4](#culture)). In step 3, most edits fail. The ones that set a record look like this:
+If we raise each program by how close it came to the best known value, the run looks like a climb up a landscape. The film shows the same view (<a class="tc" href="#film" data-t="50">0:50</a>):
+
+<Relief />
+
+Every deme repeats the same attempt, and SCiEL learns from each one. The whole system fits on one page:
+
+<System />
+
+<Sec id="steering" />
+
+**Every attempt is a handful of choices: which program to start from, what kind of edit to ask for, which finding to show, which strategy to follow.** SCiEL does not leave these choices to chance or to a fixed rule. It draws each choice at random with set odds, and it learns the odds from its own record of what worked. Three layers set the odds. A layer takes over only when it does better than the layer below on attempts it has not seen:
+
+- **Bandits**, from the first attempt. When a kind of edit has just improved a program, SCiEL chooses it more often; it still tries the other kinds now and then, and it forgets old successes.
+- **A world model**, from about 60 attempts. Before SCiEL calls the language model, the world model predicts whether an attempt will improve its line, and SCiEL favours the attempts it rates highly.
+- **A step policy**, from about 200 attempts. It can shift the odds of every choice by a small, bounded amount, but only when the record shows a clear gain.
+
+<Tiers />
+
+This is how SCiEL points its effort in the right direction. It does not ask the model the same question in the same way for the whole run. It asks more often about the parents, edits and findings that have just worked at this stage of the climb, and less often about what keeps failing. SCiEL still makes one choice in ten at random and records the odds of every choice. A lucky streak therefore cannot lock in the run, and the record stays a fair experiment; it is the same experiment we use to test culture in <a href="#culture">Section 5</a>. Most attempts still do not help, so the choice of which attempts to make matters. Here is one run, step by step, with each record and the model's own reason for the edit:
 
 <Steps />
 
 <Sec id="results" />
 
-**SCiEL reaches or beats the best known values on two open mathematical problems, at a cost of a few dollars per run.** All runs are in the [Empira arena](https://research-arena.small-pine-3af7.workers.dev/experiments), an independent benchmark of research tasks, with an open 27B model served locally.
+Every result below comes from one open model, Qwen3.8-27B, which we run on our own machines and do not train during a run. We check each result outside the run, and the status column says where it stands. New results appear first on the [results page](https://sciel-cpil.github.io/sciel-results/).
 
-| Task | Result | Compared with |
-|---|---|---|
-| Circle packing, n = 26 | **best known value**, zero tolerance | best known |
-| Third autocorrelation constant | **tighter bound** | AlphaEvolve (<a class="cite" href="#ref-3">Novikov et al., 2025</a>) |
-| Same model and budget | **higher scores, ~½ the evaluations** | OpenEvolve, ShinkaEvolve (<a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>) |
-| Circle packing on two GPUs | **six digits** of the best known value | a 4.4× larger model (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>) |
+<div class="wide versus">
+  <div class="vs-us"><span class="vs-k">SCiEL</span><b>one open 27B model</b> (Qwen3.8-27B) · <b>2× H100</b> · no training during a run</div>
+  <div class="vs-x">vs</div>
+  <div class="vs-them"><span class="vs-k">Previous bests</span>closed frontier models (Gemini ensembles, Claude, GPT-6 Astra), a 120B model trained with RL, or decades of specialist records</div>
+</div>
+
+<div class="wide tablewrap">
+  <table class="results-t">
+    <thead><tr><th>Problem</th><th>SCiEL</th><th>Previous best</th><th>Year</th><th>Reached with</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="self"><td>Autocorrelation constant C<sub>1d</sub>, upper bound</td><td><span class="win new-sota">NEW SOTA</span> <b>1.457854885</b> <a class="go" href="https://github.com/teorth/optimizationproblems/pull/248" target="_blank" rel="noopener" aria-label="Evidence">↗</a></td><td><b>1.459989047</b></td><td class="yr">2026</td><td class="how">Google DeepMind, AlphaEvolve: ensemble of Gemini 2.0 Flash and Pro <span class="tag fr">closed frontier</span></td><td><span class="st ok">merged</span></td></tr>
+      <tr><td>Ramsey multiplicity of K<sub>6</sub> (89c), upper bound</td><td><span class="win new-sota">NEW SOTA</span> <b>0.7422042116·2<sup>−14</sup></b> <a class="go" href="https://github.com/teorth/optimizationproblems/pull/331" target="_blank" rel="noopener" aria-label="Evidence">↗</a></td><td><b>0.7422548616·2<sup>−14</sup></b></td><td class="yr">2026</td><td class="how">Claude Code <span class="tag fr">closed frontier</span>; before it, Franek's 2002 bound stood for 24 years</td><td><span class="st">in review</span></td></tr>
+      <tr><td>Maximal-function constant 47, lower bound</td><td><span class="win new-sota">NEW SOTA</span> <b>1.7032090736</b> <a class="go" href="https://github.com/teorth/optimizationproblems/pull/341" target="_blank" rel="noopener" aria-label="Evidence">↗</a></td><td><b>1.70311</b></td><td class="yr">2026</td><td class="how">a researcher with GPT-6 Astra and Claude Opus 5.5 <span class="tag fr">closed frontier</span></td><td><span class="st">in review</span><span class="st">raised since</span></td></tr>
+      <tr><td>Thick knot 22b, upper bound</td><td><span class="win new-sota">NEW SOTA</span> <b>7.087662112</b> <a class="go" href="https://github.com/teorth/optimizationproblems/pull/342" target="_blank" rel="noopener" aria-label="Evidence">↗</a></td><td><b>7.090412</b></td><td class="yr">2026</td><td class="how">a researcher; the bound before it was found with Claude <span class="tag fr">closed frontier</span></td><td><span class="st">in review</span><span class="st">lowered since</span></td></tr>
+      <tr><td>Circles in rectangles, seven aspect ratios</td><td><span class="win new-sota">NEW SOTA</span> <b>700+ sizes</b></td><td><b>Packomania tables</b></td><td class="yr">2010</td><td class="how">records contributed by packing specialists over decades</td><td><span class="st">verified</span></td></tr>
+      <tr><td>Circles in an isosceles right triangle</td><td><span class="win new-sota">NEW SOTA</span> <b>101 of 150 sizes</b></td><td><b>Packomania table</b></td><td class="yr">2011</td><td class="how">records contributed by packing specialists</td><td><span class="st">verified</span></td></tr>
+      <tr><td>Circles in a quarter disc</td><td><span class="win new-sota">NEW SOTA</span> <b>392 sizes</b></td><td><b>Packomania table</b></td><td class="yr">2011</td><td class="how">records contributed by packing specialists</td><td><span class="st">verified</span></td></tr>
+      <tr><td>Circles in a semicircle</td><td><span class="win new-sota">NEW SOTA</span> <b>116 of 151 sizes</b></td><td><b>Packomania table</b></td><td class="yr">2026</td><td class="how">including S. Hogan's records of September 2026</td><td><span class="st">verified</span></td></tr>
+      <tr><td>Circles in a pentagon</td><td><span class="win new-sota">NEW SOTA</span> <b>85 of 101 sizes</b></td><td><b>Packomania table</b></td><td class="yr">2026</td><td class="how">the table as of October 2026</td><td><span class="st">verified</span></td></tr>
+      <tr><td>Spherical codes, dimensions 8 to 14</td><td><span class="win new-sota">NEW SOTA</span> <b>42 of 49 codes</b></td><td><b>H. Cohn's table</b></td><td class="yr">2026</td><td class="how">best known codes from the literature, as of October 2026</td><td><span class="st">verified</span></td></tr>
+      <tr><td>16 points in the plane, max/min distance ratio</td><td><span class="win new-sota">NEW SOTA</span> <b>12.889230</b></td><td><b>12.889266</b></td><td class="yr">2025</td><td class="how">Google DeepMind, AlphaEvolve: ensemble of Gemini 2.0 Flash and Pro <span class="tag fr">closed frontier</span></td><td><span class="st">re-checked</span></td></tr>
+      <tr><td>26 circles in a square, sum of radii</td><td><span class="win matched">MATCHED</span> <b>2.6359831</b></td><td><b>2.6359831</b></td><td class="yr">2025</td><td class="how">TTT-Discover reached it with a 120B open model <span class="tag rl">trained with RL during the run</span>, 25,600 samples; SCiEL from scratch: 370 model calls, $1.92</td><td><span class="st">re-checked</span></td></tr>
+      <tr><td>Lennard-Jones clusters, 38 and 55 atoms</td><td><span class="win matched">MATCHED</span> <b>known minima</b></td><td><b>global minima</b></td><td class="yr">1990s</td><td class="how">Cambridge Cluster Database, decades of global optimisation</td><td><span class="st">re-checked</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="table-note"><i>New SOTA</i>: better than the best published value at the time. <i>Verified</i>: checked in exact arithmetic, not yet submitted to the table's maintainers. <i>In review</i>: an open pull request to the list of optimization constants; <i>raised since</i> / <i>lowered since</i>: another group has since improved on our bound. Model sizes and compute of closed models are not disclosed.</p>
+
+With the same model and budget as OpenEvolve and ShinkaEvolve, SCiEL reaches higher scores and needs about half as many evaluations (<a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>). On circle packing it matches the best known value to six digits on two GPUs; TTT-Discover reached the same value with a model 4.4 times larger that it trained during the run (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>). A run costs a few dollars:
 
 <Cost />
 
+<ReadMore href="https://sciel-cpil.github.io/sciel-results/" kind="Live · Results page" title="New results, as they come in" desc="Every SCiEL run with the best value it reached and the literature value it is compared with: 2,011 runs on 236 task families so far." />
+
 <Sec id="why" />
 
-**A single model, a single climber or a crowd that does not share all stall; SCiEL keeps climbing.** To see why SCiEL needs every part of Figure 2, we use a toy landscape small enough to search thousands of times. A hard problem is a long climb seen one edit at a time. Sampling one model many times never builds on a success. One climber builds, but stops at the first bump. Several climbers that share nothing split the budget and each stop at their own bump. The toy has a trap and a narrow ridge to the summit, and the difference is visible in a single trial:
+**A single model, a single climber and a crowd that shares nothing all get stuck; SCiEL keeps climbing.** To show why SCiEL needs each of its parts, we use a toy landscape that is small enough to search thousands of times. Solving a hard problem is like a long climb where you see only one step ahead. If you ask one model many times, no answer builds on an earlier success. One climber builds on its successes but stops at the first bump. Several climbers who share nothing split the budget, and each stops at its own bump. The toy landscape has a trap and a narrow ridge that leads to the summit, and a single trial shows the difference:
 
-<Climb />
-
-Over 30 trials, SCiEL reaches the summit in 29; none of the others does better than 5:
-
-<Methods />
-
-Which parts of Figure 2 does that take? Switching them off shows what each is worth: without the learned policy, the world model or culture, SCiEL gets there in 8 to 15 trials. Research cells add little here, because on this landscape the slope always leads somewhere. Try any combination:
-
-<Ablation />
+<Compare />
 
 <Sec id="culture" />
 
-**Yes: receiving a finding from another deme raises the chance that an edit improves from 54% to 62%.** The toy above suggests culture matters; real runs can test it directly. When a deme writes its next prompt, SCiEL flips a weighted coin to decide whether to include a finding from another deme, and logs the odds. That turns every run into a randomised experiment. Across 31 runs and 1,022 such decisions:
+**Receiving a finding from another deme raises the chance that an edit improves from 54% to 62%.** The toy landscape suggests that culture matters, and real runs let us test it directly. When a deme writes its next prompt, SCiEL flips a weighted coin to decide whether to include a finding from another deme, and it records the odds. Every run is therefore a randomised experiment. Across 31 runs and 1,022 such decisions:
 
 <CultureTest />
 
+The interval is wide: at 95% confidence, the gain lies between 1.7 and 13.7 points. This result shows the first step of recursion: what the system keeps makes it more likely to improve. Whether the gain grows as the system keeps more is the first question in <a href="#open">Section 9</a>.
+
 <Sec id="top" />
 
-**Near the best program, most edits stop helping, and that is where a run's budget goes.** Across all edits, 30% to 80% beat their parent. Starting from a program close to the run's best, the share drops in five of the six runs, to as low as 7%. This is where shared lessons and long shots matter most, and the regime SCiEL is built for.
+**Across all edits, 30% to 80% beat their parent; starting from a program close to the run's best, the share drops in five of the six runs, to as low as 7%.** Shared lessons and unlikely ideas matter most here, and SCiEL is built for this stage. In the run of the film, 82 of 99 attempts did not beat the best so far (<a class="tc" href="#film" data-t="140">2:20</a>).
 
 <Edits />
 
+<Sec id="limits" />
+
+Our experiments have clear limits, and here is what we plan to do about them.
+
+- **Culture into weights.** Today SCiEL keeps what it learns outside the model, in prompts, tools and policies. Next, we want to put it into the model itself. Every run already records what this needs: each attempt and its outcome, the findings that passed their tests, and the methods that worked. We collect these records to fine-tune small models cheaply. To do this, we pair SCiEL with DeltaServe (<a class="cite" href="#ref-22">Chen et al., 2026</a>), which trains and serves LoRA adapters in the same inference engine while a run is going. The records we have collected so far are on the [results page](https://sciel-cpil.github.io/sciel-results/) and in the [arena](https://research-arena.small-pine-3af7.workers.dev/experiments).
+- **More backends.** Most runs use a relatively small open model, Qwen3.8-27B served locally, and only occasionally a frontier model through a subscription. We plan to widen the set of backends and compare them under one protocol.
+- **Beyond exact checkers.** Today SCiEL works on problems where a program can be scored exactly and cheaply, such as packings, bounds and codes. Next, we want it to work on real data, where a score is noisy or expensive to compute; we are building the first such tasks now.
+
 <Sec id="related" />
 
-Other self-improving systems differ mainly in what they change and how they decide to keep a change.
+**Self-improving systems** differ mainly in what they change and how they decide to keep a change.
 
-<div class="col" style="overflow-x:auto">
+<div class="col tablewrap">
   <table>
     <thead><tr><th>System</th><th>What improves</th><th>How a change is kept</th></tr></thead>
     <tbody>
@@ -88,29 +136,74 @@ Other self-improving systems differ mainly in what they change and how they deci
       <tr><td><b>DGM · SICA · HGM</b> (<a class="cite" href="#ref-7">Zhang et al., 2025</a>; <a class="cite" href="#ref-8">Robeyns et al., 2025</a>; <a class="cite" href="#ref-9">Wang et al., 2025a</a>)</td><td>its own code</td><td>benchmark score</td></tr>
       <tr><td><b>Hyperagents</b> (<a class="cite" href="#ref-10">Zhang et al., 2026</a>)</td><td>the improver</td><td>a fixed number of rounds</td></tr>
       <tr><td><b>MetaRSI</b> (<a class="cite" href="#ref-11">Tan et al., 2026</a>)</td><td>the improver of the improver</td><td>meta-level search</td></tr>
+      <tr><td><b>Self-improving coding agent</b> (<a class="cite" href="#ref-25">Liang et al., 2026</a>)</td><td>its own code, guided by a written set of values</td><td>the agent's own judgment over iterations</td></tr>
+      <tr><td><b>Red Queen Gödel Machine</b> (<a class="cite" href="#ref-23">Iacob et al., 2026</a>)</td><td>the agents and the evaluators that judge them</td><td>co-evolving evaluators</td></tr>
+      <tr><td><b>Dream-RSI</b> (<a class="cite" href="#ref-24">Zheng et al., 2026</a>)</td><td>the exploration policy; the agent stays fixed</td><td>replay over the recorded discovery tree</td></tr>
       <tr><td><b>TTT-Discover · ThetaEvolve</b> (<a class="cite" href="#ref-4">Yuksekgonul et al., 2026</a>; <a class="cite" href="#ref-12">Wang et al., 2025b</a>)</td><td>model weights during the run</td><td>reinforcement-learning reward</td></tr>
-      <tr class="self"><td><b>SCiEL</b></td><td>methods, findings, policy, world model</td><td>a test where it is used, on randomised logs</td></tr>
+      <tr class="self"><td><b>SCiEL</b></td><td>findings, tools, steering, world model; the model stays frozen</td><td>a randomised test where it is used</td></tr>
     </tbody>
   </table>
 </div>
 
+**Evolving programs with language models** (<a class="cite" href="#ref-21">Romera-Paredes et al., 2024</a>; <a class="cite" href="#ref-3">Novikov et al., 2025</a>; <a class="cite" href="#ref-1">Sharma, 2025</a>; <a class="cite" href="#ref-2">Lange et al., 2025</a>) keep a population of programs and select them by score. SCiEL keeps the population too, and it also keeps what the population learned about how to improve; with the same model and budget it reaches higher scores and needs about half as many evaluations (<a href="#results">Section 3</a>).
+
+**Learning with data that responds to the learner.** Strategic classification (<a class="cite" href="#ref-16">Hardt et al., 2016</a>) and performative prediction (<a class="cite" href="#ref-17">Perdomo et al., 2020</a>) study a rule deployed on a population that adapts to it; evolutionary prediction games (<a class="cite" href="#ref-18">Saig and Rosenfeld, 2025</a>) show that retraining on the current mix of groups drives all but one out, and leave dependencies between groups as an open question. In SCiEL, groups of programs interact and improve, and because SCiEL records the probability of every choice, we can measure the quantities these models only assume, as in the test of <a href="#culture">Section 5</a>.
+
+**Learning from experience and cumulative culture.** Agents should learn from the experience they gather themselves, with rewards that come from the world (<a class="cite" href="#ref-19">Silver and Sutton, 2025</a>); here the reward is an exact checker. Cumulative culture depends on people copying others and then testing what they copied (<a class="cite" href="#ref-20">Boyd and Richerson, 1985</a>; <a class="cite" href="#ref-15">Henrich, 2016</a>); SCiEL makes this test explicit and controls its error rate.
+
+<Sec id="open" />
+
+1. **Is the improvement recursive or cumulative?** A repertoire that adds a constant boost makes progress cumulative; only one that grows with each record bends the curve. A random share of attempts run without the repertoire answers it, and we are adding that arm.
+2. **When do another group's findings beat a group's own?** In models of one rule shared by many groups, that decides whether transmission keeps the groups together or speeds the takeover by one. The logged offers of findings measure it in real runs.
+3. **How well does the system know itself?** The log-loss of its own forecasts bounds how far it has fitted the checker rather than the problem.
+
+<div class="footnotes col">
+  <ol>
+    <li id="fn-1">In this post the model stays frozen. In our next post we pair SCiEL with DeltaServe (<a class="cite" href="#ref-22">Chen et al., 2026</a>) and adapt LoRA weights on the experience SCiEL collects, during inference. Stay tuned. <a href="#fnref-1" aria-label="Back to the text">↩</a></li>
+  </ol>
+</div>
+
 <hr />
+
+<h3 id="data">Data</h3>
+
+<div class="col tablewrap">
+  <table class="data-t">
+    <thead><tr><th>Source</th><th>What it holds</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://github.com/SCiEL-RSI-CPIL/sciel-rsi-framework">sciel-rsi-framework</a></td><td>The code: engine, world model, step policy, research cells, culture across runs.</td></tr>
+      <tr><td><a href="https://sciel-cpil.github.io/sciel-results/">Results page</a></td><td>2,011 runs on 236 task families, the best value each reached and its literature reference (data of 10 November 2026).</td></tr>
+      <tr><td><a href="https://research-arena.small-pine-3af7.workers.dev/experiments">Empira arena</a></td><td>The runs behind Figures 1, 2, 5, 8 and 9, with every attempt.</td></tr>
+      <tr><td><a href="https://github.com/teorth/optimizationproblems/pull/248">teorth/optimizationproblems #248</a></td><td>The C<sub>1d</sub> bound as merged, with the verification method; certificate archived at Zenodo, <a href="https://doi.org/10.5281/zenodo.23541324">10.5281/zenodo.23541324</a> (files on request).</td></tr>
+      <tr><td><a href="/data/overview.json">overview.json</a></td><td>The aggregates drawn on this page, including the randomised culture test.</td></tr>
+    </tbody>
+  </table>
+</div>
 
 ### References
 
 <ul class="refs">
+  <li id="ref-20">Boyd, R., and Richerson, P. J. (1985). <i>Culture and the Evolutionary Process.</i> University of Chicago Press.</li>
+  <li id="ref-22">Chen, J., She, J., Yuan, Y., Ghosh, R., Gupta, K., Ho, Q., Liu, X., and Balmau, O. (2026). DeltaServe: host-agnostic co-serving of inference and fine-tuning for LLMs. <a href="https://arxiv.org/abs/2607.28848">arXiv:2607.28848</a></li>
+  <li id="ref-23">Iacob, A., Jovanović, A., Shen, W. F., Burkhardt, D., et al. (2026). The Red Queen Gödel Machine: co-evolving agents and their evaluators. <a href="https://arxiv.org/abs/2606.26294">arXiv:2606.26294</a></li>
+  <li id="ref-16">Hardt, M., Megiddo, N., Papadimitriou, C., and Wootters, M. (2016). Strategic classification. ITCS. <a href="https://arxiv.org/abs/1506.06980">arXiv:1506.06980</a></li>
   <li id="ref-15">Henrich, J. (2016). <i>The Secret of Our Success: How Culture Is Driving Human Evolution.</i> Princeton University Press.</li>
   <li id="ref-2">Lange, R. T., Imajuku, Y., and Cetin, E. (2025). ShinkaEvolve: towards open-ended and sample-efficient program evolution. <a href="https://arxiv.org/abs/2509.19349">arXiv:2509.19349</a></li>
+  <li id="ref-25">Liang, J., Waldner, D., and Miikkulainen, R. (2026). Values shape what self-improving coding agents build. <a href="https://arxiv.org/abs/2611.23067">arXiv:2611.23067</a></li>
   <li id="ref-5">Lee, H., Xu, J., Seely, J., Lee, D., et al. (2026). Recursive self-improvement through multi-agent self-supervision (MASS). <a href="https://arxiv.org/abs/2610.12176">arXiv:2610.12176</a></li>
   <li id="ref-3">Novikov, A., Vũ, N., Eisenberger, M., Dupont, E., et al. (2025). AlphaEvolve: a coding agent for scientific and algorithmic discovery. <a href="https://arxiv.org/abs/2506.13131">arXiv:2506.13131</a></li>
+  <li id="ref-17">Perdomo, J., Zrnic, T., Mendler-Dünner, C., and Hardt, M. (2020). Performative prediction. ICML. <a href="https://arxiv.org/abs/2002.06673">arXiv:2002.06673</a></li>
   <li id="ref-8">Robeyns, M., Szummer, M., and Aitchison, L. (2025). A self-improving coding agent. <a href="https://arxiv.org/abs/2504.15228">arXiv:2504.15228</a></li>
+  <li id="ref-21">Romera-Paredes, B., Barekatain, M., Novikov, A., Balog, M., et al. (2024). Mathematical discoveries from program search with large language models. <i>Nature</i> 625.</li>
+  <li id="ref-18">Saig, E., and Rosenfeld, N. (2025). Evolutionary prediction games. NeurIPS. <a href="https://arxiv.org/abs/2503.03401">arXiv:2503.03401</a></li>
   <li id="ref-1">Sharma, A. (2025). OpenEvolve: an open-source evolutionary coding agent. <a href="https://github.com/codelion/openevolve">github.com/codelion/openevolve</a></li>
+  <li id="ref-19">Silver, D., and Sutton, R. S. (2025). Welcome to the era of experience. Preprint.</li>
   <li id="ref-6">Srikanth, D., Zhao, B., Xu, D., Wu, Y., et al. (2026). Recursive self-improvement of AI research agents (AIDE²). <a href="https://arxiv.org/abs/2609.26457">arXiv:2609.26457</a></li>
   <li id="ref-11">Tan, Z., Sun, L., Shi, Z., Liu, Y., et al. (2026). MetaRSI / RSI²: a meta-recursive self-improving system for recursive self-improving systems themselves. <a href="https://arxiv.org/abs/2609.06396">arXiv:2609.06396</a></li>
   <li id="ref-9">Wang, W., Piękos, P., Nanbo, L., Laakom, F., et al. (2025a). Huxley-Gödel Machine: human-level coding agent development by an approximation of the optimal self-improving machine. <a href="https://arxiv.org/abs/2510.21614">arXiv:2510.21614</a></li>
   <li id="ref-12">Wang, Y., Su, S.-R., Zeng, Z., Xu, E., et al. (2025b). ThetaEvolve: test-time learning on open problems. <a href="https://arxiv.org/abs/2511.23473">arXiv:2511.23473</a></li>
-  <li id="ref-14">Yampolskiy, R. V. (2015). From seed AI to technological singularity via recursively self-improving software. <a href="https://arxiv.org/abs/1502.06512">arXiv:1502.06512</a></li>
   <li id="ref-4">Yuksekgonul, M., Koceja, D., Li, X., Bianchi, F., et al. (2026). Learning to discover at test time. <a href="https://arxiv.org/abs/2601.16175">arXiv:2601.16175</a></li>
+  <li id="ref-24">Zheng, T., Wu, X., Zhang, Z., He, Z., et al. (2026). Dream-RSI: recursive self-improvement through evolving worlds. <a href="https://arxiv.org/abs/2609.14858">arXiv:2609.14858</a></li>
   <li id="ref-7">Zhang, J., Hu, S., Lu, C., Lange, R., et al. (2025). Darwin Gödel Machine: open-ended evolution of self-improving agents. <a href="https://arxiv.org/abs/2505.22954">arXiv:2505.22954</a></li>
   <li id="ref-10">Zhang, J., Zhao, B., Yang, W., Foerster, J., et al. (2026). Hyperagents. <a href="https://arxiv.org/abs/2603.19461">arXiv:2603.19461</a></li>
 </ul>

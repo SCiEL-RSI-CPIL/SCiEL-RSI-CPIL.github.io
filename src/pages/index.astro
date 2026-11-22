@@ -1,5 +1,9 @@
 ---
 import "@fontsource-variable/inter";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/400-italic.css";
+import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource-variable/source-serif-4";
 import "@fontsource-variable/source-serif-4/wght-italic.css";
 import "@fontsource-variable/jetbrains-mono";
@@ -8,6 +12,7 @@ import "../styles/site.css";
 import "../styles/figures.css";
 
 import Masthead from "../components/Masthead.astro";
+import TocRail from "../components/TocRail.astro";
 import Article from "../content/article.mdx";
 import { SITE, AUTHORS } from "../data/site";
 
@@ -55,16 +60,30 @@ const jsonLd = {
 
     <Masthead />
 
+    <TocRail />
+
     <main class="article">
       <Article />
     </main>
 
     <footer class="site">
-      Figures are drawn from SCiEL runs with Qwen3.8-27B served locally, processed with the same code as the run
-      viewer (<code>sciel web</code>); the runs are in the
-      <a href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a>.
-      Research is ongoing and the preprint is in progress. Questions and collaborations: write to any of the authors.
-      <br /><a class="top" href="#top">Back to top ↑</a>
+      <div class="foot-in">
+        <div class="foot-orgs">
+          <a href="https://cpil-lab.github.io/" target="_blank" rel="noopener"><img src="/img/cpil.png" alt="" width="22" height="22" />CPIL Research Group</a>
+          <a href="https://mbzuai.ac.ae/" target="_blank" rel="noopener"><img src="/img/mbzuai.png" alt="" width="22" height="22" />MBZUAI</a>
+        </div>
+        <p>
+          Figures are drawn from SCiEL runs with Qwen3.8-27B served locally, processed with the same code as the run viewer.
+          The runs are in the <a href="https://research-arena.small-pine-3af7.workers.dev/experiments" target="_blank" rel="noopener">Empira arena</a>.
+          The preprint is in progress; for questions and collaborations, write to any of the authors.
+        </p>
+        <nav class="foot-links" aria-label="Links">
+          <a href="https://github.com/SCiEL-RSI-CPIL/sciel-rsi-framework" target="_blank" rel="noopener">Code</a>
+          <a href="https://sciel-cpil.github.io/sciel-results/" target="_blank" rel="noopener">Results</a>
+          <a href="#cite">Cite</a>
+          <a href="#top">Back to top ↑</a>
+        </nav>
+      </div>
     </footer>
 
     <script>

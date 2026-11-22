@@ -1,15 +1,23 @@
-// A toy landscape and four ways to search it (one call best-of-N, one climber, a swarm, SCiEL),
-// used by the "Why a population with culture?" bar chart. Pure functions, no rendering.
-// Ported from legacy/assets/world.js.
+
+import * as THREE from "three";
+import { C, cssColor } from "../lib/core";
+
+THREE.ColorManagement.enabled = false;
+
+export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
+  const rd = new THREE.WebGLRenderer({ canvas, antialias: true });
+  rd.outputColorSpace = THREE.LinearSRGBColorSpace;
+  rd.setPixelRatio(Math.min(devicePixelRatio, 2));
+  rd.setClearColor(new THREE.Color(cssColor(C.bg)), 1);
+  return rd;
+}
 
 export type Pt = [number, number];
 
 export const G = { amp: 0.14, sig: 0.09, hole: 0.15, np: 4 };
 
 export interface World {
-  /** Score at (x, y); 0 outside the feasible set. */
   f(x: number, y: number): number;
-  /** Score ignoring the constraints. */
   raw(x: number, y: number): number;
   feasible(x: number, y: number): boolean;
   seed: Pt;
@@ -79,7 +87,6 @@ function gauss(r: () => number): number {
 
 export type Mode = "bestn" | "climber" | "swarm" | "sciel";
 
-/** Which SCiEL components are on (all default to on). */
 export interface ModeOptions {
   policy?: boolean;
   world?: boolean;
@@ -88,21 +95,15 @@ export interface ModeOptions {
 }
 
 export interface PolicyState {
-  /** Searcher index. */
   i: number;
-  /** Current position. */
   c: Pt;
-  /** Proposal spread. */
   s: number;
-  /** Proposal drift. */
   mu: Pt;
 }
 
-/** One step of a search: an evaluation, a screened-out proposal, a culture move or a research probe. */
 export interface SearchEvent {
   t: number;
   k: "eval" | "screen" | "chord" | "jump";
-  /** Searcher index. */
   i: number;
   p: Pt;
   from: Pt;
@@ -126,7 +127,6 @@ export interface SearchRun {
   L?: Searcher[];
 }
 
-/** Run one searcher type for B evaluations on the toy world. Deterministic for a given seed. */
 export function runMode(W: World, mode: Mode, B: number, seed: number, opt: ModeOptions = {}): SearchRun {
   const r = mkRng(seed);
   const ev: SearchEvent[] = [];
@@ -316,4 +316,45 @@ export function runMode(W: World, mode: Mode, B: number, seed: number, opt: Mode
     last().pol = { i, c: [l.cur[0], l.cur[1]], s: useP ? l.s : sig, mu: useP ? [l.mu[0], l.mu[1]] : [0, 0] };
   }
   return { ev, best, L };
+}
+
+function canvasTexture(draw: (g: CanvasRenderingContext2D) => void): THREE.CanvasTexture {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  if (g) draw(g);
+  return new THREE.CanvasTexture(c);
+}
+
+export function glowTexture(): THREE.CanvasTexture {
+  return canvasTexture((g) => {
+    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, "rgba(255,255,255,1)");
+    r.addColorStop(0.3, "rgba(255,255,255,.35)");
+    r.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = r;
+    g.fillRect(0, 0, 64, 64);
+  });
+}
+
+export function discTexture(): THREE.CanvasTexture {
+  return canvasTexture((g) => {
+    g.beginPath();
+    g.arc(32, 32, 24, 0, 7);
+    g.fillStyle = "#fff";
+    g.fill();
+    g.lineWidth = 5;
+    g.strokeStyle = cssColor(C.bg);
+    g.stroke();
+  });
+}
+
+export function ringTexture(): THREE.CanvasTexture {
+  return canvasTexture((g) => {
+    g.beginPath();
+    g.arc(32, 32, 20, 0, 7);
+    g.lineWidth = 7;
+    g.strokeStyle = "#fff";
+    g.stroke();
+  });
 }

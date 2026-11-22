@@ -1,11 +1,8 @@
-// "Improvements get rarer near the top": for each run, the share of edits that beat their parent,
-// over all edits and for edits whose parent was already close to the run's best.
 
 import { C, el, esc } from "../lib/core";
 import { loadOverview } from "../lib/data";
 import { runName, sortRuns } from "../data/names";
 
-/** "Near the top": the parent is within this much of the run's best score. */
 const NEAR = 0.01;
 
 export async function mount(): Promise<void> {

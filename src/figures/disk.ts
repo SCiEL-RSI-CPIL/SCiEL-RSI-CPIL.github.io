@@ -1,5 +1,3 @@
-// Hero: the culture disk of the first run, with lineage brushing and a reading key.
-// Ported from legacy/assets/disk.js (the geometry lives in disk-model.ts).
 
 import { C, demeColor, el, esc, f4, isVisible, prefersReducedMotion } from "../lib/core";
 import { loadOverview, loadRun, programsById, type Run } from "../lib/data";
@@ -7,7 +5,6 @@ import { hover } from "../lib/tooltip";
 import { demeName } from "../data/names";
 import { demeIndexOfLabel, diskModel, geodesic, type Pt } from "./disk-model";
 
-/** The "dot" items carry a radius and whether they are filled; their colour is a deme hue. */
 interface DotItem {
   x: number;
   y: number;
@@ -16,10 +13,6 @@ interface DotItem {
   fill?: boolean;
 }
 
-/**
- * The culture disk as an SVG string, `S` px across. With `tmax`, only programs from attempts
- * up to `tmax` are drawn (the replay).
- */
 export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
   const m = diskModel(r);
   const by = programsById(r);
@@ -40,7 +33,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     const rr = (Math.tanh(0.42 * g + 0.25) * S) / 2;
     s.push(`<circle cx="${S / 2}" cy="${S / 2}" r="${rr.toFixed(1)}" fill="none" style="stroke:${C.rule}" stroke-dasharray="2 5"/>`);
   }
-  // Parent → child edges.
   for (const id of Object.keys(m.pos)) {
     if (!shown(id)) continue;
     const p = by.get(id)!;
@@ -49,7 +41,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
       `<path data-l="${esc(id)}" data-d="${p[2]}" d="${path(geodesic(src, m.pos[id]))}" fill="none" stroke="${demeColor(p[2])}" stroke-width="1" opacity=".55"/>`,
     );
   }
-  // Chords: findings passed between demes. The first that raised its child gets the label.
   let labelled = false;
   for (const c of m.chords) {
     if (!shown(c.to)) continue;
@@ -61,7 +52,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     );
     if (mark) labelled = true;
   }
-  // Programs. Stroke stays a presentation attribute so the brushing CSS can override it.
   for (const id of Object.keys(m.dots)) {
     if (!shown(id)) continue;
     const i = m.dots[id] as unknown as DotItem;
@@ -71,7 +61,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
       `<circle cx="${(i.x * S).toFixed(1)}" cy="${((1 - i.y) * S).toFixed(1)}" r="${rr.toFixed(1)}" ${fill} stroke="${i.c}" stroke-width="1.2" data-id="${esc(id)}" data-d="${by.get(id)?.[2] ?? -1}"/>`,
     );
   }
-  // Ring and label the best program shown.
   let bi: string | null = null;
   let bs = -Infinity;
   for (const id of Object.keys(m.dots)) {
@@ -96,7 +85,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
     `<circle cx="${S / 2}" cy="${S / 2}" r="2.5" style="fill:${C.ink}"/>` +
       `<text x="${S / 2 + 6}" y="${S / 2 + 14}" style="fill:${C.faint}" font-size="${(S / 60).toFixed(1)}">seed</text>`,
   );
-  // Sector labels last, with a halo in the panel colour, so programs on the rim don't cover them.
   for (const i of m.texts) {
     const d = demeIndexOfLabel(i.s);
     const text = d == null ? String(i.s ?? "") : demeName(d);
@@ -107,7 +95,6 @@ export function diskSvg(r: Run, S: number, tmax: number | null = null): string {
   return s.join("") + "</svg>";
 }
 
-/** Hovering a program highlights its line of descent. */
 function brushLineage(hero: HTMLElement, r: Run): void {
   const by = programsById(r);
   let last: string | null = null;
@@ -145,10 +132,6 @@ function brushLineage(hero: HTMLElement, r: Run): void {
   });
 }
 
-/**
- * Focus one deme: its programs and lines keep their colour, everything else fades, and the findings
- * it sent or received stay red. `null` shows the whole run.
- */
 function focusDeme(svg: Element, d: number | null): void {
   svg.querySelectorAll<SVGElement>("[data-d]").forEach((n) => n.classList.toggle("dim", d != null && +n.dataset.d! !== d));
   svg.querySelectorAll<SVGElement>("[data-cf]").forEach((n) => {
@@ -159,7 +142,6 @@ function focusDeme(svg: Element, d: number | null): void {
 }
 
 export async function mount(): Promise<void> {
-  // The hero always shows the first run, whichever run the figures below are set to.
   const o = await loadOverview();
   const r = await loadRun(o.order[0]);
   const disk = el("heroDisk");
@@ -169,13 +151,11 @@ export async function mount(): Promise<void> {
   const by = programsById(r);
   const m = diskModel(r);
 
-  // Numbers in the "how to read it" key.
   const demes = [...new Set(r.programs.map((p) => p[2]))].sort((a, b) => a - b);
   const best = Math.max(...r.programs.map((p) => p[4] ?? -Infinity));
   el("hero-demes").textContent = String(demes.length);
   el("hero-best").textContent = f4(best);
 
-  // One line per deme: size, best score, findings sent and received.
   const info = (d: number | null): string => {
     if (d == null) {
       return `All ${demes.length} demes: ${r.programs.length} programs, ${m.chords.length} findings passed between demes.`;
@@ -198,7 +178,6 @@ export async function mount(): Promise<void> {
   const line = el("hero-info");
   let cur: number | null = null;
 
-  // Replay: the disk grows attempt by attempt, once on arrival, then on request.
   const T = Math.max(...r.programs.map((p) => p[6] || 0));
   const range = el<HTMLInputElement>("heroT");
   const label = el("heroTv");
@@ -218,7 +197,7 @@ export async function mount(): Promise<void> {
   let playing = !prefersReducedMotion();
   let t = playing ? 0 : T;
   let last = 0;
-  const setBtn = () => (btn.textContent = playing ? "Pause" : t >= T ? "Replay" : "Play");
+  const setBtn = () => { btn.textContent = playing ? "Pause" : t >= T ? "Replay" : "Play"; btn.dataset.state = playing ? "pause" : t >= T ? "replay" : "play"; btn.setAttribute("aria-label", btn.textContent); };
   btn.addEventListener("click", () => {
     playing = !playing;
     if (playing && t >= T) t = 0;
@@ -234,7 +213,7 @@ export async function mount(): Promise<void> {
     const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
     last = now;
     if (playing && isVisible(disk)) {
-      t = Math.min(T, t + (dt * T) / 9); // the whole run in about nine seconds
+      t = Math.min(T, t + (dt * T) / 9);
       render(t);
       if (t >= T) {
         playing = false;
@@ -253,7 +232,6 @@ export async function mount(): Promise<void> {
     line.innerHTML = info(d);
     chips.querySelectorAll<HTMLButtonElement>("button").forEach((b) => b.classList.toggle("on", b.dataset.k === (d == null ? "all" : String(d))));
   };
-  // A slow tour of the demes until the reader picks one.
   let touring = !prefersReducedMotion();
   const stop = () => (touring = false);
   chips.addEventListener("click", (e) => {

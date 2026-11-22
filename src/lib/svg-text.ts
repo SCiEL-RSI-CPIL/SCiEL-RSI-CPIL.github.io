@@ -1,8 +1,3 @@
-// Chart text at a fixed on-screen size.
-// Figures draw SVG in a fixed viewBox and let it scale with the column, which also scales the text:
-// an 11-unit label in a 1160-unit chart shown 700px wide renders at under 7px. Each figure SVG gets
-// --k = (viewBox width) / (rendered width), and figures.css sets `svg text` to var(--fs-fig) × --k,
-// so labels render at the same size as the rest of the figure text whatever the chart's width.
 
 const ro = new ResizeObserver((entries) => {
   for (const e of entries) setK(e.target as SVGSVGElement, e.contentRect.width);

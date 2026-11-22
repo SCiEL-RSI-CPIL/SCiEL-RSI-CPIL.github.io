@@ -1,0 +1,40 @@
+---
+import { FILM } from "../data/film";
+const fmt = (t: number) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+const ends = FILM.chapters.map((_, i) => (i + 1 < FILM.chapters.length ? FILM.chapters[i + 1].t : FILM.duration));
+---
+<figure class="film figure wide" id="film" data-duration={FILM.duration}>
+  <div class="film-stage" data-src={FILM.src} data-poster={FILM.poster}>
+    {FILM.youtube
+      ? <><div class="film-yt" id="film-yt" data-yt={FILM.youtube}></div><img class="film-poster" src={FILM.poster} alt="" /></>
+      : <video
+          class="film-video"
+          src={FILM.src}
+          poster={FILM.poster}
+          muted
+          playsinline
+          preload="metadata"
+          aria-label="Overview film of SCiEL."
+        ></video>}
+  </div>
+  <div class="film-row">
+    <button type="button" class="film-play" aria-label="Play">
+      <svg viewBox="0 0 16 16" class="i-play"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+      <svg viewBox="0 0 16 16" class="i-pause"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>
+    </button>
+    <div class="film-bar" role="slider" tabindex="0" aria-label="Position in the film" aria-valuemin="0" aria-valuemax={FILM.duration} aria-valuenow="0">
+      {FILM.chapters.map((c, j) => (
+        <span class="film-seg" style={`flex:${(ends[j] - c.t).toFixed(2)}`} title={`${fmt(c.t)} · ${c.title}`} data-j={j} data-a={c.t} data-b={ends[j]}>
+          <i><b></b></i>
+          <em>{c.label}</em>
+        </span>
+      ))}
+    </div>
+    <span class="film-time" aria-hidden="true">0:00 / {fmt(FILM.duration)}</span>
+  </div>
+  <figcaption>
+    <b>Film.</b> SCiEL in under four minutes. Click a chapter to jump to it; links such as
+    <a class="tc" href="#film" data-t="159">2:39</a> in the text play the moment they name. The model of groups at the
+    start is an illustration, not a SCiEL run; the run, the staircase and the 1d surface are drawn from real run data.
+  </figcaption>
+</figure>

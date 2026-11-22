@@ -1,0 +1,16 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure width="wide">
+  <div class="tiers">
+    <video class="tiers-video" src="/video/steering-tiers.mp4" poster="/video/steering-tiers-poster.jpg"
+      autoplay muted loop playsinline preload="metadata"
+      aria-label="One run lifted into a relief, with three layers rising above it: bandits from the first attempt, a world model after about 60 attempts, a step policy after 200; an orange beam drops from the layers to the parent chosen next."></video>
+  </div>
+  <Fragment slot="caption">
+    <b>Figure 4.</b> The run of Figure 1, with each program raised by how close it came to the best known value. Above
+    it are the three layers that set the odds of the next attempt. An orange beam points to the parent they chose, and
+    the child grows below it. The relief shows real run data; the layers are a sketch. From the film
+    (<a class="tc" href="#film" data-t="50">0:50</a>).
+  </Fragment>
+</Figure>

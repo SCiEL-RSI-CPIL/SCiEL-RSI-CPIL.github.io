@@ -1,5 +1,3 @@
-// Program tooltips and the "finding passed on" chord label (ported from legacy/assets/page.js).
-// Tooltips never show internal program IDs; they describe a program by deme, generation and edit.
 
 import { demeName } from "../data/names";
 import { programsById, type Program, type Run } from "./data";
@@ -34,7 +32,6 @@ export function placeTip(box: Element, tip: HTMLElement, e: MouseEvent): void {
   tip.style.top = y + "px";
 }
 
-/** Get (or create) the `.tip` element inside a figure. */
 export function ensureTip(fig: HTMLElement): HTMLElement {
   let tip = fig.querySelector<HTMLElement>(".tip");
   if (!tip) {
@@ -46,7 +43,6 @@ export function ensureTip(fig: HTMLElement): HTMLElement {
   return tip;
 }
 
-/** Show a program tooltip for any element under `fig` that carries data-id. */
 export function hover(fig: HTMLElement, r: Run): void {
   const tip = ensureTip(fig);
   const by = programsById(r);

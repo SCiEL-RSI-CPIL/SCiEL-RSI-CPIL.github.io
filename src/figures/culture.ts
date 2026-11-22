@@ -1,11 +1,7 @@
-// "Does culture help?": the randomised test. Each time a prompt is built, SCiEL decides at random
-// (with a logged probability) whether to include a finding from another deme; this compares the
-// outcomes with and without it, across runs.
 
 import { C, el } from "../lib/core";
 import { loadOverview } from "../lib/data";
 
-/** [with a finding, without, 95% low, 95% high] (low/high are of the difference). */
 type Effect = [number, number, number, number];
 
 interface CultureTest {

@@ -1,0 +1,42 @@
+---
+import Figure from "../Figure.astro";
+---
+<Figure
+  width="full"
+  stage
+  title="Four ways to search the same landscape"
+  sub="A toy task, the same budget of 200 evaluations for each. Height is the score; the glowing line marks where solutions are valid; the white dot is the starting program and the glow on the peak is the best known value."
+>
+  <Fragment slot="controls">
+    <span class="ctl"><span class="seglab">SCiEL uses</span>
+    <div class="seg chips" id="mcomp"><button data-c="policy" class="on">Learned policy</button><button data-c="world" class="on">World model</button><button data-c="culture" class="on">Culture</button><button data-c="research" class="on">Research cells</button></div></span>
+  </Fragment>
+  <div id="mech3d" class="three"><canvas id="cmech"></canvas><div class="ov" id="ovmech"></div></div>
+  <div class="racebar"><button class="playb" id="mplay" type="button" data-state="play" aria-label="Play">Play</button><input class="rng" type="range" id="mT" min="0" max="200" step="1" value="200" aria-label="Evaluation" /><span class="num" id="mTv"></span></div>
+  <div class="legend">
+    <span><i style="background:#3A6EA5"></i><i style="background:#D0702F;margin-left:-3px"></i><i style="background:#3F8F5C;margin-left:-3px"></i>demes or climbers</span>
+    <span><i class="ln" style="background:var(--fig-ink2)"></i>accepted step</span>
+    <span>halo: where the policy proposes next</span>
+    <span><i style="background:transparent;border:1.5px solid var(--fig-muted)"></i>screened out by the world model</span>
+    <span><i class="ln" style="background:var(--fig-chord)"></i>culture, adopted after a trial</span>
+    <span><i class="dash"></i>culture, rejected</span>
+    <span><i class="ln" style="background:#6E5BB5"></i>research probe</span>
+  </div>
+  <div class="mcompare real">
+    <span class="hd">Measured on real runs</span><span class="hd">effect</span><span class="hd" style="text-align:right">evidence</span>
+    <span class="s"><b>SCiEL vs the same model, best of N</b></span><div class="b"><i style="width:50%;background:var(--film-blue)"></i><em>+30% best score</em></div><span class="n">Qwen3-14B, circle packing, matched calls</span>
+    <span class="s"><b>Learned mode controller, on vs off</b></span><div class="b"><i style="width:87%;background:var(--film-blue)"></i><em>+52% best score</em></div><span class="n">Heilbronn, 8 paired runs, p ≈ 0.005</span>
+    <span class="s"><b>Engine-side repair, on vs off</b></span><div class="b"><i style="width:78%;background:var(--film-blue)"></i><em>wasted calls 57% → 10%</em></div><span class="n">4 of 4 paired runs, variance 14× lower</span>
+    <span class="s"><b>Diversity stack, on vs off</b></span><div class="b"><i style="width:45%;background:var(--film-blue)"></i><em>+27% diversity</em></div><span class="n">4 of 4 paired runs</span>
+    <span class="s"><b>Culture: a finding from another deme</b></span><div class="b"><i style="width:25%;background:var(--film-blue)"></i><em>+7.5 pts success</em></div><span class="n">randomised in-run, 1,022 decisions, 31 runs</span>
+  </div>
+  <Fragment slot="caption">
+    <b>Figure 7.</b> <b>Only SCiEL chains steps and shares them.</b> <b>One call</b> samples edits of the starting program independently.
+    <b>One climber</b> keeps a single line and accepts improvements. <b>Swarm</b> runs five such lines that share nothing.
+    <b>SCiEL</b> runs five demes with a learned proposal policy (the halo around each head), a world model that screens
+    proposals before they cost an evaluation (hollow rings), culture that moves a lagging deme to the leader after a
+    trial (crimson arcs), and research cells that probe far away when a line stalls (violet arcs). The landscape is an
+    illustration on a toy task; the table under it is measured on real runs, with paired runs or an in-run randomised
+    test for each row.
+  </Fragment>
+</Figure>

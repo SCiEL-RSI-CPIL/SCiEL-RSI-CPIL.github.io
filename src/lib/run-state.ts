@@ -1,5 +1,3 @@
-// The run that per-run figures show. The legacy page had a run selector but kept it hidden, so
-// in practice this is always the first run; the subscription stays so a selector can come back.
 
 import { loadOverview, loadRun, type Run } from "./data";
 
@@ -21,7 +19,6 @@ export function setCurrentRun(id: string): void {
   listeners.forEach((f) => f(id));
 }
 
-/** Call `f` whenever the selected run changes. Returns an unsubscribe function. */
 export function onRunChange(f: (id: string) => void): () => void {
   listeners.add(f);
   return () => listeners.delete(f);
