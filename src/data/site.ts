@@ -20,7 +20,7 @@ export const SITE = {
   description:
     "A system built on a frozen 27B model that keeps improving from the experience it produces itself: what one group of programs learns is tested, passed on, and kept only if it helps where it lands.",
   url: "https://sciel-rsi-cpil.github.io/",
-  ogImage: "https://sciel-rsi-cpil.github.io/og-card.png",
+  ogImage: "https://sciel-rsi-cpil.github.io/og-card.png?v=2",
   authors: AUTHORS,
   affiliations: [
     { name: "CPIL", full: "Cyber-Physical Intelligence Lab" },

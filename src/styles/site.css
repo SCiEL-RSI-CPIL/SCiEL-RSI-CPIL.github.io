@@ -927,51 +927,6 @@ a.tc:hover {
 .tldr {
   position: relative;
 }
-.glance {
-  font-family: var(--font-sans);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  padding: 14px 16px 6px;
-  margin: 0 0 20px;
-  background: var(--bg);
-}
-.glance .label {
-  font-size: var(--fs-2xs);
-  font-weight: 650;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 8px;
-}
-.glance dl {
-  margin: 0;
-}
-.glance dl > div {
-  padding: 8px 0;
-  border-top: 1px solid var(--rule);
-}
-.glance dt {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--amber);
-  font-variant-numeric: tabular-nums;
-}
-.glance dd {
-  margin: 2px 0 0;
-  font-size: var(--fs-xs);
-  line-height: 1.45;
-  color: var(--muted);
-}
-@media (min-width: 1500px) {
-  .glance {
-    position: absolute;
-    top: 64px;
-    left: calc(100% + 40px);
-    width: 220px;
-    margin: 0;
-  }
-}
 
 .st {
   display: inline-block;
@@ -1444,13 +1399,6 @@ header.masthead {
 .cite {
   color: var(--accent);
 }
-.glance {
-  border: 2px solid #9cc3f2;
-  background: #f4f5f7;
-}
-.glance dt {
-  color: #1f5fc9;
-}
 .readmore {
   background: #f4f5f7;
   border: 2px solid #9cc3f2;
@@ -1523,11 +1471,6 @@ footer.site {
 }
 .results-t a:hover .st {
   border-color: var(--accent);
-}
-@media (max-width: 1499px) {
-  .glance {
-    display: none;
-  }
 }
 
 .article table.results-t td:nth-child(2) {
@@ -1738,15 +1681,6 @@ a,
   background: var(--sheet);
 }
 .eqbox,
-.glance,
-.readmore {
-  border-color: var(--film-blue-mid);
-  background: var(--sheet);
-}
-.glance dt,
-.rm-go {
-  color: var(--film-blue);
-}
 .gverdict,
 pre.bib {
   background: var(--sheet);
@@ -1994,12 +1928,6 @@ h3,
 .ftitle,
 .race-h,
 .tldr p.claim,
-.glance dd,
-.readmore .rm-desc,
-.gverdict,
-th {
-  text-wrap: balance;
-}
 .article > p,
 .prose p,
 .tldr p.claim {
@@ -2610,7 +2538,6 @@ footer.site a::after { content: none !important; }
   .readmore .rm-title { font-size: 15px; }
   .readmore .rm-desc { font-size: 13px; }
   .versus { font-size: 13px; }
-  .glance { display: none; }
   .refs li { font-size: 13px !important; }
   footer.site p,
   footer.site .foot-links,
@@ -2705,4 +2632,113 @@ footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
     overflow-wrap: break-word;
     text-wrap: pretty;
   }
+}
+
+.xpost {
+  display: none;
+}
+@media (min-width: 1500px) {
+  .xpost {
+    display: block;
+    position: absolute;
+    top: 64px;
+    left: calc(100% + 32px);
+    width: min(270px, calc((100vw - var(--col)) / 2 - 64px));
+    padding: 14px 16px 10px;
+    border: 1px solid #cfd9de;
+    border-radius: 12px;
+    background: #fff;
+    color: #0f1419;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+}
+.xpost a::after {
+  content: none !important;
+}
+.xp-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.xp-av {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+}
+.xp-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 14px;
+}
+.xp-who span {
+  color: #536471;
+}
+.xp-x {
+  margin-left: auto;
+  color: #0f1419;
+  line-height: 0;
+}
+.xp-x svg {
+  width: 20px;
+  height: 20px;
+}
+.xpost .xp-text {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #0f1419;
+}
+.xpost .xp-text a {
+  color: #1d9bf0;
+  text-decoration: none;
+}
+.xp-media {
+  display: block;
+  line-height: 0;
+}
+.xp-media img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center 45%;
+  border: 1px solid #cfd9de;
+  border-radius: 12px;
+}
+.xpost .xp-date {
+  margin: 10px 0 8px;
+  font-size: 13px;
+  color: #536471;
+}
+.xp-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #eff3f4;
+  font-size: 13px;
+  color: #536471;
+}
+.xp-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.xp-views svg {
+  width: 17px;
+  height: 17px;
+}
+.xp-views b {
+  color: #0f1419;
+}
+.xp-foot a {
+  color: #536471;
+  text-decoration: none;
+}
+.xp-foot a:hover {
+  color: #1d9bf0;
 }

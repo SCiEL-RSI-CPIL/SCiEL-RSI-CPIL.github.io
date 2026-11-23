@@ -52,3 +52,17 @@ initChrome();
 initFilm();
 initSvgText();
 mountLazily();
+
+const views = document.querySelector<HTMLElement>(".masthead .views");
+if (views) {
+  fetch(`https://musyalyusya.goatcounter.com/counter/${encodeURIComponent("/")}.json`)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d: { count: string } | null) => {
+      const n = Number(d?.count.replace(/\D/g, ""));
+      if (n >= 1000) {
+        views.textContent = ` · ${n.toLocaleString("en-US")} views`;
+        views.hidden = false;
+      }
+    })
+    .catch(() => {});
+}
