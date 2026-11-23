@@ -3,6 +3,7 @@ import TocBox from "../components/TocBox.astro";
 import Citation from "../components/Citation.astro";
 import Film from "../components/Film.astro";
 import XPost from "../components/XPost.astro";
+import TryRun from "../components/TryRun.astro";
 import ReadMore from "../components/ReadMore.astro";
 import Hero from "../components/figures/Hero.astro";
 import System from "../components/figures/System.astro";
@@ -19,12 +20,14 @@ import Edits from "../components/figures/Edits.astro";
 <div class="tldr prose">
   <XPost />
   <p class="label">TL;DR</p>
-  <p class="claim">SCiEL is a <b>recursive self-improvement</b> system built on cultural transmission. It learns from the experience it produces itself: groups of programs pass tested findings, tools and strategies to one another and on to the next run, so each gain also improves how the next one is found.</p>
+  <p class="claim"><span class="key">SCiEL</span> is an AI system that <b>improves itself</b>. It does not retrain its language model. It learns from its own attempts instead: which ideas work, which tools help and what to try next. It tests every lesson before keeping it, shares it between groups that work in parallel and carries it into its next run. Each lesson makes the next one easier to find, so SCiEL <span class="key">gets better at getting better</span>. This is <b>recursive self-improvement</b> (RSI).</p>
   <ul>
-    <li><b>New records from one open 27B model.</b> A new upper bound on the autocorrelation constant C<sub>1d</sub>, merged into Terence Tao's list of optimization constants; bounds in review on three more; hundreds of circle packings and spherical codes above their published tables (<a href="#results">Section 3</a>).</li>
-    <li><b>Run at scale in an open arena.</b> 2,011 runs across 236 task families in mathematics, physics, chemistry and more, every one with its best value and the literature value it is compared with, live on the <a href="https://sciel-cpil.github.io/sciel-results/">results page</a> and in the <a href="https://research-arena.small-pine-3af7.workers.dev/experiments">arena</a>.</li>
+    <li><b>Self-improvement beats scale.</b> With SCiEL, a free 27B model running on two GPUs sets new records on hard scientific problems, beating results that Google DeepMind and others reached with the largest closed models such as Gemini, Claude and GPT. One of these records is already accepted into Terence Tao's collection of open problems (<a href="#results">Section 3</a>).</li>
+    <li><b>Open to everyone.</b> Our arena, <a href="https://github.com/SCiEL-RSI-CPIL/empira-rsi-arena">Empira</a>, holds 2,260 scientific tasks in 11 fields, from mathematics and physics to biology, chemistry, robotics and finance. The <a href="https://github.com/SCiEL-RSI-CPIL/sciel-rsi-framework">code</a> and 2,011 <a href="https://sciel-cpil.github.io/sciel-results/">runs</a> are public, and anyone can run SCiEL on their own problem today.</li>
   </ul>
 </div>
+
+<TryRun />
 
 <TocBox />
 

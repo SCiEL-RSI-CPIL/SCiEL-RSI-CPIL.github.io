@@ -2742,3 +2742,120 @@ footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
 .xp-foot a:hover {
   color: #1d9bf0;
 }
+.tryrun {
+  display: flex;
+  flex-direction: column;
+  margin: 6px 0 10px;
+  padding: 16px 18px 14px;
+  border: 2px solid #9cc3f2;
+  border-radius: 12px;
+  background: #f4f5f7;
+  font-family: var(--font-sans);
+}
+.tryrun .tr-tabs {
+  align-self: flex-start;
+  margin: 12px 0 12px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tryrun .tr-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  white-space: nowrap;
+}
+.tryrun .tr-tabs svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tryrun .tr-short {
+  display: none;
+}
+.tryrun .tr-tabs button.on svg {
+  stroke: var(--film-blue);
+}
+.tryrun .rm-desc {
+  display: block;
+  margin: 0 0 10px;
+}
+.tryrun code {
+  font-size: 0.9em;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #e8eaee;
+  color: var(--ink-2);
+}
+.tryrun pre.bib {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding-right: 92px;
+  white-space: pre;
+}
+.tryrun .tr-need {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.tryrun .tr-need b {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.tryrun .tr-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.tryrun .tr-foot a {
+  color: var(--muted);
+}
+.tryrun .tr-foot a:hover {
+  color: var(--film-blue);
+}
+.tryrun .tr-foot a::after {
+  content: none !important;
+}
+@media (max-width: 760px) {
+  .tryrun {
+    padding: 14px 14px 12px;
+  }
+  .tryrun .tr-tabs {
+    align-self: stretch;
+  }
+  .tryrun .tr-tabs button {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+  .tryrun .tr-tabs svg,
+  .tryrun .tr-full {
+    display: none;
+  }
+  .tryrun .tr-short {
+    display: inline;
+  }
+  .tryrun pre.bib {
+    padding-right: 14px;
+    font-size: 11.5px;
+  }
+  .bibwrap pre.bib {
+    padding-top: 48px;
+  }
+}
+.tldr .key {
+  background: linear-gradient(transparent 52%, rgba(255, 214, 0, 0.5) 52%, rgba(255, 214, 0, 0.5) 92%, transparent 92%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.08em;
+}

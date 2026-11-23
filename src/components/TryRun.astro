@@ -1,0 +1,64 @@
+---
+const repo = "https://github.com/SCiEL-RSI-CPIL/sciel-rsi-framework";
+const install = "pip install sciel";
+const tabs = [
+  {
+    id: "api",
+    name: "API key",
+    short: "API",
+    icon: '<circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/>',
+    text: "With an Anthropic or OpenRouter key, nothing else to set up: sciel picks the key up and asks what to improve.",
+    code: `export ANTHROPIC_API_KEY=...\n${install}\nsciel`,
+  },
+  {
+    id: "local",
+    name: "Local model",
+    short: "Local",
+    icon: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
+    text: "Serve an open model with vLLM or any OpenAI-compatible server and set llm.api_base: http://127.0.0.1:8000/v1 in a profile. Our runs use Qwen3.8-27B on two GPUs.",
+    code: `vllm serve <model> --port 8000\n${install}\nsciel run <profile>.yaml`,
+  },
+  {
+    id: "sub",
+    name: "Subscription",
+    short: "Subscription",
+    icon: '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5M15 12H3"/>',
+    text: "Use a Claude Code or Codex login: set provider: claude_code or provider: codex_responses in a profile. A run pauses when a usage limit is reached and continues after it resets.",
+    code: `${install}\nsciel run <profile>.yaml`,
+  },
+  {
+    id: "skill",
+    name: "Agent skill",
+    short: "Skill",
+    icon: '<path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/>',
+    text: "Let Claude Code or Codex set the task up from your paper, notebook or data: the sciel-task skill writes the checker, audits the task, runs SCiEL and checks the result.",
+    code: `git clone ${repo}\ncp -r sciel-rsi-framework/skills/sciel-task ~/.claude/skills/\nclaude "solve this with SCiEL"`,
+  },
+];
+const fmt = (t: string) =>
+  t.replace(/(sciel(?![-\w]| run)|llm\.api_base: \S+?(?= in)|provider: \w+)/g, "<code>$1</code>");
+---
+<div class="col tryrun" id="code">
+  <span class="rm-kind">Open source · MIT · PyPI</span>
+  <span class="rm-title">Run SCiEL on your own problem</span>
+  <div class="seg tr-tabs" role="tablist" aria-label="How to run SCiEL">
+    {tabs.map((t, j) => (
+      <button type="button" role="tab" class={j === 0 ? "on" : undefined} id={`tr-tab-${t.id}`} aria-controls={`tr-pane-${t.id}`} aria-selected={j === 0 ? "true" : "false"} tabindex={j === 0 ? 0 : -1}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" set:html={t.icon} /><span class="tr-full">{t.name}</span><span class="tr-short" aria-hidden="true">{t.short}</span>
+      </button>
+    ))}
+  </div>
+  {tabs.map((t, j) => (
+    <div class="tr-pane" role="tabpanel" id={`tr-pane-${t.id}`} aria-labelledby={`tr-tab-${t.id}`} hidden={j !== 0}>
+      <p class="rm-desc" set:html={fmt(t.text)} />
+      <div class="bibwrap">
+        <pre class="bib" id={`tr-cmd-${t.id}`}>{t.code}</pre>
+        <button class="copy" type="button" data-copy={`tr-cmd-${t.id}`}>Copy</button>
+      </div>
+    </div>
+  ))}
+  <p class="tr-need"><b>Only the language model needs a GPU.</b> The bandits (from the first step), the world model (after about 60 steps) and the step policy (after about 200) run on CPU. The world model embeds code with a small embedding server, such as Qwen3-Embedding-0.6B, or with built-in hashed embeddings that need no server. Its TabPFN stage comes with <code>{'pip install "sciel[tabular]"'}</code>.</p>
+  <p class="tr-foot">
+    <a href={repo}>Code and documentation</a><span aria-hidden="true">·</span><a href="https://pypi.org/project/sciel/">PyPI</a><span aria-hidden="true">·</span><a href={`${repo}/tree/main/skills/sciel-task`}>sciel-task skill</a><span aria-hidden="true">·</span><a href={`${repo}/tree/main/configs`}>Profiles</a>
+  </p>
+</div>

@@ -17,6 +17,30 @@ function copyButtons(): void {
   });
 }
 
+function tryRunTabs(): void {
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>(".tr-tabs [role=tab]")];
+  const show = (b: HTMLButtonElement) => {
+    tabs.forEach((t) => {
+      const on = t === b;
+      t.setAttribute("aria-selected", String(on));
+      t.classList.toggle("on", on);
+      t.tabIndex = on ? 0 : -1;
+      const pane = document.getElementById(t.getAttribute("aria-controls") || "");
+      if (pane) pane.hidden = !on;
+    });
+  };
+  tabs.forEach((b, j) => {
+    b.addEventListener("click", () => show(b));
+    b.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const next = tabs[(j + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+      show(next);
+      next.focus();
+      e.preventDefault();
+    });
+  });
+}
+
 function tocRail(): void {
   const rail = document.querySelector<HTMLElement>(".toc-rail");
   if (!rail || typeof IntersectionObserver === "undefined") return;
@@ -44,5 +68,6 @@ function tocRail(): void {
 
 export function initChrome(): void {
   copyButtons();
+  tryRunTabs();
   tocRail();
 }

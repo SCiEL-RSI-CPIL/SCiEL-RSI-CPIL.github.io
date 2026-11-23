@@ -56,7 +56,9 @@ function race(o: Overview, mode: Mode): string {
     else s.push(`<rect x="${X(a) - 6}" y="${y - 7}" width="${X(b2) - X(a) + 12}" height="14" rx="7" fill="${col}" fill-opacity="${x.ours ? 0.85 : 0.18}" stroke="${col}"/>`);
     const num = (n: number) => (mode === "cost" ? "$" + (n < 10 ? n.toFixed(2) : n.toLocaleString("en-US")) : mode === "size" ? n + "B" : mode === "gpus" ? n + " GPUs" : n.toLocaleString("en-US"));
     const label = mode === "cost" && x.costNote ? x.costNote : mode === "size" && x.sizeNote ? x.sizeNote : mode === "gpus" && x.gpuNote ? x.gpuNote : a === b2 ? num(a) : num(a) + "–" + num(b2).replace("$", "");
-    s.push(`<text x="${X(b2) + 16}" y="${y + 5}" class="r-v" fill="${col}">${esc(label)}${mode === "calls" && x.name === "Dream-RSI" ? " (at most)" : ""}</text>`);
+    const text = label + (mode === "calls" && x.name === "Dream-RSI" ? " (at most)" : "");
+    const left = X(b2) + 16 + text.length * 7.2 > W;
+    s.push(`<text x="${left ? X(a) - 16 : X(b2) + 16}" y="${y + 5}" class="r-v" fill="${col}"${left ? ' text-anchor="end"' : ""}>${esc(text)}</text>`);
     if (x.ours || a <= ours[1] || x.noRatio?.includes(mode)) return;
     const r = a / ours[1];
     const r2 = r >= 1000 ? Math.round(r / 10 ** (String(Math.round(r)).length - 2)) * 10 ** (String(Math.round(r)).length - 2) : r >= 10 ? Math.round(r) : Math.round(r * 10) / 10;
