@@ -1,0 +1,145 @@
+---
+import katex from "katex";
+import "katex/dist/katex.min.css";
+
+const m = (t: string) => katex.renderToString(t, { throwOnError: true });
+const eq = (t: string) => katex.renderToString(t, { throwOnError: true, displayMode: true });
+
+type Term = {
+  id: string;
+  name: string;
+  lead: string;
+  eq?: string;
+  where?: [string, string][];
+  example?: { text: string; meta: string };
+  links?: [string, string][];
+};
+
+const terms: Term[] = [
+  {
+    id: "attempt",
+    name: "Attempt",
+    lead: "One step of a run: SCiEL makes its choices, the model writes a child program, the checker scores it.",
+    eq: String.raw`a \sim \pi, \qquad x' = M(a), \qquad y = f(x')`,
+    where: [
+      ["a", "the choices: the parent program $x$, the kind of edit, the finding to show, the strategy"],
+      ["\\pi", "the odds of the choices, learned from the journal"],
+      ["M", "the frozen language model, Qwen3.8-27B; it gets the parent and a prompt built from the choices"],
+      ["x'", "the child program it writes"],
+      ["f", "the task's exact checker; $y$ is the child's score"],
+    ],
+  },
+  {
+    id: "deme",
+    name: "Deme",
+    lead: "A group of programs that evolves on its own, in parallel with the others.",
+    eq: String.raw`P = D_1 \sqcup D_2 \sqcup \dots \sqcup D_K, \qquad K = 8 \text{ in run A}`,
+    where: [
+      ["P", "all programs of a run"],
+      ["D_k", "deme $k$; a child joins the deme of its parent"],
+    ],
+  },
+  {
+    id: "finding",
+    name: "Finding",
+    lead: "A lesson written in one deme and shown to the others. SCiEL keeps it only after a randomised trial shows that it helps.",
+    eq: String.raw`d_s = \operatorname{sign}\big(f(x'_r) - f(x'_\varnothing)\big), \qquad r \in R \iff n \ge 4,\ E_n(r) \ge 8,\ L_n(r) > 0`,
+    where: [
+      ["r", "the finding"],
+      ["x'_r,\\ x'_\\varnothing", "two children of one trial: same parent, same edit, same seed; one is shown $r$, the other a neutral text of the same length"],
+      ["d_s", "the outcome of trial $s$: $+1$ if the child shown $r$ scores higher, $-1$ if lower"],
+      ["E_n(r)", "the e-value after $n$ trials, a running bet against no effect"],
+      ["L_n(r)", "the lower end of the confidence interval for the effect of $r$"],
+    ],
+    example: {
+      text: "The structural probe confirms single active lag dominance (lag 377) and refinement invariance, supporting targeted local search on the active lag's contribution as the next candidate design step.",
+      meta: "Written by a research cell in deme 1 and passed to demes 2 and 7, where both children that received it beat their parents. When the run ended, it was still on trial.",
+    },
+  },
+  {
+    id: "cell",
+    name: "Research cell",
+    lead: "A standing question that a deme studies with tools it writes itself.",
+    eq: String.raw`\text{question} \;\to\; \texttt{tool.py} \;\to\; \text{run in a sandbox} \;\to\; \text{observation} \;\to\; \text{finding}`,
+    where: [
+      ["\\texttt{tool.py}", "code the model writes to measure the problem"],
+      ["\\text{sandbox}", "an isolated Docker container"],
+    ],
+  },
+  {
+    id: "repertoire",
+    name: "Repertoire",
+    lead: "Everything SCiEL keeps besides the programs.",
+    eq: String.raw`R = \big(\,\text{findings},\ \text{strategies},\ \text{tools},\ W,\ \pi\,\big)`,
+    where: [
+      ["\\text{tools}", "the research cells' $\\texttt{tool.py}$ files that earned credit"],
+      ["W", "the world model, which predicts whether an attempt will improve its line"],
+      ["\\pi", "the step policy and the odds of the choices"],
+    ],
+  },
+  {
+    id: "culture",
+    name: "Culture",
+    lead: "Passing the repertoire on: between demes during a run, and to the next run.",
+    eq: String.raw`r : D_i \to D_j \ \ \text{(within a run)}, \qquad R_{g+1} \leftarrow R_g \ \ \text{(across runs)}`,
+    where: [
+      ["D_i \\to D_j", "a finding shown in deme $j$ after deme $i$ wrote it"],
+      ["R_{g+1}", "the repertoire the next run starts from; each item is tried again, and only the new run's own trials decide"],
+    ],
+  },
+  {
+    id: "journal",
+    name: "Journal",
+    lead: "The record of every choice, the odds it was drawn with and its outcome.",
+    eq: String.raw`J = \{(a_s,\ \mu(a_s),\ y_s)\}_{s=1}^{n}, \qquad \hat V(\pi) = \frac{\sum_s w_s\, y_s}{\sum_s w_s}, \quad w_s = \frac{\pi(a_s)}{\mu(a_s)}`,
+    where: [
+      ["a_s,\\ y_s", "the choice at step $s$ and its outcome"],
+      ["\\mu(a_s)", "the odds it was drawn with"],
+      ["\\hat V(\\pi)", "what other odds $\\pi$ would have scored, estimated from the record alone"],
+    ],
+  },
+  {
+    id: "empira",
+    name: "Empira",
+    lead: "Our open arena: 2,260 tasks in 11 fields and the public runs, with every attempt.",
+    links: [
+      ["Code", "https://github.com/SCiEL-RSI-CPIL/empira-rsi-arena"],
+      ["Live arena", "https://research-arena.small-pine-3af7.workers.dev/experiments"],
+    ],
+  },
+];
+---
+<details class="defs">
+  <summary>Definitions<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+  <div class="chips-row defs-chips" role="tablist" aria-label="Terms">
+    {terms.map((t, j) => (
+      <button type="button" role="tab" id={`def-tab-${t.id}`} aria-controls={`def-${t.id}`} aria-selected={j === 0 ? "true" : "false"} class={j === 0 ? "on" : undefined}>{t.name}</button>
+    ))}
+  </div>
+  {terms.map((t, j) => (
+    <div class="def" id={`def-${t.id}`} role="tabpanel" aria-labelledby={`def-tab-${t.id}`} hidden={j !== 0}>
+      <p class="def-lead">{t.lead}</p>
+      {t.eq && <div class="def-eq">{t.eq.split(String.raw`\qquad`).map((x) => <span set:html={eq(x.trim().replace(/,$/, ""))} />)}</div>}
+      {t.where && (
+        <dl class="def-where">
+          {t.where.map(([s, d]) => (
+            <Fragment>
+              <dt set:html={m(s)} />
+              <dd set:html={d.replace(/\$(.+?)\$/g, (_, t) => m(t))} />
+            </Fragment>
+          ))}
+        </dl>
+      )}
+      {t.example && (
+        <figure class="def-ex">
+          <p class="label">From run A, autocorrelation</p>
+          <blockquote>“{t.example.text}”</blockquote>
+          <figcaption>{t.example.meta}</figcaption>
+        </figure>
+      )}
+      {t.links && (
+        <p class="def-links">{t.links.map(([n, h]) => <a href={h}>{n}</a>)}</p>
+      )}
+    </div>
+  ))}
+</details>

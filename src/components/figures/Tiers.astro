@@ -2,10 +2,12 @@
 import Figure from "../Figure.astro";
 ---
 <Figure width="wide">
-  <div class="tiers">
+  <div class="tiers clip">
     <video class="tiers-video" src="/video/steering-tiers.mp4" poster="/video/steering-tiers-poster.jpg"
-      autoplay muted loop playsinline preload="metadata"
+      muted playsinline preload="metadata" data-end="11.1"
       aria-label="One run lifted into a relief, with three layers rising above it: bandits from the first attempt, a world model after about 60 attempts, a step policy after 200; an orange beam drops from the layers to the parent chosen next."></video>
+    <img class="clip-still" src="/video/steering-tiers-end.jpg" alt="" hidden />
+    <button class="copy clip-replay" type="button" hidden>Replay</button>
   </div>
   <Fragment slot="caption">
     <b>Figure 4.</b> The run of Figure 1, with each program raised by how close it came to the best known value. Above

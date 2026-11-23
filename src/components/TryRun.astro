@@ -35,6 +35,36 @@ const tabs = [
     code: `git clone ${repo}\ncp -r sciel-rsi-framework/skills/sciel-task ~/.claude/skills/\nclaude "solve this with SCiEL"`,
   },
 ];
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const span = (c: string, t: string) => `<span class="sh-${c}">${esc(t)}</span>`;
+const hl = (code: string) =>
+  code
+    .split("\n")
+    .map((line) => {
+      let first = true;
+      let afterExport = false;
+      return (line.match(/"[^"]*"|\s+|[^\s"]+/g) || [])
+        .map((w) => {
+          if (/^\s+$/.test(w)) return w;
+          if (first) {
+            first = false;
+            afterExport = w === "export";
+            return span("cmd", w);
+          }
+          if (afterExport && w.includes("=")) {
+            afterExport = false;
+            const [k, ...v] = w.split("=");
+            return span("var", k) + "=" + span("ph", v.join("="));
+          }
+          if (w.startsWith('"')) return span("str", w);
+          if (w.startsWith("-")) return span("flag", w);
+          if (/^<.*>/.test(w) || w === "...") return span("ph", w);
+          if (/^(https?:|~\/|[\w.-]+\/)/.test(w)) return span("path", w);
+          return esc(w);
+        })
+        .join("");
+    })
+    .join("\n");
 const fmt = (t: string) =>
   t.replace(/(sciel(?![-\w]| run)|llm\.api_base: \S+?(?= in)|provider: \w+)/g, "<code>$1</code>");
 ---
@@ -52,7 +82,7 @@ const fmt = (t: string) =>
     <div class="tr-pane" role="tabpanel" id={`tr-pane-${t.id}`} aria-labelledby={`tr-tab-${t.id}`} hidden={j !== 0}>
       <p class="rm-desc" set:html={fmt(t.text)} />
       <div class="bibwrap">
-        <pre class="bib" id={`tr-cmd-${t.id}`}>{t.code}</pre>
+        <pre class="bib" id={`tr-cmd-${t.id}`} set:html={hl(t.code)} />
         <button class="copy" type="button" data-copy={`tr-cmd-${t.id}`}>Copy</button>
       </div>
     </div>

@@ -66,8 +66,62 @@ function tocRail(): void {
 }
 
 
+function clips(): void {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLElement>(".clip").forEach((box) => {
+    const v = box.querySelector("video");
+    const still = box.querySelector<HTMLImageElement>(".clip-still");
+    const btn = box.querySelector<HTMLButtonElement>(".clip-replay");
+    if (!v || !still || !btn) return;
+    const end = Number(v.dataset.end) || Infinity;
+    const done = () => {
+      v.pause();
+      still.hidden = false;
+      btn.hidden = false;
+    };
+    const play = () => {
+      still.hidden = true;
+      btn.hidden = true;
+      v.currentTime = 0;
+      v.play().catch(done);
+    };
+    v.addEventListener("timeupdate", () => {
+      if (v.currentTime >= end) done();
+    });
+    v.addEventListener("ended", done);
+    btn.addEventListener("click", play);
+    if (reduce) return done();
+    const io = new IntersectionObserver(
+      (es) => {
+        if (!es.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        play();
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(box);
+  });
+}
+
+function terms(): void {
+  const chips = [...document.querySelectorAll<HTMLButtonElement>(".defs-chips [role=tab]")];
+  chips.forEach((b) => {
+    b.addEventListener("click", () => {
+      chips.forEach((c) => {
+        const on = c === b;
+        c.classList.toggle("on", on);
+        c.setAttribute("aria-selected", String(on));
+        const pane = document.getElementById(c.getAttribute("aria-controls") || "");
+        if (pane) pane.hidden = !on;
+      });
+    });
+  });
+}
+
 export function initChrome(): void {
   copyButtons();
+  terms();
+  clips();
   tryRunTabs();
   tocRail();
 }

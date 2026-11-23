@@ -2407,7 +2407,6 @@ h3,
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  cursor: pointer;
 }
 .method-row {
   display: flex;
@@ -2798,6 +2797,26 @@ footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
   padding-right: 92px;
   white-space: pre;
 }
+.tryrun .sh-cmd {
+  color: var(--film-blue);
+  font-weight: 600;
+}
+.tryrun .sh-var {
+  color: #8a3ffc;
+}
+.tryrun .sh-str {
+  color: #1a7f37;
+}
+.tryrun .sh-flag {
+  color: #b35900;
+}
+.tryrun .sh-path {
+  color: #0a6e8a;
+}
+.tryrun .sh-ph {
+  color: var(--muted);
+  font-style: italic;
+}
 .tryrun .tr-need {
   margin: 12px 0 0;
   font-size: 13px;
@@ -2858,4 +2877,138 @@ footer.site .foot-orgs img[src*="cpil-mark"] { width: 26px; height: 22px; }
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   padding: 0 0.08em;
+}
+.clip {
+  position: relative;
+}
+.clip-still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.clip .clip-replay {
+  top: auto;
+  bottom: 10px;
+}
+.defs {
+  margin: 18px 0 26px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans);
+}
+.defs summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.defs summary::-webkit-details-marker {
+  display: none;
+}
+.defs summary svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s;
+}
+.defs[open] summary svg {
+  transform: rotate(180deg);
+}
+.defs .defs-chips {
+  justify-content: flex-start;
+  margin: 0;
+}
+.def {
+  padding: 14px 0 18px;
+}
+.def-lead {
+  margin: 0;
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.def-eq {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 44px;
+  margin: 12px 0 10px;
+  padding: 2px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.def-eq .katex-display {
+  margin: 0;
+  text-align: left;
+}
+.def-eq .katex-display > .katex {
+  text-align: left;
+  font-size: 1.15em;
+}
+.def-where {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+}
+.def-where dt,
+.def-where dd {
+  margin: 0;
+  padding: 8px 0;
+  border-top: 1px solid var(--rule);
+}
+.def-where dt {
+  padding-right: 14px;
+  color: var(--ink);
+}
+.def-where dd {
+  color: var(--ink-2);
+}
+.def-ex {
+  margin: 14px 0 0;
+}
+.def-ex .label {
+  margin: 0 0 6px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--muted);
+}
+.def-ex blockquote {
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.def-ex figcaption {
+  margin-top: 6px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.def-links {
+  display: flex;
+  gap: 16px;
+  margin: 10px 0 0;
+  font-size: var(--fs-sm);
+}
+.def-links a::after {
+  content: none !important;
+}
+@media (max-width: 640px) {
+  .def-where {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
 }

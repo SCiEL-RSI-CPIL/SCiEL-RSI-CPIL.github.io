@@ -27,9 +27,8 @@ export async function mount(): Promise<void> {
   const opt: Required<ModeOptions> = { policy: true, world: true, culture: true, research: true };
   const MCOL = MCOL0;
   const R4: Partial<Record<Mode, Built>> = {};
-  let runSeed = 1007;
+  const runSeed = 1007;
   let looping = true;
-  let loopT: ReturnType<typeof setTimeout> | undefined;
   let drg: { x: number; y: number; t: number; p: number } | null = null;
   let touched = false;
   const reduced = prefersReducedMotion();
@@ -273,13 +272,11 @@ export async function mount(): Promise<void> {
       cancelAnimationFrame(raf);
       raf = 0;
     }
-    clearTimeout(loopT);
     mplay.textContent = looping ? "Pause" : "Play";
     mplay.dataset.state = looping ? "pause" : "play";
   }
   function play() {
     if (raf) cancelAnimationFrame(raf);
-    clearTimeout(loopT);
     looping = true;
     mplay.textContent = "Pause";
     mplay.dataset.state = "pause";
@@ -293,12 +290,9 @@ export async function mount(): Promise<void> {
         return;
       }
       raf = 0;
-      loopT = setTimeout(() => {
-        if (!looping) return;
-        runSeed++;
-        buildAll();
-        play();
-      }, 2600);
+      looping = false;
+      mplay.textContent = "Replay";
+      mplay.dataset.state = "play";
     };
     st(t0);
   }
